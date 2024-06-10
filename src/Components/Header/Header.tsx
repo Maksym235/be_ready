@@ -16,7 +16,7 @@ export const Header: FC = () => {
 	};
 	return (
 		<>
-			<div>
+			<div className={styles.header}>
 				<div className={styles.content_cotainer}>
 					<img src={Logo} />
 					<button onClick={handleToggleModal} className={styles.burger}>

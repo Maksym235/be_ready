@@ -19,8 +19,8 @@ export const SliderWrapper: FC = () => {
 			spaceBetween={50}
 			slidesPerView={1}
 		>
-			{cards_data.map((card) => (
-				<SwiperSlide>
+			{cards_data.map((card, index: number) => (
+				<SwiperSlide key={index}>
 					<SliderCard title={card.title} content={card.content} />
 				</SwiperSlide>
 			))}

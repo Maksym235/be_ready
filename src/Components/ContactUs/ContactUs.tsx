@@ -2,7 +2,7 @@ import { FC } from "react";
 import styles from "./ContactUs.module.css";
 export const ContactUs: FC = () => {
 	return (
-		<div className={styles.background}>
+		<div id="contactUs" className={styles.background}>
 			<div className={styles.container}>
 				<p className={styles.title}>Contact us:</p>
 				<div className={styles.btn_container}>

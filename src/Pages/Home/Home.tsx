@@ -7,6 +7,7 @@ import { FirstChecklist } from "../../Components/FirstChecklist/FirstChecklist";
 import { ContactUs } from "../../Components/ContactUs/ContactUs";
 import { Footer } from "../../Components/Footer/Footer";
 import { RegisterModal } from "../../Components/Modals/Auth/RegisterModal";
+import { LoginModal } from "../../Components/Modals/Auth/LoginModal";
 
 const Home: FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +30,7 @@ const Home: FC = () => {
 			<FirstChecklist toggleModal={handleToggleModal} />
 			<ContactUs />
 			<Footer />
-			<RegisterModal isOpen={isModalOpen} toggleModal={handleToggleModal} />
+			<LoginModal isOpen={isModalOpen} toggleModal={handleToggleModal} />
 		</main>
 	);
 };
