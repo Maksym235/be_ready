@@ -1,6 +1,9 @@
 import { FC } from "react";
 import styles from "./ShortDesc.module.css";
-export const ShortDesc: FC = () => {
+interface IProps {
+	toggleModal: () => void;
+}
+export const ShortDesc: FC<IProps> = ({ toggleModal }) => {
 	return (
 		<div className={styles.container}>
 			<p className={styles.text}>
@@ -9,7 +12,7 @@ export const ShortDesc: FC = () => {
 				hiking trip.
 			</p>
 			<div className={styles.btn_wrapper}>
-				<button className={styles.get_started}>
+				<button onClick={toggleModal} className={styles.get_started}>
 					<span className={styles.get_started_text}>Get started</span>
 				</button>
 				<button className={styles.lear_more}>
