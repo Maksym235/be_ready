@@ -1,10 +1,11 @@
 import { FC } from "react";
-import Hero_img from "../../assets/hero image.png";
+// import Hero_img from "../../assets/hero image.png";
+import Img from "../../assets/content.png";
 import styles from "./Hero.module.css";
 export const Hero: FC = () => {
 	return (
 		<div className={styles.hero}>
-			<img src={Hero_img} />
+			<img src={Img} width={368} height={190} />
 		</div>
 	);
 };

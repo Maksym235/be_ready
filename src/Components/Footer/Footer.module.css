@@ -1,0 +1,20 @@
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-top: 1px solid rgba(69, 142, 247, 0.2);
+}
+
+.text {
+	padding-top: 16px;
+	padding-bottom: 24px;
+	color: var(--light-silver, #cecece);
+	text-align: center;
+
+	/* main text */
+	/* font-family: "Neue Montreal"; */
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}

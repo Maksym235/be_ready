@@ -1,0 +1,80 @@
+.background {
+	position: relative;
+	background: #fff;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 24px;
+	padding-top: 32px;
+	background: #458ef7;
+	border-top-left-radius: 32px;
+	border-top-right-radius: 32px;
+	padding-bottom: 40px;
+	/* position: absolute; */
+	top: -20px;
+}
+
+.title {
+	color: var(--accent, #fff);
+	/* h2 */
+	/* font-family: "Founders Grotesk"; */
+	font-size: 32px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 32px; /* 100% */
+	text-transform: uppercase;
+	/* margin-top: 32px; */
+	margin-left: 44px;
+	position: relative;
+}
+.title::before {
+	content: "";
+	display: block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #fff;
+	position: absolute;
+	top: 50%;
+	left: -22px;
+	transform: translateY(-50%);
+}
+
+.btn {
+	display: flex;
+	width: 350px;
+	height: 44px;
+	padding: 8px 24px;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 40px;
+	border: none;
+	background: var(--white, #fff);
+	color: var(--accent, #458ef7);
+	text-align: right;
+
+	/* list item */
+	/* font-family: "Neue Montreal"; */
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	text-transform: uppercase;
+	position: relative;
+}
+
+.btn::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 24px;
+	width: 8px;
+	height: 8px;
+	background-color: #458ef7;
+	border-radius: 50%;
+}
