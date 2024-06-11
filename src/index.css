@@ -1,10 +1,22 @@
 @import "normalize.css";
 
-/* @font-face {
-	font-family: Manrope-SemiBold;
-	src: local("Manrope-SemiBold.ttf"),
-		url("../public/Manrope-SemiBold.ttf") format("woff");
-} */
+@font-face {
+	font-family: "Neue Montreal";
+	src: local("NeueMontreal-Medium.ttf"),
+		url("./assets/fonts/NeueMontreal-Medium.ttf") format("woff");
+}
+
+@font-face {
+	font-family: "NM-regular";
+	src: local("NeueMontreal-Regular.ttf"),
+		url("./assets/fonts/NeueMontreal-Regular.ttf") format("woff");
+}
+
+@font-face {
+	font-family: "Founders Grotesk";
+	src: local("FoundersGrotesk-Medium.ttf"),
+		url("./assets/fonts/FoundersGrotesk-Medium.ttf") format("woff");
+}
 :root[data-theme="light"] {
 	--bodyBcg: #f1e8e6;
 	--cardBg: #edd2cb;
@@ -66,6 +78,9 @@ a {
 	text-decoration: none;
 }
 
+body {
+	font-family: "Neue Montreal", serif;
+}
 /* body {
 	font-family: Manrope-SemiBold, serif;
 	background-color: var(--bodyBcg);

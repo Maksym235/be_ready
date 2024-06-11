@@ -1,7 +1,28 @@
 .container {
-	margin: 16px 20px 0 20px;
+	display: flex;
+	flex-direction: column;
+	margin: 0 20px 179px 20px;
+	gap: 16px;
 }
-.text {
+
+.text_wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.incorectData {
+	color: #458ef7;
+
+	/* h4 */
+	font-family: "Founders Grotesk";
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 24px; /* 133.333% */
+}
+
+.information {
 	color: var(--black, #0d0d0d);
 
 	/* main text */
@@ -10,92 +31,77 @@
 	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
-	text-align: justify;
 }
 
 .btn_wrapper {
-	margin-top: 16px;
 	display: flex;
-	gap: 16px;
-	/* justify-content: space-between;
-    align-items: center; */
+	flex-direction: column;
+	gap: 8px;
 }
 
-.get_started {
+.try_again {
 	display: flex;
-	width: 167px;
+	width: 350px;
 	height: 44px;
 	padding: 8px 24px;
 	justify-content: space-between;
 	align-items: center;
-	border-radius: 40px;
 	border: none;
+	border-radius: 40px;
 	background: var(--accent, #458ef7);
 	color: var(--white, #fff);
 	text-align: right;
-	text-transform: uppercase;
+
 	/* list item */
 	font-family: "Neue Montreal";
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 500;
 	line-height: normal;
-}
-
-.get_started_text {
 	position: relative;
+	text-transform: uppercase;
 }
 
-.get_started_text::after {
+.try_again::after {
 	content: "";
-	display: block;
+	position: absolute;
+	top: 18px;
+	right: 24px;
 	width: 8px;
 	height: 8px;
-	border-radius: 50%;
 	background-color: #fff;
-	/* border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	border-left: 10px solid var(--accent, #458ef7); */
-	position: absolute;
-	top: 50%;
-	right: -14px;
-	transform: translateY(-50%);
+	border-radius: 50%;
 }
 
-.lear_more {
+.reset_password {
 	display: flex;
-	width: 167px;
+	width: 350px;
 	height: 44px;
 	padding: 8px 24px;
 	justify-content: space-between;
 	align-items: center;
 	border-radius: 40px;
 	border: 2px solid var(--accent, #458ef7);
-	background-color: #fff;
 	color: var(--accent, #458ef7);
 	text-align: right;
-	text-transform: uppercase;
+	background-color: #fff;
 	/* list item */
 	font-family: "Neue Montreal";
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 500;
 	line-height: normal;
-}
-
-.lear_more_text {
 	position: relative;
+	text-transform: uppercase;
 }
 
-.lear_more_text::after {
+.reset_password::after {
 	content: "";
-	display: block;
+	position: absolute;
+	top: 18px;
+	right: 24px;
 	width: 8px;
 	height: 8px;
-	border-radius: 50%;
 	background-color: #458ef7;
-	position: absolute;
-	top: 50%;
-	right: -16px;
-	transform: translateY(-50%);
+	border-radius: 50%;
 }

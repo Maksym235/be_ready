@@ -15,7 +15,7 @@
 .title {
 	color: var(--accent, #458ef7);
 	/* h2 */
-	/* font-family: "Founders Grotesk"; */
+	font-family: "Founders Grotesk";
 	font-size: 32px;
 	font-style: normal;
 	font-weight: 500;
@@ -61,7 +61,7 @@
 	color: var(--black, #0d0d0d);
 
 	/* main text */
-	/* font-family: "Neue Montreal"; */
+	font-family: "NM-regular";
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 400;

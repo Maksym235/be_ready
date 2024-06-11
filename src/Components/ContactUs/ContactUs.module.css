@@ -13,7 +13,7 @@
 .title {
 	color: var(--accent, #458ef7);
 	/* h2 */
-	/* font-family: "Founders Grotesk"; */
+	font-family: "Founders Grotesk";
 	font-size: 32px;
 	font-style: normal;
 	font-weight: 500;
