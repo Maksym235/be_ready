@@ -3,6 +3,7 @@ import styles from "./BurgerMenu.module.css";
 import { createPortal } from "react-dom";
 import Logo from "../../../assets/⛰ beReady 🏕️.svg";
 import BurgerCross from "../../../assets/burger_cross.svg";
+import { Link } from "react-router-dom";
 interface IProps {
 	toggleBurger: () => void;
 	isOpen: boolean;
@@ -56,7 +57,11 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
 				</button>
 			</div>
 			<ul className={styles.nav_list}>
-				<li className={styles.nav_list_item}>Create list</li>
+				<li className={styles.nav_list_item}>
+					<Link style={{ color: "#458ef7" }} to="/lists">
+						Create list
+					</Link>
+				</li>
 				<li
 					className={styles.nav_list_item}
 					onClick={() => navigateToElement("features")}

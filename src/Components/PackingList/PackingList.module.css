@@ -1,0 +1,52 @@
+.background {
+	padding-top: 88px;
+	position: relative;
+	background: #ecf4fe;
+}
+
+.container {
+	border-radius: 32px 32px 0px 0px;
+	background: var(--white, #fff);
+	padding-top: 20px;
+}
+
+.title {
+	padding-top: 10px;
+	color: var(--accent, #458ef7);
+	/* h2 */
+	font-family: "Founders Grotesk";
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 28px; /* 100% */
+	text-transform: uppercase;
+	/* margin-top: 32px; */
+	margin-left: 44px;
+	margin-bottom: 34px;
+	position: relative;
+}
+
+.title::before {
+	content: "";
+	display: block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #458ef7;
+	position: absolute;
+	top: 50%;
+	left: -22px;
+	transform: translateY(-50%);
+}
+.title::after {
+	content: "";
+	position: absolute;
+	bottom: -16px;
+	left: -44px;
+	display: block;
+	width: calc(100% + 44px);
+	height: 1px;
+	opacity: 0.2;
+	z-index: 2;
+	background: var(--accent, #458ef7);
+}

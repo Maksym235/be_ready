@@ -18,3 +18,8 @@
 	background-color: transparent;
 	border: none;
 }
+
+.user_icon_wrapper {
+	display: flex;
+	gap: 40px;
+}
