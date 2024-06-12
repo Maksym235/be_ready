@@ -4,7 +4,7 @@ import Burger from "../../assets/burger.svg";
 import User from "../../assets/user.svg";
 import styles from "./Header.module.css";
 import { BurgerMenu } from "../Modals/Burger/BurgerMenu";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 export const Header: FC = () => {
 	const location = useLocation();
 
@@ -22,7 +22,9 @@ export const Header: FC = () => {
 		<>
 			<div className={styles.header}>
 				<div className={styles.content_cotainer}>
-					<img src={Logo} alt="logo" />
+					<Link to="/">
+						<img src={Logo} alt="logo" />
+					</Link>
 					{location.pathname === "/lists" ? (
 						<div className={styles.user_icon_wrapper}>
 							<img src={User} alt="user icon" />

@@ -58,7 +58,7 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
 			</div>
 			<ul className={styles.nav_list}>
 				<li className={styles.nav_list_item}>
-					<Link style={{ color: "#458ef7" }} to="/lists">
+					<Link onClick={toggleBurger} className={styles.link} to="/lists">
 						Create list
 					</Link>
 				</li>

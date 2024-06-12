@@ -1,10 +1,14 @@
 import { FC, useState } from "react";
 import styles from "./ToggleLists.module.css";
-export const TogglerLists: FC = () => {
+interface IProps {
+	toggle: (key: string) => void;
+}
+export const TogglerLists: FC<IProps> = ({ toggle }) => {
 	const [currentList, setCurrentList] = useState("personal");
 
 	const toggleCurrentList = (key: string) => {
 		setCurrentList(key);
+		toggle(key);
 	};
 	return (
 		<div className={styles.container}>
