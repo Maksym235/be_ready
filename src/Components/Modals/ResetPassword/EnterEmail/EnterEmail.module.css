@@ -1,0 +1,68 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	margin-right: 20px;
+	margin-left: 20px;
+	margin-bottom: 262px;
+}
+
+.input {
+	display: flex;
+	width: 350px;
+	padding: 8px 0px;
+	align-items: center;
+	gap: 2px;
+	border: none;
+	border-bottom: 2px solid var(--black, #0d0d0d);
+}
+
+.input::placeholder {
+	color: var(--silver, #939393);
+
+	/* main text */
+	font-family: "NM-regular";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+
+.input:focus {
+	outline: none;
+}
+
+.button {
+	display: flex;
+	width: 350px;
+	height: 44px;
+	padding: 8px 24px;
+	justify-content: space-between;
+	align-items: center;
+	border: none;
+	border-radius: 40px;
+	background: var(--accent, #458ef7);
+	color: var(--white, #fff);
+	text-align: right;
+
+	/* list item */
+	font-family: "Neue Montreal";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	position: relative;
+	text-transform: uppercase;
+}
+
+.button::after {
+	content: "";
+	position: absolute;
+	top: 18px;
+	right: 24px;
+	width: 8px;
+	height: 8px;
+	background-color: #fff;
+	border-radius: 50%;
+}

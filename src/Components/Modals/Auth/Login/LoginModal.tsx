@@ -39,7 +39,12 @@ export const LoginModal: FC<IProps> = ({
 					</button>
 				</div>
 			</form>
-			<button className={styles.resetPass}>RESET PASSWORD</button>
+			<button
+				onClick={() => setCurrentModal("resetPassEnterEmail")}
+				className={styles.resetPass}
+			>
+				RESET PASSWORD
+			</button>
 			<div className={styles.alredy_have_acc_block}>
 				<p className={styles.alredy_have_acc_text}>DON’T HAVE AN ACCOUNT? </p>
 				<button

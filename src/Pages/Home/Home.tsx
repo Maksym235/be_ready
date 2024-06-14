@@ -10,8 +10,13 @@ import { RegisterModal } from "../../Components/Modals/Auth/Register/RegisterMod
 import { LoginModal } from "../../Components/Modals/Auth/Login/LoginModal";
 import { IncorectDataModal } from "../../Components/Modals/Auth/IncorectData/IncorectDataModal";
 import { AlreadyHaveAccModal } from "../../Components/Modals/Auth/AlreadyHaveAcc/AlreadyHaveAccModal";
+import { EnterEmail } from "../../Components/Modals/ResetPassword/EnterEmail/EnterEmail";
+import { WeSendEmail } from "../../Components/Modals/ResetPassword/WeSendEmail/WeSendEmail";
+import { NotFoundEmail } from "../../Components/Modals/ResetPassword/NotFoundEmail/NotFoundEmail";
 const Home: FC = () => {
-	const [currentModal, setCurrentModal] = useState<string>("register");
+	const [currentModal, setCurrentModal] = useState<string>(
+		"resetPassNotFoundEmail",
+	);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const handleToggleModal = () => {
 		if (isModalOpen) {
@@ -50,6 +55,27 @@ const Home: FC = () => {
 		),
 		alreadyHaveAcc: (
 			<AlreadyHaveAccModal
+				setCurrentModal={toggleCurrentModal}
+				isOpen={isModalOpen}
+				toggleModal={handleToggleModal}
+			/>
+		),
+		resetPassEnterEmail: (
+			<EnterEmail
+				setCurrentModal={toggleCurrentModal}
+				isOpen={isModalOpen}
+				toggleModal={handleToggleModal}
+			/>
+		),
+		resetPassWeSendEmail: (
+			<WeSendEmail
+				setCurrentModal={toggleCurrentModal}
+				isOpen={isModalOpen}
+				toggleModal={handleToggleModal}
+			/>
+		),
+		resetPassNotFoundEmail: (
+			<NotFoundEmail
 				setCurrentModal={toggleCurrentModal}
 				isOpen={isModalOpen}
 				toggleModal={handleToggleModal}
