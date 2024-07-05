@@ -9,13 +9,19 @@ interface IProps {
 	isOpen: boolean;
 	toggleModal: () => void;
 	setCurrentModal: (key: string) => void;
+	changeTripType: (type: string) => void;
 }
 export const SetTripType: FC<IProps> = ({
 	isOpen,
 	toggleModal,
 	setCurrentModal,
+	changeTripType,
 }) => {
 	const [selectedType, setSelectedType] = useState("");
+	const handleNextPage = () => {
+		setCurrentModal("setTripDuration");
+		changeTripType(selectedType);
+	};
 	return (
 		<ModalContainerCreateList
 			isOpen={isOpen}
@@ -39,7 +45,7 @@ export const SetTripType: FC<IProps> = ({
 				</div>
 				<div className={styles.btn_wrapper}>
 					<button
-						onClick={() => setCurrentModal("setTripDuration")}
+						onClick={handleNextPage}
 						disabled={selectedType.length < 1}
 						className={styles.next_step}
 					>

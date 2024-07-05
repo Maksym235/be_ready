@@ -8,7 +8,10 @@ import { SetTripDuration } from "../../Components/Modals/SetTripDuration/SetTrip
 import { SetRecOrEmpty } from "../../Components/Modals/SetRecOtEmpty/SetRecOrEmpty";
 
 const Lists: FC = () => {
-	const [currentModal, setCurrentModal] = useState<string>("setRecOrEmpty");
+	const [currentModal, setCurrentModal] = useState<string>("setTripName");
+	const [tripName, setTripName] = useState("");
+	const [tripDuration, setTripDuration] = useState("");
+	const [tripType, setTripType] = useState("");
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const handleToggleModal = () => {
 		if (isModalOpen) {
@@ -24,12 +27,24 @@ const Lists: FC = () => {
 		setCurrentModal(key);
 	};
 
+	const handleSubmitNewTrip = (recOrEmpty: string) => {
+		const newTrip = {
+			name: tripName,
+			type: tripType,
+			duration: tripDuration,
+			recOrEmpty: recOrEmpty,
+		};
+		console.log(newTrip);
+		setIsModalOpen(false);
+	};
+
 	const Modals: Record<string, ReactNode> = {
 		setTripName: (
 			<CreateList
 				setCurrentModal={toggleCurrentModal}
 				isOpen={isModalOpen}
 				toggleModal={handleToggleModal}
+				changeTripName={setTripName}
 			/>
 		),
 		setTripType: (
@@ -37,6 +52,7 @@ const Lists: FC = () => {
 				setCurrentModal={toggleCurrentModal}
 				isOpen={isModalOpen}
 				toggleModal={handleToggleModal}
+				changeTripType={setTripType}
 			/>
 		),
 		setTripDuration: (
@@ -44,6 +60,7 @@ const Lists: FC = () => {
 				setCurrentModal={toggleCurrentModal}
 				isOpen={isModalOpen}
 				toggleModal={handleToggleModal}
+				changeTripDuration={setTripDuration}
 			/>
 		),
 		setRecOrEmpty: (
@@ -51,6 +68,7 @@ const Lists: FC = () => {
 				setCurrentModal={toggleCurrentModal}
 				isOpen={isModalOpen}
 				toggleModal={handleToggleModal}
+				submit={handleSubmitNewTrip}
 			/>
 		),
 	};

@@ -5,12 +5,17 @@ interface IProps {
 	isOpen: boolean;
 	toggleModal: () => void;
 	setCurrentModal: (key: string) => void;
+	submit: (type: string) => void;
 }
 export const SetRecOrEmpty: FC<IProps> = ({
 	isOpen,
 	toggleModal,
 	setCurrentModal,
+	submit,
 }) => {
+	const handleNextPage = (type: string) => {
+		submit(type);
+	};
 	return (
 		<ModalContainerCreateList
 			isOpen={isOpen}
@@ -24,8 +29,18 @@ export const SetRecOrEmpty: FC<IProps> = ({
 					scratch?
 				</p>
 				<div className={styles.btn_wrapper}>
-					<button className={styles.recomend}>I WANT RECOMMENDATIONS</button>
-					<button className={styles.empty_back}>CREATE EMPTY LIST</button>
+					<button
+						onClick={() => handleNextPage("rec")}
+						className={styles.recomend}
+					>
+						I WANT RECOMMENDATIONS
+					</button>
+					<button
+						onClick={() => handleNextPage("empty")}
+						className={styles.empty_back}
+					>
+						CREATE EMPTY LIST
+					</button>
 					<button
 						onClick={() => setCurrentModal("setTripDuration")}
 						className={styles.empty_back}
