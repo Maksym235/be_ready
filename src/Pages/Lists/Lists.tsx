@@ -13,6 +13,7 @@ const Lists: FC = () => {
 	const [tripDuration, setTripDuration] = useState("");
 	const [tripType, setTripType] = useState("");
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [lists, setLists] = useState<any>([]);
 	const handleToggleModal = () => {
 		if (isModalOpen) {
 			document.body.style.overflow = "unset";
@@ -36,6 +37,7 @@ const Lists: FC = () => {
 		};
 		console.log(newTrip);
 		setIsModalOpen(false);
+		setLists((state: any) => [...state, newTrip]);
 	};
 
 	const Modals: Record<string, ReactNode> = {
@@ -74,7 +76,7 @@ const Lists: FC = () => {
 	};
 	return (
 		<main className={styles.main}>
-			<PackingList />
+			<PackingList lists={lists} />
 			<img
 				onClick={handleToggleModal}
 				className={styles.plus_btn}

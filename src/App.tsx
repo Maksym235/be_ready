@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Layout } from "./Components/Layout/Layout";
 const HomePage = lazy(() => import("./Pages/Home/Home"));
 import ListsPage from "./Pages/Lists/Lists";
+import { SelectedList } from "./Components/SelectedList/SelectedList";
 // const ListsPage = lazy(() => import("./Pages/Lists/Lists"));
 // =========Router==========================
 const router = createBrowserRouter([
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
 			{
 				path: "/lists",
 				Component: () => <ListsPage />,
+			},
+			{
+				path: "/selectedList/:id",
+				Component: () => <SelectedList />,
 			},
 		],
 	},
