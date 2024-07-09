@@ -1,7 +1,8 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import styles from "./LoginModal.module.css";
 import google from "../../../../assets/google.svg";
 import { ModalContainer } from "../../ModalContainer/ModalContainer";
+import { useAuth } from "../../../../Pages/Home/store";
 interface IProps {
 	toggleModal: () => void;
 	isOpen: boolean;
@@ -12,6 +13,18 @@ export const LoginModal: FC<IProps> = ({
 	isOpen,
 	setCurrentModal,
 }) => {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const login = useAuth((state: any) => state.login);
+	const stateEmail = useAuth((state: any) => state.user);
+	console.log(stateEmail);
+	const handleSubmit = () => {
+		const loginData = {
+			email: email,
+			password: password,
+		};
+		login(loginData);
+	};
 	return (
 		<ModalContainer
 			title="Log in to account"
@@ -20,17 +33,23 @@ export const LoginModal: FC<IProps> = ({
 		>
 			<form className={styles.form}>
 				<input
+					onChange={(e) => setEmail(e.currentTarget.value)}
 					placeholder="Enter your email...*"
 					className={styles.input}
 					type="email"
 				/>
 				<input
+					onChange={(e) => setPassword(e.currentTarget.value)}
 					placeholder="Enter your password...*"
 					className={styles.input}
 					type="password"
 				/>
 				<div className={styles.btn_wrapper}>
-					<button className={styles.sing_up} type="submit">
+					<button
+						onClick={handleSubmit}
+						className={styles.sing_up}
+						type="submit"
+					>
 						Sign in
 					</button>
 					<button className={styles.google} type="button">

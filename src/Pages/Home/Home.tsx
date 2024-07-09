@@ -14,9 +14,7 @@ import { EnterEmail } from "../../Components/Modals/ResetPassword/EnterEmail/Ent
 import { WeSendEmail } from "../../Components/Modals/ResetPassword/WeSendEmail/WeSendEmail";
 import { NotFoundEmail } from "../../Components/Modals/ResetPassword/NotFoundEmail/NotFoundEmail";
 const Home: FC = () => {
-	const [currentModal, setCurrentModal] = useState<string>(
-		"resetPassNotFoundEmail",
-	);
+	const [currentModal, setCurrentModal] = useState<string>("login");
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const handleToggleModal = () => {
 		if (isModalOpen) {
