@@ -1,17 +1,59 @@
 .container {
-	padding-top: 88px;
+	/* padding-top: 55px; */
 	margin-left: 20px;
 	margin-right: 20px;
 }
 
+.header {
+	display: flex;
+	align-items: center;
+	padding: 86px 0 22px 0;
+	position: relative;
+	border-bottom: 1px solid var(--light-blue, #ecf4fe);
+	background: var(--blur-filled, rgba(255, 255, 255, 0.7));
+
+	/* background-blur */
+	backdrop-filter: blur(5px);
+	margin-bottom: 16px;
+}
+
+.header_icon {
+	position: absolute;
+	left: 20px;
+	bottom: 20px;
+}
+
+.header_title {
+	color: var(--black, #0d0d0d);
+	font-family: "Neue Montreal";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.categories_wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
 .category {
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
 	/* width: 350px; */
 	padding: 8px 16px;
 	gap: 16px;
 	border-radius: 16px;
 	border: 1px solid var(--light-silver, #cecece);
+}
+
+.title_content {
+	display: flex;
+	justify-content: space-between;
 }
 
 .title {
@@ -47,6 +89,34 @@
 	background: var(--light-blue, #ecf4fe);
 }
 
+.category_item {
+	display: flex;
+	/* width: 314px; */
+	padding: 8px 16px;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 8px;
+	border: 1px solid var(--light-silver, #cecece);
+}
+
+.checkbox_wrapper {
+	position: relative;
+}
+
+.checkbox_input {
+	width: 24px;
+	height: 24px;
+	appearance: none;
+	position: relative;
+	z-index: 10;
+}
+
+.checkbox_icon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
 .footer {
 	position: fixed;
 	bottom: 0;

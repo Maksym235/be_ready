@@ -21,6 +21,7 @@
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+	width: 100%;
 	/* align-items: center; */
 	background: #fff;
 	border-top-left-radius: 32px;

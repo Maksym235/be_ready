@@ -35,7 +35,6 @@ const Lists: FC = () => {
 			duration: tripDuration,
 			recOrEmpty: recOrEmpty,
 		};
-		console.log(newTrip);
 		setIsModalOpen(false);
 		setLists((state: any) => [...state, newTrip]);
 	};
