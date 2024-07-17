@@ -1,0 +1,47 @@
+.footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	width: 100%;
+	/* padding-left: 26px;
+	padding-right: 26px; */
+	gap: 46px;
+	justify-content: space-around;
+	margin-bottom: 3px;
+	border-top: 1px solid var(--light-blue, #ecf4fe);
+	background: var(--white, #fff);
+	/* background-blur */
+	backdrop-filter: blur(5px);
+}
+
+.footer_btns {
+	padding-top: 8px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 3px;
+}
+
+.footer_icon {
+	width: 24px;
+	height: 24px;
+}
+
+.footer_text {
+	color: var(--accent, #458ef7);
+	text-align: center;
+
+	/* text hint medium */
+	font-family: "Neue Montreal";
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+}
+
+.edit_footer_container {
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+}

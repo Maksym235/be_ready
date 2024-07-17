@@ -54,6 +54,14 @@
 	gap: 8px;
 }
 
+.person_block {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	position: relative;
+}
 .person_icon {
 	width: 18px;
 	height: 18px;
@@ -69,6 +77,45 @@
 	padding: 20px;
 	background-color: rgba(69, 142, 247, 0.2);
 	border-radius: 50%;
+}
+
+.person_icon_disabled {
+	color: var(--silver, #939393);
+	background-color: rgba(147, 147, 147, 0.2);
+}
+
+.person_name {
+	color: var(--accent, #458ef7);
+	text-align: center;
+	font-family: "Neue Montreal";
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+}
+
+.person_name_disabled {
+	color: var(--silver, #939393);
+}
+
+.person_counter {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: -5px;
+	right: -5px;
+	background-color: #e73a2e;
+	padding: 5px;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	color: #fff;
+}
+
+.person_counter_disabled {
+	color: var(--silver, #939393);
+	background-color: #dcdcdc;
 }
 
 .btn_wrapper {

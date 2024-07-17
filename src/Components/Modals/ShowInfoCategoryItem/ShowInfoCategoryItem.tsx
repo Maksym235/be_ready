@@ -42,9 +42,33 @@ export const ShowInfoCategoryItem: FC<IProps> = ({
 				<div>
 					<p className={styles.label}>Who takes the item</p>
 					<div className={styles.persons_wrapper}>
-						<p className={styles.person_icon}>K</p>
-						<p className={styles.person_icon}>M</p>
-						<p className={styles.person_icon}>D</p>
+						<div className={styles.person_block}>
+							<p
+								className={`${styles.person_icon} ${styles.person_icon_disabled}`}
+							>
+								K
+							</p>
+							<p
+								className={`${styles.person_name} ${styles.person_name_disabled}`}
+							>
+								Kolya
+							</p>
+							<p
+								className={`${styles.person_counter} ${styles.person_counter_disabled}`}
+							>
+								0
+							</p>
+						</div>
+						<div className={styles.person_block}>
+							<p className={styles.person_icon}>M</p>
+							<p className={styles.person_name}>Maksym</p>
+							<p className={styles.person_counter}>1</p>
+						</div>
+						<div className={styles.person_block}>
+							<p className={styles.person_icon}>D</p>
+							<p className={styles.person_name}>Dasha</p>
+							<p className={styles.person_counter}>2</p>
+						</div>
 					</div>
 				</div>
 				<div className={styles.btn_wrapper}>

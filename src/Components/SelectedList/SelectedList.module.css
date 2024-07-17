@@ -4,36 +4,6 @@
 	margin-right: 20px;
 }
 
-.header {
-	display: flex;
-	align-items: center;
-	padding: 86px 0 22px 0;
-	position: relative;
-	border-bottom: 1px solid var(--light-blue, #ecf4fe);
-	background: var(--blur-filled, rgba(255, 255, 255, 0.7));
-
-	/* background-blur */
-	backdrop-filter: blur(5px);
-	margin-bottom: 16px;
-}
-
-.header_icon {
-	position: absolute;
-	left: 20px;
-	bottom: 20px;
-}
-
-.header_title {
-	color: var(--black, #0d0d0d);
-	font-family: "Neue Montreal";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 .categories_wrapper {
 	display: flex;
 	flex-direction: column;
@@ -99,6 +69,26 @@
 	border: 1px solid var(--light-silver, #cecece);
 }
 
+.add_category_item {
+	display: flex;
+	width: 314px;
+	padding: 8px 16px;
+	align-items: center;
+	gap: 16px;
+	border-radius: 8px;
+	border: 1px solid var(--accent, #458ef7);
+	background-color: #fff;
+}
+
+.add_category_item_text {
+	color: var(--accent, #458ef7);
+	font-family: "Neue Montreal";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+}
+
 .checkbox_wrapper {
 	position: relative;
 }
@@ -117,43 +107,21 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
-.footer {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	display: flex;
-	width: 100%;
-	/* padding-left: 26px;
-	padding-right: 26px; */
-	gap: 46px;
-	justify-content: space-around;
-	margin-bottom: 3px;
-	border-top: 1px solid var(--light-blue, #ecf4fe);
-	background: var(--white, #fff);
-	/* background-blur */
-	backdrop-filter: blur(5px);
-}
 
-.footer_btns {
-	padding-top: 8px;
+.add_category {
 	display: flex;
-	flex-direction: column;
+	width: 350px;
+	height: 44px;
+	padding: 8px 24px;
+	justify-content: space-between;
 	align-items: center;
-	gap: 3px;
-}
-
-.footer_icon {
-	width: 24px;
-	height: 24px;
-}
-
-.footer_text {
+	border-radius: 40px;
+	border: 2px solid var(--accent, #458ef7);
+	text-transform: uppercase;
+	background-color: #fff;
 	color: var(--accent, #458ef7);
-	text-align: center;
-
-	/* text hint medium */
 	font-family: "Neue Montreal";
-	font-size: 10px;
+	font-size: 16px;
 	font-style: normal;
 	font-weight: 500;
 	line-height: normal;
