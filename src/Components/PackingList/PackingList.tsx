@@ -3,7 +3,7 @@ import styles from "./PackingList.module.css";
 import { TogglerLists } from "../TogglerLists/TogglerLists";
 import { EmptyLists } from "../EmptyLists/EmptyLists";
 import { PersonalItem } from "./PersonalItem/PersonalItem";
-import { AllListBelow } from "../AllListBelow/AllListBelow";
+// import { AllListBelow } from "../AllListBelow/AllListBelow";
 import { Link, useLocation } from "react-router-dom";
 export interface IProps {
 	lists: any;
@@ -15,19 +15,17 @@ export const PackingList: FC<IProps> = ({ lists }) => {
 		shared: lists.connected,
 	};
 	const [currentList, setCurrentList] = useState("personal");
+	console.log(userLists[currentList]);
 	return (
 		<div className={styles.background}>
 			<div className={styles.container}>
 				<p className={styles.title}>Packing list </p>
 				<TogglerLists toggle={setCurrentList} />
-				{lists && userLists[currentList].length > 0 ? (
+				{userLists[currentList] && userLists[currentList].length > 0 ? (
 					<ul className={styles.list}>
 						{userLists[currentList].map((el: any, index: number) => (
 							<li key={index}>
-								<Link
-									state={{ from: location }}
-									to={`/selectedList/${el.name}`}
-								>
+								<Link state={{ from: location }} to={`/selectedList/${el._id}`}>
 									<PersonalItem name={el.name} />
 								</Link>
 							</li>

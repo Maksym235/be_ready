@@ -26,6 +26,8 @@ export interface INewTrip {
 // }
 const userStore = JSON.parse(localStorage.getItem("user-storage")!);
 
+console.log(userStore);
+
 export const useTrips = create(
 	devtools(
 		persist(
@@ -37,6 +39,7 @@ export const useTrips = create(
 						const userLocalStorage = localStorage.getItem("user-storage");
 						// if (userLocalStorage) {
 						// }
+						console.log(userStore.state.token);
 						const resp = await axios.get(`/tours`, {
 							headers: {
 								Authorization: "Bearer " + userStore.state.token,

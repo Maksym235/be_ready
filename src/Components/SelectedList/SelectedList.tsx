@@ -12,12 +12,49 @@ import { ShowInfoCategoryItem } from "../Modals/ShowInfoCategoryItem/ShowInfoCat
 import { AddNewCategory } from "../Modals/AddNewCategory/AddNewCategory";
 import { SelectedListFooter } from "./SelectedListFooter/SelectedListFooter";
 import { SelectedListHeader } from "./SelectedListHeader/SelectedListHeader";
+import { useTrips } from "../../Pages/Lists/store";
 export const SelectedList: FC = () => {
 	const [opensCategories, setOpensCategories] = useState<string[]>([]);
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenNewCategory, setIsOpenNewCategory] = useState(false);
 	const [isCheckedItem, setIsCheckedItem] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
+	const listId = useParams();
+	const location = useLocation();
+	const { trips } = useTrips((store: any) => ({
+		trips: store.trips,
+	}));
+	const currentTrip = [...trips.personal, ...trips.connected].find(
+		(item: any) => item._id === listId.id,
+	);
+	// const filteredByCategory = currentTrip.equipList.reduce(
+	// 	(acc: any, item: any) => {
+	// 		console.log(item.category);
+	// 	},
+	// 	{},
+	// );
+	// const filteredByCategory = currentTrip.equipList
+	// 	.flat()
+	// 	.reduce((acc: any, item: any) => {
+	// 		if (acc[item.category]) {
+	// 			acc[item.category] = [...acc[item.category], item];
+	// 		}
+	// 		acc[item.category] = [item];
+	// 		return acc;
+	// 	}, {});
+	const filteredByCategory = currentTrip.equipList
+		.flat()
+		.reduce((acc: any, item: any) => {
+			const category = item.category;
+
+			if (!acc[category]) {
+				acc[category] = [];
+			}
+
+			acc[category].push(item);
+			return acc;
+		}, {});
+	console.log(filteredByCategory);
 	const toggleIsOpen = () => {
 		setIsOpen((state) => !state);
 	};
@@ -31,8 +68,7 @@ export const SelectedList: FC = () => {
 		}
 		setOpensCategories((state) => [...state, id]);
 	};
-	const listId = useParams();
-	const location = useLocation();
+
 	const handleCheckedItem = (evt: any) => {
 		setIsCheckedItem(evt.target.checked);
 	};
@@ -40,16 +76,78 @@ export const SelectedList: FC = () => {
 	const toggleIsEditing = () => {
 		setIsEditing((state) => !state);
 	};
+	console.log(currentTrip.equipList.flat());
 	return (
 		<>
 			<SelectedListHeader
 				location={location}
-				listId={listId.id ? listId.id : ""}
+				listId={currentTrip ? currentTrip.name : ""}
 				isEditing={isEditing}
 			/>
 			<div className={styles.container}>
 				<div className={styles.categories_wrapper}>
-					<div className={styles.category} id="1">
+					{Object.keys(filteredByCategory).map((el) => (
+						<div className={styles.category} id="1">
+							<div className={styles.title_content}>
+								<div className={styles.title_img}>
+									<img src={camp} alt="camp icon" />
+									<h4 className={styles.title}>{el}</h4>
+								</div>
+								<div className={styles.cout_arrow}>
+									<div className={styles.counter}>0/9</div>
+									<img
+										src={opensCategories.includes(el) ? arrow_up : arrow_bottom}
+										onClick={() => toggleOpenCategory(el)}
+									/>
+								</div>
+							</div>
+							{opensCategories.includes(el) && (
+								<>
+									{filteredByCategory[el].map((item: any) => (
+										<>
+											<div className={styles.category_item}>
+												<div
+													style={{
+														display: "flex",
+														gap: "16px",
+														alignItems: "center",
+													}}
+												>
+													<div className={styles.checkbox_wrapper}>
+														<input
+															onClick={handleCheckedItem}
+															className={styles.checkbox_input}
+															type="checkbox"
+														/>
+														<img
+															className={styles.checkbox_icon}
+															src={isCheckedItem ? checkbox_ch : checkbox}
+															alt=""
+														/>
+													</div>
+													<p>{item.name}</p>
+												</div>
+												<img
+													onClick={toggleIsOpen}
+													src={info_icon}
+													alt="information icon"
+												/>
+											</div>
+											{isEditing && (
+												<button className={styles.add_category_item}>
+													<img src={plus_icon} alt="add item icon" />
+													<p className={styles.add_category_item_text}>
+														Add Item
+													</p>
+												</button>
+											)}
+										</>
+									))}
+								</>
+							)}
+						</div>
+					))}
+					{/* <div className={styles.category} id="1">
 						<div className={styles.title_content}>
 							<div className={styles.title_img}>
 								<img src={camp} alt="camp icon" />
@@ -131,7 +229,7 @@ export const SelectedList: FC = () => {
 								/>
 							</div>
 						)}
-					</div>
+					</div> */}
 					<button
 						onClick={toggleIsOpenNewCategory}
 						className={styles.add_category}

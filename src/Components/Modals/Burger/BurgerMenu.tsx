@@ -3,21 +3,31 @@ import styles from "./BurgerMenu.module.css";
 import { createPortal } from "react-dom";
 import Logo from "../../../assets/⛰ beReady 🏕️.svg";
 import BurgerCross from "../../../assets/burger_cross.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTrips } from "../../../Pages/Lists/store";
+import { useAuth } from "../../../Pages/Home/store";
 interface IProps {
 	toggleBurger: () => void;
 	isOpen: boolean;
 }
 export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
+	const navigate = useNavigate();
 	const root = document.querySelector("#modal-root")!;
 	const featuresEl = document.querySelector("#features")!;
 	const aboutUsEl = document.querySelector("#aboutUs")!;
 	const contactUsEl = document.querySelector("#contactUs")!;
 	const getAllTrips = useTrips((state: any) => state.getTrips);
+	const { token } = useAuth((store: any) => ({
+		token: store.token,
+	}));
 	const navigateToLists = () => {
+		if (!token) {
+			toggleBurger();
+			return;
+		}
 		toggleBurger();
 		getAllTrips();
+		navigate("/lists");
 	};
 	const navigateToElement = (key: string) => {
 		switch (key) {
@@ -62,10 +72,10 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
 				</button>
 			</div>
 			<ul className={styles.nav_list}>
-				<li className={styles.nav_list_item}>
-					<Link onClick={navigateToLists} className={styles.link} to="/lists">
-						Create list
-					</Link>
+				<li onClick={navigateToLists} className={styles.nav_list_item}>
+					{/* <Link className={styles.link} to="/lists"> */}
+					Create list
+					{/* </Link> */}
 				</li>
 				<li
 					className={styles.nav_list_item}

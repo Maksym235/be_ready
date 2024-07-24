@@ -52,6 +52,7 @@ export const useAuth = create(
 						set(() => ({
 							user: resp.data.user,
 							token: resp.data.token,
+							isLoading: false,
 						}));
 						console.log(resp);
 					} catch (error: any) {
