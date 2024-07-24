@@ -6,6 +6,7 @@ import { CreateList } from "../../Components/Modals/CreateList/CreateList";
 import { SetTripType } from "../../Components/Modals/SetTripType/SetTripType";
 import { SetTripDuration } from "../../Components/Modals/SetTripDuration/SetTripDuration";
 import { SetRecOrEmpty } from "../../Components/Modals/SetRecOtEmpty/SetRecOrEmpty";
+import { useTrips } from "./store";
 
 const Lists: FC = () => {
 	const [currentModal, setCurrentModal] = useState<string>("setTripName");
@@ -14,6 +15,12 @@ const Lists: FC = () => {
 	const [tripType, setTripType] = useState("");
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [lists, setLists] = useState<any>([]);
+	// const userLists = useTrips((state: any) => state.trips);
+	// const createList = useTrips((state: any) => state.createTrip);
+	const { createList, trips } = useTrips((store: any) => ({
+		createList: store.createTrip,
+		trips: store.trips,
+	}));
 	const handleToggleModal = () => {
 		if (isModalOpen) {
 			document.body.style.overflow = "unset";
@@ -36,6 +43,13 @@ const Lists: FC = () => {
 			recOrEmpty: recOrEmpty,
 		};
 		setIsModalOpen(false);
+
+		createList({
+			name: tripName,
+			duration: Number(tripDuration),
+			listType: recOrEmpty === "rec" ? 1 : 0,
+		});
+		console.log(createList);
 		setLists((state: any) => [...state, newTrip]);
 	};
 
@@ -75,7 +89,7 @@ const Lists: FC = () => {
 	};
 	return (
 		<main className={styles.main}>
-			<PackingList lists={lists} />
+			<PackingList lists={trips} />
 			<img
 				onClick={handleToggleModal}
 				className={styles.plus_btn}

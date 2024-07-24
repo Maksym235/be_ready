@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import Logo from "../../../assets/⛰ beReady 🏕️.svg";
 import BurgerCross from "../../../assets/burger_cross.svg";
 import { Link } from "react-router-dom";
+import { useTrips } from "../../../Pages/Lists/store";
 interface IProps {
 	toggleBurger: () => void;
 	isOpen: boolean;
@@ -13,7 +14,11 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
 	const featuresEl = document.querySelector("#features")!;
 	const aboutUsEl = document.querySelector("#aboutUs")!;
 	const contactUsEl = document.querySelector("#contactUs")!;
-
+	const getAllTrips = useTrips((state: any) => state.getTrips);
+	const navigateToLists = () => {
+		toggleBurger();
+		getAllTrips();
+	};
 	const navigateToElement = (key: string) => {
 		switch (key) {
 			case "features":
@@ -58,7 +63,7 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
 			</div>
 			<ul className={styles.nav_list}>
 				<li className={styles.nav_list_item}>
-					<Link onClick={toggleBurger} className={styles.link} to="/lists">
+					<Link onClick={navigateToLists} className={styles.link} to="/lists">
 						Create list
 					</Link>
 				</li>

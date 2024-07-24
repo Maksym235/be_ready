@@ -10,19 +10,39 @@ export interface IProps {
 }
 export const PackingList: FC<IProps> = ({ lists }) => {
 	const location = useLocation();
-
+	const userLists: any = {
+		personal: lists.personal,
+		shared: lists.connected,
+	};
 	const [currentList, setCurrentList] = useState("personal");
 	return (
 		<div className={styles.background}>
 			<div className={styles.container}>
 				<p className={styles.title}>Packing list </p>
 				<TogglerLists toggle={setCurrentList} />
-				{lists.length === 0 ? (
+				{lists && userLists[currentList].length > 0 ? (
+					<ul className={styles.list}>
+						{userLists[currentList].map((el: any, index: number) => (
+							<li key={index}>
+								<Link
+									state={{ from: location }}
+									to={`/selectedList/${el.name}`}
+								>
+									<PersonalItem name={el.name} />
+								</Link>
+							</li>
+						))}
+					</ul>
+				) : (
+					<EmptyLists list={currentList} />
+				)}
+				{/* {lists.length === 0 ? (
 					<EmptyLists list={currentList} />
 				) : (
 					<AllListBelow list={currentList} />
-				)}
-				{lists.length > 0 && (
+				)} */}
+				{/*========================================================== */}
+				{/* {lists.length > 0 && (
 					<ul className={styles.list}>
 						{lists.map((el: any, index: number) => (
 							<li key={index}>
@@ -35,7 +55,7 @@ export const PackingList: FC<IProps> = ({ lists }) => {
 							</li>
 						))}
 					</ul>
-				)}
+				)} */}
 			</div>
 		</div>
 	);

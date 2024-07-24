@@ -18,12 +18,14 @@ export const LoginModal: FC<IProps> = ({
 	const login = useAuth((state: any) => state.login);
 	const stateEmail = useAuth((state: any) => state.user);
 	console.log(stateEmail);
-	const handleSubmit = () => {
+	const handleSubmit = (evt: any) => {
+		evt.preventDefault();
 		const loginData = {
 			email: email,
 			password: password,
 		};
 		login(loginData);
+		toggleModal();
 	};
 	return (
 		<ModalContainer
