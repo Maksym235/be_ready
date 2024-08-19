@@ -3,6 +3,8 @@ import styles from "./LoginModal.module.css";
 import google from "../../../../assets/google.svg";
 import { ModalContainer } from "../../ModalContainer/ModalContainer";
 import { useAuth } from "../../../../Pages/Home/store";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { loginAsync } from "../../../../Pages/Home/api";
 interface IProps {
 	toggleModal: () => void;
 	isOpen: boolean;
@@ -17,20 +19,35 @@ export const LoginModal: FC<IProps> = ({
 	const [password, setPassword] = useState("");
 	// const login = useAuth((state: any) => state.login);
 	// const stateEmail = useAuth((state: any) => state.user);
-	const { login, stateEmail, isLoading } = useAuth((store: any) => ({
-		login: store.login,
-		stateEmail: store.stateEmail,
-		isLoading: store.isLoading,
-	}));
-	console.log(stateEmail);
+	const queryClient = useQueryClient();
+
+	// Queries
+	// const query = useQuery({
+	// 	queryKey: ["user"],
+	// 	queryFn: () => loginAsync({ email, password }),
+	// });
+	// const { login, stateEmail, isLoading } = useAuth((store: any) => ({
+	// 	login: store.login,
+	// 	stateEmail: store.stateEmail,
+	// 	isLoading: store.isLoading,
+	// }));
+
+	const mutation = useMutation({
+		mutationFn: () => loginAsync({ email, password }),
+		onSuccess: () => {
+			// Invalidate and refetch
+			queryClient.invalidateQueries({ queryKey: ["user"] });
+		},
+	});
 	const handleSubmit = (evt: any) => {
 		evt.preventDefault();
-		const loginData = {
+		const loginData: { email: string; password: string } = {
 			email: email,
 			password: password,
 		};
-		login(loginData);
-		if (!isLoading) {
+		//@ts-ignore
+		mutation.mutate(loginData);
+		if (mutation.isSuccess) {
 			toggleModal();
 		}
 	};

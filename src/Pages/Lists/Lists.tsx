@@ -7,6 +7,8 @@ import { SetTripType } from "../../Components/Modals/SetTripType/SetTripType";
 import { SetTripDuration } from "../../Components/Modals/SetTripDuration/SetTripDuration";
 import { SetRecOrEmpty } from "../../Components/Modals/SetRecOtEmpty/SetRecOrEmpty";
 import { useTrips } from "./store";
+import { useQuery } from "@tanstack/react-query";
+import { getTours } from "./api";
 
 const Lists: FC = () => {
 	const [currentModal, setCurrentModal] = useState<string>("setTripName");
@@ -17,10 +19,14 @@ const Lists: FC = () => {
 	const [lists, setLists] = useState<any>([]);
 	// const userLists = useTrips((state: any) => state.trips);
 	// const createList = useTrips((state: any) => state.createTrip);
-	const { createList, trips } = useTrips((store: any) => ({
-		createList: store.createTrip,
-		trips: store.trips,
-	}));
+	const query = useQuery({ queryKey: ["tours"], queryFn: getTours });
+	if (query.isLoading) {
+		return <div>Loading...</div>;
+	}
+	// const { createList, trips } = useTrips((store: any) => ({
+	// 	createList: store.createTrip,
+	// 	trips: store.trips,
+	// }));
 	const handleToggleModal = () => {
 		if (isModalOpen) {
 			document.body.style.overflow = "unset";
@@ -35,23 +41,23 @@ const Lists: FC = () => {
 		setCurrentModal(key);
 	};
 
-	const handleSubmitNewTrip = (recOrEmpty: string) => {
-		const newTrip = {
-			name: tripName,
-			type: tripType,
-			duration: tripDuration,
-			recOrEmpty: recOrEmpty,
-		};
-		setIsModalOpen(false);
+	// const handleSubmitNewTrip = (recOrEmpty: string) => {
+	// 	const newTrip = {
+	// 		name: tripName,
+	// 		type: tripType,
+	// 		duration: tripDuration,
+	// 		recOrEmpty: recOrEmpty,
+	// 	};
+	// 	setIsModalOpen(false);
 
-		createList({
-			name: tripName,
-			duration: Number(tripDuration),
-			listType: recOrEmpty === "rec" ? 1 : 0,
-		});
-		console.log(createList);
-		setLists((state: any) => [...state, newTrip]);
-	};
+	// 	createList({
+	// 		name: tripName,
+	// 		duration: Number(tripDuration),
+	// 		listType: recOrEmpty === "rec" ? 1 : 0,
+	// 	});
+	// 	console.log(createList);
+	// 	setLists((state: any) => [...state, newTrip]);
+	// };
 
 	const Modals: Record<string, ReactNode> = {
 		setTripName: (
@@ -83,13 +89,13 @@ const Lists: FC = () => {
 				setCurrentModal={toggleCurrentModal}
 				isOpen={isModalOpen}
 				toggleModal={handleToggleModal}
-				submit={handleSubmitNewTrip}
+				submit={(recOrEmpty) => console.log(recOrEmpty)}
 			/>
 		),
 	};
 	return (
 		<main className={styles.main}>
-			<PackingList lists={trips} />
+			<PackingList lists={query.data} />
 			<img
 				onClick={handleToggleModal}
 				className={styles.plus_btn}

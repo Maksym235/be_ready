@@ -5,7 +5,10 @@ import { Layout } from "./Components/Layout/Layout";
 const HomePage = lazy(() => import("./Pages/Home/Home"));
 import ListsPage from "./Pages/Lists/Lists";
 import { SelectedList } from "./Components/SelectedList/SelectedList";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 // const ListsPage = lazy(() => import("./Pages/Lists/Lists"));
+const queryClient = new QueryClient();
 // =========Router==========================
 const router = createBrowserRouter([
 	{
@@ -25,7 +28,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	return <RouterProvider router={router} />;
+	return (
+		<QueryClientProvider client={queryClient}>
+			<RouterProvider router={router} />
+			<ReactQueryDevtools initialIsOpen={false} />
+		</QueryClientProvider>
+	);
 }
 
 export default App;

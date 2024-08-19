@@ -17,9 +17,10 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
 	const aboutUsEl = document.querySelector("#aboutUs")!;
 	const contactUsEl = document.querySelector("#contactUs")!;
 	const getAllTrips = useTrips((state: any) => state.getTrips);
-	const { token } = useAuth((store: any) => ({
-		token: store.token,
-	}));
+	// const { token } = useAuth((store: any) => ({
+	// 	token: store.token,
+	// }));
+	const token = window.localStorage.getItem("token");
 	const navigateToLists = () => {
 		if (!token) {
 			toggleBurger();
