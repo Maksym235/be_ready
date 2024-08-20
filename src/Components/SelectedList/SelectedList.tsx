@@ -13,6 +13,14 @@ import { AddNewCategory } from "../Modals/AddNewCategory/AddNewCategory";
 import { SelectedListFooter } from "./SelectedListFooter/SelectedListFooter";
 import { SelectedListHeader } from "./SelectedListHeader/SelectedListHeader";
 import { useTrips } from "../../Pages/Lists/store";
+import { useAuth } from "../../Pages/Home/store";
+import {
+	QueryClient,
+	useMutation,
+	useQuery,
+	useQueryClient,
+} from "@tanstack/react-query";
+import { getToursById, toggleEquipItemCheck } from "../../Pages/Lists/api";
 export const SelectedList: FC = () => {
 	const [opensCategories, setOpensCategories] = useState<string[]>([]);
 	const [isOpen, setIsOpen] = useState(false);
@@ -20,13 +28,22 @@ export const SelectedList: FC = () => {
 	const [isCheckedItem, setIsCheckedItem] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 	const listId = useParams();
+	const tripId = listId.id;
 	const location = useLocation();
-	const { trips } = useTrips((store: any) => ({
-		trips: store.trips,
+	const queryClient = useQueryClient();
+	const { user } = useAuth((store: any) => ({
+		user: store.user,
 	}));
-	const currentTrip = [...trips.personal, ...trips.connected].find(
-		(item: any) => item._id === listId.id,
-	);
+	const { isPending, isError, data, error } = useQuery({
+		queryKey: ["tours"],
+		queryFn: () => getToursById(tripId ? tripId : "", true),
+	});
+	const mutation = useMutation({
+		mutationFn: toggleEquipItemCheck,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["tours"] });
+		},
+	});
 	// const filteredByCategory = currentTrip.equipList.reduce(
 	// 	(acc: any, item: any) => {
 	// 		console.log(item.category);
@@ -42,19 +59,24 @@ export const SelectedList: FC = () => {
 	// 		acc[item.category] = [item];
 	// 		return acc;
 	// 	}, {});
-	const filteredByCategory = currentTrip.equipList
-		.flat()
-		.reduce((acc: any, item: any) => {
-			const category = item.category;
+	if (isPending) {
+		return <div>Loading...</div>;
+	}
+	if (isError) {
+		return <div>Error</div>;
+	}
+	// const filteredByCategory = data
+	// 	? data.trip.equipList.flat().reduce((acc: any, item: any) => {
+	// 			const category = item.category;
 
-			if (!acc[category]) {
-				acc[category] = [];
-			}
+	// 			if (!acc[category]) {
+	// 				acc[category] = [];
+	// 			}
 
-			acc[category].push(item);
-			return acc;
-		}, {});
-	console.log(filteredByCategory);
+	// 			acc[category].push(item);
+	// 			return acc;
+	// 	  }, {})
+	// 	: [];
 	const toggleIsOpen = () => {
 		setIsOpen((state) => !state);
 	};
@@ -69,84 +91,113 @@ export const SelectedList: FC = () => {
 		setOpensCategories((state) => [...state, id]);
 	};
 
-	const handleCheckedItem = (evt: any) => {
-		setIsCheckedItem(evt.target.checked);
-	};
+	// const mutation = useMutation({
+	// 	mutationFn: () =>
+	// 		toggleEquipItemCheck({
+	// 			tourId: tripId ? tripId : "",
+	// 			equipItemId: equipId,
+	// 		}),
+	// 	onSuccess: () => {
+	// 		queryClient.invalidateQueries({ queryKey: ["tours"] });
+	// 	},
+	// });
 
 	const toggleIsEditing = () => {
 		setIsEditing((state) => !state);
 	};
-	console.log(currentTrip.equipList.flat());
+	const handleCheckedItem = (item: Record<string, any>) => {
+		// setIsCheckedItem(evt.target.checked);
+
+		mutation.mutate({
+			tourId: tripId ? tripId : "",
+			equipItemId: item._id,
+		});
+		// const index = item.persons.findIndex((el: string) => el === user.id);
+		// if (index === -1) {
+		// 	item.persons.push(user.id);
+		// } else {
+		// 	item.persons.splice(index, 1);
+		// }
+	};
+
 	return (
 		<>
 			<SelectedListHeader
 				location={location}
-				listId={currentTrip ? currentTrip.name : ""}
+				listId={data.trip ? data.trip.name : ""}
 				isEditing={isEditing}
 			/>
 			<div className={styles.container}>
 				<div className={styles.categories_wrapper}>
-					{Object.keys(filteredByCategory).map((el) => (
-						<div className={styles.category} id="1">
-							<div className={styles.title_content}>
-								<div className={styles.title_img}>
-									<img src={camp} alt="camp icon" />
-									<h4 className={styles.title}>{el}</h4>
+					{data.trip &&
+						Object.keys(data.trip.equipList).map((el) => (
+							<div className={styles.category}>
+								<div className={styles.title_content}>
+									<div className={styles.title_img}>
+										<img src={camp} alt="camp icon" />
+										<h4 className={styles.title}>{el}</h4>
+									</div>
+									<div className={styles.cout_arrow}>
+										<div className={styles.counter}>0/9</div>
+										<img
+											src={
+												opensCategories.includes(el) ? arrow_up : arrow_bottom
+											}
+											onClick={() => toggleOpenCategory(el)}
+										/>
+									</div>
 								</div>
-								<div className={styles.cout_arrow}>
-									<div className={styles.counter}>0/9</div>
-									<img
-										src={opensCategories.includes(el) ? arrow_up : arrow_bottom}
-										onClick={() => toggleOpenCategory(el)}
-									/>
-								</div>
-							</div>
-							{opensCategories.includes(el) && (
-								<>
-									{filteredByCategory[el].map((item: any) => (
-										<>
-											<div className={styles.category_item}>
-												<div
-													style={{
-														display: "flex",
-														gap: "16px",
-														alignItems: "center",
-													}}
-												>
-													<div className={styles.checkbox_wrapper}>
-														<input
-															onClick={handleCheckedItem}
-															className={styles.checkbox_input}
-															type="checkbox"
-														/>
-														<img
-															className={styles.checkbox_icon}
-															src={isCheckedItem ? checkbox_ch : checkbox}
-															alt=""
-														/>
+								{opensCategories.includes(el) && (
+									<>
+										{data.trip.equipList[el].map((item: any) => (
+											<div key={item._id}>
+												<div className={styles.category_item}>
+													<div
+														style={{
+															display: "flex",
+															gap: "16px",
+															alignItems: "center",
+														}}
+													>
+														<div className={styles.checkbox_wrapper}>
+															<input
+																onClick={() => handleCheckedItem(item)}
+																// className={styles.checkbox_input}
+																type="checkbox"
+																checked={item.persons.includes(user.id)}
+															/>
+															{/* <img
+																className={styles.checkbox_icon}
+																src={
+																	item.persons.includes(user.id)
+																		? checkbox_ch
+																		: checkbox
+																}
+																alt=""
+															/> */}
+														</div>
+														<p>{item.name}</p>
 													</div>
-													<p>{item.name}</p>
+													<img
+														onClick={toggleIsOpen}
+														src={info_icon}
+														alt="information icon"
+													/>
 												</div>
-												<img
-													onClick={toggleIsOpen}
-													src={info_icon}
-													alt="information icon"
-												/>
+												{isEditing && (
+													<button className={styles.add_category_item}>
+														<img src={plus_icon} alt="add item icon" />
+														<p className={styles.add_category_item_text}>
+															Add Item
+														</p>
+													</button>
+												)}
 											</div>
-											{isEditing && (
-												<button className={styles.add_category_item}>
-													<img src={plus_icon} alt="add item icon" />
-													<p className={styles.add_category_item_text}>
-														Add Item
-													</p>
-												</button>
-											)}
-										</>
-									))}
-								</>
-							)}
-						</div>
-					))}
+										))}
+									</>
+								)}
+							</div>
+						))}
 					{/* <div className={styles.category} id="1">
 						<div className={styles.title_content}>
 							<div className={styles.title_img}>

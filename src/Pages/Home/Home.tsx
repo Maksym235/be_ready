@@ -13,9 +13,22 @@ import { AlreadyHaveAccModal } from "../../Components/Modals/Auth/AlreadyHaveAcc
 import { EnterEmail } from "../../Components/Modals/ResetPassword/EnterEmail/EnterEmail";
 import { WeSendEmail } from "../../Components/Modals/ResetPassword/WeSendEmail/WeSendEmail";
 import { NotFoundEmail } from "../../Components/Modals/ResetPassword/NotFoundEmail/NotFoundEmail";
+import { getCurrent } from "./api";
+import { useQuery } from "@tanstack/react-query";
 const Home: FC = () => {
 	const [currentModal, setCurrentModal] = useState<string>("login");
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const { isPending, isError } = useQuery({
+		queryKey: ["user"],
+		queryFn: getCurrent,
+	});
+	if (isPending) {
+		return <div>Loading...</div>;
+	}
+	if (isError) {
+		localStorage.setItem("token", "");
+		localStorage.setItem("isLoggedIn", JSON.stringify(false));
+	}
 	const handleToggleModal = () => {
 		if (isModalOpen) {
 			document.body.style.overflow = "unset";

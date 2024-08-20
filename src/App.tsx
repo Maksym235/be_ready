@@ -5,8 +5,14 @@ import { Layout } from "./Components/Layout/Layout";
 const HomePage = lazy(() => import("./Pages/Home/Home"));
 import ListsPage from "./Pages/Lists/Lists";
 import { SelectedList } from "./Components/SelectedList/SelectedList";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+	QueryClient,
+	QueryClientProvider,
+	useQuery,
+	useQueryClient,
+} from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { getCurrent } from "./Pages/Home/api";
 // const ListsPage = lazy(() => import("./Pages/Lists/Lists"));
 const queryClient = new QueryClient();
 // =========Router==========================

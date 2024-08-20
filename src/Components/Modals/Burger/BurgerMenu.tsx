@@ -5,7 +5,7 @@ import Logo from "../../../assets/⛰ beReady 🏕️.svg";
 import BurgerCross from "../../../assets/burger_cross.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useTrips } from "../../../Pages/Lists/store";
-import { useAuth } from "../../../Pages/Home/store";
+// import { useAuth } from "../../../Pages/Home/store";
 interface IProps {
 	toggleBurger: () => void;
 	isOpen: boolean;
@@ -20,14 +20,14 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
 	// const { token } = useAuth((store: any) => ({
 	// 	token: store.token,
 	// }));
-	const token = window.localStorage.getItem("token");
+	const isLoggedIn = JSON.parse(window.localStorage.getItem("isLoggedIn")!);
 	const navigateToLists = () => {
-		if (!token) {
+		if (!isLoggedIn) {
 			toggleBurger();
 			return;
 		}
 		toggleBurger();
-		getAllTrips();
+		// getAllTrips();
 		navigate("/lists");
 	};
 	const navigateToElement = (key: string) => {

@@ -32,7 +32,7 @@ export const LoginModal: FC<IProps> = ({
 	// 	isLoading: store.isLoading,
 	// }));
 
-	const mutation = useMutation({
+	const { mutate, isPending } = useMutation({
 		mutationFn: () => loginAsync({ email, password }),
 		onSuccess: () => {
 			// Invalidate and refetch
@@ -46,8 +46,8 @@ export const LoginModal: FC<IProps> = ({
 			password: password,
 		};
 		//@ts-ignore
-		mutation.mutate(loginData);
-		if (mutation.isSuccess) {
+		mutate(loginData);
+		if (!isPending) {
 			toggleModal();
 		}
 	};

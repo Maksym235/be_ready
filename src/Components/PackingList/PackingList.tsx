@@ -10,7 +10,6 @@ export interface IProps {
 }
 export const PackingList: FC<IProps> = ({ lists }) => {
 	const location = useLocation();
-	console.log(lists);
 	const userLists: any = {
 		personal: lists.personal,
 		shared: lists.connected,

@@ -7,8 +7,8 @@ import { SetTripType } from "../../Components/Modals/SetTripType/SetTripType";
 import { SetTripDuration } from "../../Components/Modals/SetTripDuration/SetTripDuration";
 import { SetRecOrEmpty } from "../../Components/Modals/SetRecOtEmpty/SetRecOrEmpty";
 import { useTrips } from "./store";
-import { useQuery } from "@tanstack/react-query";
-import { getTours } from "./api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createNewTour, getTours, toggleEquipItemCheck } from "./api";
 
 const Lists: FC = () => {
 	const [currentModal, setCurrentModal] = useState<string>("setTripName");
@@ -16,13 +16,32 @@ const Lists: FC = () => {
 	const [tripDuration, setTripDuration] = useState("");
 	const [tripType, setTripType] = useState("");
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [lists, setLists] = useState<any>([]);
+	// const [lists, setLists] = useState<any>([]);
 	// const userLists = useTrips((state: any) => state.trips);
 	// const createList = useTrips((state: any) => state.createTrip);
-	const query = useQuery({ queryKey: ["tours"], queryFn: getTours });
-	if (query.isLoading) {
+	const queryClient = useQueryClient();
+	const { isPending, isError, data, error, refetch } = useQuery({
+		queryKey: ["tours"],
+		queryFn: getTours,
+	});
+	const { mutate } = useMutation({
+		mutationFn: createNewTour,
+		onSuccess: () => {
+			// Invalidate and refetch
+			queryClient.invalidateQueries({ queryKey: ["user"] });
+			refetch();
+			setIsModalOpen(false);
+		},
+	});
+
+	if (isPending) {
 		return <div>Loading...</div>;
 	}
+	if (isError) {
+		// console.log(query);
+		return <div>{error.message}</div>;
+	}
+
 	// const { createList, trips } = useTrips((store: any) => ({
 	// 	createList: store.createTrip,
 	// 	trips: store.trips,
@@ -41,24 +60,32 @@ const Lists: FC = () => {
 		setCurrentModal(key);
 	};
 
-	// const handleSubmitNewTrip = (recOrEmpty: string) => {
-	// 	const newTrip = {
-	// 		name: tripName,
-	// 		type: tripType,
-	// 		duration: tripDuration,
-	// 		recOrEmpty: recOrEmpty,
-	// 	};
-	// 	setIsModalOpen(false);
+	const handleSubmitNewTrip = (recOrEmpty: string) => {
+		const newTrip = {
+			name: tripName,
+			// type: tripType,
+			duration: Number(tripDuration),
+			listType: recOrEmpty === "rec" ? 1 : 0,
+		};
 
-	// 	createList({
-	// 		name: tripName,
-	// 		duration: Number(tripDuration),
-	// 		listType: recOrEmpty === "rec" ? 1 : 0,
-	// 	});
-	// 	console.log(createList);
-	// 	setLists((state: any) => [...state, newTrip]);
-	// };
-
+		// name: resp.name,
+		// 		users: resp.users,
+		// 		owner: resp.owner,
+		// 		duration: resp.duration,
+		// 		equipList: filteredByCategory
+		mutate(newTrip);
+		// if (!IsPenMutation) {
+		// 	setIsModalOpen(false);
+		// 	refetch();
+		// }
+		// createList({
+		// 	name: tripName,
+		// 	duration: Number(tripDuration),
+		// 	listType: recOrEmpty === "rec" ? 1 : 0,
+		// });
+		// console.log(createList);
+		// setLists((state: any) => [...state, newTrip]);
+	};
 	const Modals: Record<string, ReactNode> = {
 		setTripName: (
 			<CreateList
@@ -89,13 +116,13 @@ const Lists: FC = () => {
 				setCurrentModal={toggleCurrentModal}
 				isOpen={isModalOpen}
 				toggleModal={handleToggleModal}
-				submit={(recOrEmpty) => console.log(recOrEmpty)}
+				submit={(recOrEmpty) => handleSubmitNewTrip(recOrEmpty)}
 			/>
 		),
 	};
 	return (
 		<main className={styles.main}>
-			<PackingList lists={query.data} />
+			<PackingList lists={data} />
 			<img
 				onClick={handleToggleModal}
 				className={styles.plus_btn}
