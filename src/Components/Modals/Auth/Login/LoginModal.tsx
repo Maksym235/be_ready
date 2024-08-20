@@ -2,8 +2,8 @@ import { FC, useState } from "react";
 import styles from "./LoginModal.module.css";
 import google from "../../../../assets/google.svg";
 import { ModalContainer } from "../../ModalContainer/ModalContainer";
-import { useAuth } from "../../../../Pages/Home/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+// import { useAuth } from "../../../../Pages/Home/store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { loginAsync } from "../../../../Pages/Home/api";
 interface IProps {
 	toggleModal: () => void;

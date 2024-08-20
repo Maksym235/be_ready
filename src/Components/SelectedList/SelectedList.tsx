@@ -12,10 +12,8 @@ import { ShowInfoCategoryItem } from "../Modals/ShowInfoCategoryItem/ShowInfoCat
 import { AddNewCategory } from "../Modals/AddNewCategory/AddNewCategory";
 import { SelectedListFooter } from "./SelectedListFooter/SelectedListFooter";
 import { SelectedListHeader } from "./SelectedListHeader/SelectedListHeader";
-import { useTrips } from "../../Pages/Lists/store";
-import { useAuth } from "../../Pages/Home/store";
 import {
-	QueryClient,
+	// QueryClient,
 	useMutation,
 	useQuery,
 	useQueryClient,
@@ -25,16 +23,14 @@ export const SelectedList: FC = () => {
 	const [opensCategories, setOpensCategories] = useState<string[]>([]);
 	const [isOpen, setIsOpen] = useState(false);
 	const [isOpenNewCategory, setIsOpenNewCategory] = useState(false);
-	const [isCheckedItem, setIsCheckedItem] = useState(false);
+	// const [isCheckedItem, setIsCheckedItem] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 	const listId = useParams();
 	const tripId = listId.id;
 	const location = useLocation();
 	const queryClient = useQueryClient();
-	const { user } = useAuth((store: any) => ({
-		user: store.user,
-	}));
-	const { isPending, isError, data, error } = useQuery({
+	const user = JSON.parse(localStorage.getItem("user")!);
+	const { isPending, isError, data } = useQuery({
 		queryKey: ["tours"],
 		queryFn: () => getToursById(tripId ? tripId : "", true),
 	});
@@ -119,7 +115,6 @@ export const SelectedList: FC = () => {
 		// 	item.persons.splice(index, 1);
 		// }
 	};
-
 	return (
 		<>
 			<SelectedListHeader
@@ -130,74 +125,80 @@ export const SelectedList: FC = () => {
 			<div className={styles.container}>
 				<div className={styles.categories_wrapper}>
 					{data.trip &&
-						Object.keys(data.trip.equipList).map((el) => (
-							<div className={styles.category}>
-								<div className={styles.title_content}>
-									<div className={styles.title_img}>
-										<img src={camp} alt="camp icon" />
-										<h4 className={styles.title}>{el}</h4>
+						Object.keys(data.trip.equipList)
+							.sort((a: any, b: any) => a.localeCompare(b, "uk"))
+							.map((el) => (
+								<div className={styles.category}>
+									<div className={styles.title_content}>
+										<div className={styles.title_img}>
+											<img src={camp} alt="camp icon" />
+											<h4 className={styles.title}>{el}</h4>
+										</div>
+										<div className={styles.cout_arrow}>
+											<div className={styles.counter}>0/9</div>
+											<img
+												src={
+													opensCategories.includes(el) ? arrow_up : arrow_bottom
+												}
+												onClick={() => toggleOpenCategory(el)}
+											/>
+										</div>
 									</div>
-									<div className={styles.cout_arrow}>
-										<div className={styles.counter}>0/9</div>
-										<img
-											src={
-												opensCategories.includes(el) ? arrow_up : arrow_bottom
-											}
-											onClick={() => toggleOpenCategory(el)}
-										/>
-									</div>
-								</div>
-								{opensCategories.includes(el) && (
-									<>
-										{data.trip.equipList[el].map((item: any) => (
-											<div key={item._id}>
-												<div className={styles.category_item}>
-													<div
-														style={{
-															display: "flex",
-															gap: "16px",
-															alignItems: "center",
-														}}
-													>
-														<div className={styles.checkbox_wrapper}>
-															<input
-																onClick={() => handleCheckedItem(item)}
-																// className={styles.checkbox_input}
-																type="checkbox"
-																checked={item.persons.includes(user.id)}
+									{opensCategories.includes(el) && (
+										<>
+											{data.trip.equipList[el]
+												.sort((a: any, b: any) =>
+													a.name.localeCompare(b.name, "uk"),
+												)
+												.map((item: any) => (
+													<div key={item._id}>
+														<div className={styles.category_item}>
+															<div
+																style={{
+																	display: "flex",
+																	gap: "16px",
+																	alignItems: "center",
+																}}
+															>
+																<div className={styles.checkbox_wrapper}>
+																	<input
+																		onChange={() => handleCheckedItem(item)}
+																		className={styles.checkbox_input}
+																		type="checkbox"
+																		checked={item.persons.includes(user.id)}
+																	/>
+																	<img
+																		className={styles.checkbox_icon}
+																		src={
+																			item.persons.includes(user.id)
+																				? checkbox_ch
+																				: checkbox
+																		}
+																		alt=""
+																	/>
+																</div>
+																<p>{item.name}</p>
+															</div>
+															<img
+																onClick={toggleIsOpen}
+																src={info_icon}
+																alt="information icon"
 															/>
-															{/* <img
-																className={styles.checkbox_icon}
-																src={
-																	item.persons.includes(user.id)
-																		? checkbox_ch
-																		: checkbox
-																}
-																alt=""
-															/> */}
 														</div>
-														<p>{item.name}</p>
+														{isEditing && (
+															<button className={styles.add_category_item}>
+																<img src={plus_icon} alt="add item icon" />
+																<p className={styles.add_category_item_text}>
+																	Add Item
+																</p>
+															</button>
+														)}
 													</div>
-													<img
-														onClick={toggleIsOpen}
-														src={info_icon}
-														alt="information icon"
-													/>
-												</div>
-												{isEditing && (
-													<button className={styles.add_category_item}>
-														<img src={plus_icon} alt="add item icon" />
-														<p className={styles.add_category_item_text}>
-															Add Item
-														</p>
-													</button>
-												)}
-											</div>
-										))}
-									</>
-								)}
-							</div>
-						))}
+												))}
+										</>
+									)}
+								</div>
+							))}
 					{/* <div className={styles.category} id="1">
 						<div className={styles.title_content}>
 							<div className={styles.title_img}>

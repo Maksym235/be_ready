@@ -3,8 +3,7 @@ import styles from "./BurgerMenu.module.css";
 import { createPortal } from "react-dom";
 import Logo from "../../../assets/⛰ beReady 🏕️.svg";
 import BurgerCross from "../../../assets/burger_cross.svg";
-import { Link, useNavigate } from "react-router-dom";
-import { useTrips } from "../../../Pages/Lists/store";
+import { useNavigate } from "react-router-dom";
 // import { useAuth } from "../../../Pages/Home/store";
 interface IProps {
 	toggleBurger: () => void;
@@ -16,7 +15,6 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
 	const featuresEl = document.querySelector("#features")!;
 	const aboutUsEl = document.querySelector("#aboutUs")!;
 	const contactUsEl = document.querySelector("#contactUs")!;
-	const getAllTrips = useTrips((state: any) => state.getTrips);
 	// const { token } = useAuth((store: any) => ({
 	// 	token: store.token,
 	// }));

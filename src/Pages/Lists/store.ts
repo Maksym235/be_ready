@@ -36,7 +36,7 @@ export const useTrips = create(
 				getTrips: async () => {
 					set(() => ({ IsLoading: true }));
 					try {
-						const userLocalStorage = localStorage.getItem("user-storage");
+						// const userLocalStorage = localStorage.getItem("user-storage");
 						// if (userLocalStorage) {
 						// }
 						console.log(userStore.state.token);

@@ -6,15 +6,14 @@ import { CreateList } from "../../Components/Modals/CreateList/CreateList";
 import { SetTripType } from "../../Components/Modals/SetTripType/SetTripType";
 import { SetTripDuration } from "../../Components/Modals/SetTripDuration/SetTripDuration";
 import { SetRecOrEmpty } from "../../Components/Modals/SetRecOtEmpty/SetRecOrEmpty";
-import { useTrips } from "./store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createNewTour, getTours, toggleEquipItemCheck } from "./api";
+import { createNewTour, getTours } from "./api";
 
 const Lists: FC = () => {
 	const [currentModal, setCurrentModal] = useState<string>("setTripName");
 	const [tripName, setTripName] = useState("");
 	const [tripDuration, setTripDuration] = useState("");
-	const [tripType, setTripType] = useState("");
+	const [_, setTripType] = useState("");
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	// const [lists, setLists] = useState<any>([]);
 	// const userLists = useTrips((state: any) => state.trips);
