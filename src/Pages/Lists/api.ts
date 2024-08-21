@@ -1,6 +1,5 @@
 import axios from "axios";
 axios.defaults.baseURL = "https://be-ready-api.vercel.app";
-const token = localStorage.getItem("token");
 export const getTours = async () => {
 	try {
 		const resp = await axios.get(`/tours`, {
