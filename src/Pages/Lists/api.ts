@@ -67,3 +67,25 @@ export const createNewTour = async (newTripData: INewTripData) => {
 		console.log(error);
 	}
 };
+interface IAddNewUserToTrip {
+	tripId: string;
+	userId: string;
+}
+export const addUserToTrip = async ({ tripId, userId }: IAddNewUserToTrip) => {
+	try {
+		const resp = await axios.post(
+			`/tours/${tripId}/addUser`,
+			{
+				usersId: userId,
+			},
+			{
+				headers: {
+					Authorization: "Bearer " + window.localStorage.getItem("token"),
+				},
+			},
+		);
+		return resp.data;
+	} catch (error) {
+		console.log(error);
+	}
+};

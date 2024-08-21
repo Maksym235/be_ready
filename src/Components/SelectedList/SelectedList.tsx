@@ -19,9 +19,18 @@ import {
 	useQueryClient,
 } from "@tanstack/react-query";
 import { getToursById, toggleEquipItemCheck } from "../../Pages/Lists/api";
+import { getUsersById } from "../../Pages/Home/api";
+export interface ICategoryItem {
+	_id: string;
+	name: string;
+	description: string;
+	category: string;
+	persons: string[];
+}
 export const SelectedList: FC = () => {
 	const [opensCategories, setOpensCategories] = useState<string[]>([]);
 	const [isOpen, setIsOpen] = useState(false);
+	const [infoItem, setInfoItem] = useState<any>(null);
 	const [isOpenNewCategory, setIsOpenNewCategory] = useState(false);
 	// const [isCheckedItem, setIsCheckedItem] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
@@ -36,6 +45,16 @@ export const SelectedList: FC = () => {
 	});
 	const mutation = useMutation({
 		mutationFn: toggleEquipItemCheck,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["tours"] });
+		},
+	});
+	const {
+		mutate,
+		isSuccess,
+		data: personsData,
+	} = useMutation({
+		mutationFn: getUsersById,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["tours"] });
 		},
@@ -73,8 +92,18 @@ export const SelectedList: FC = () => {
 	// 			return acc;
 	// 	  }, {})
 	// 	: [];
+
 	const toggleIsOpen = () => {
 		setIsOpen((state) => !state);
+	};
+	const handleShowInfo = (item: ICategoryItem) => {
+		setInfoItem(item);
+		if (item.persons.length > 0) {
+			mutate(item.persons.join(","));
+			toggleIsOpen();
+			return;
+		}
+		// toggleIsOpen();
 	};
 	const toggleIsOpenNewCategory = () => {
 		setIsOpenNewCategory((state) => !state);
@@ -180,7 +209,7 @@ export const SelectedList: FC = () => {
 																<p>{item.name}</p>
 															</div>
 															<img
-																onClick={toggleIsOpen}
+																onClick={() => handleShowInfo(item)}
 																src={info_icon}
 																alt="information icon"
 															/>
@@ -294,6 +323,7 @@ export const SelectedList: FC = () => {
 			</div>
 			<ShowInfoCategoryItem
 				tripName={listId.id ? listId.id : "-"}
+				item={infoItem}
 				isOpen={isOpen}
 				toggleModal={toggleIsOpen}
 			/>
