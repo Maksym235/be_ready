@@ -5,7 +5,7 @@ export const getTours = async () => {
 	try {
 		const resp = await axios.get(`/tours`, {
 			headers: {
-				Authorization: "Bearer " + token,
+				Authorization: "Bearer " + window.localStorage.getItem("token"),
 			},
 		});
 		return resp.data;
@@ -22,7 +22,7 @@ export const getToursById = async (tripId: string, filtered: boolean) => {
 	try {
 		const resp = await axios.get(`/tours/${tripId}/?filtered=${filtered}`, {
 			headers: {
-				Authorization: "Bearer " + token,
+				Authorization: "Bearer " + window.localStorage.getItem("token"),
 			},
 		});
 		return resp.data;
@@ -42,7 +42,7 @@ export const toggleEquipItemCheck = async ({
 			},
 			{
 				headers: {
-					Authorization: "Bearer " + token,
+					Authorization: "Bearer " + window.localStorage.getItem("token"),
 				},
 			},
 		);
@@ -60,7 +60,7 @@ export const createNewTour = async (newTripData: INewTripData) => {
 	try {
 		const resp = await axios.post(`/tours/add`, newTripData, {
 			headers: {
-				Authorization: "Bearer " + token,
+				Authorization: "Bearer " + window.localStorage.getItem("token"),
 			},
 		});
 		return resp.data;
