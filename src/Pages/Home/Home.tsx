@@ -26,6 +26,7 @@ const Home: FC = () => {
 		return <div>Loading...</div>;
 	}
 	if (isError) {
+		// toast.error("This didn't work.");
 		localStorage.setItem("token", "");
 		localStorage.setItem("isLoggedIn", JSON.stringify(false));
 	}

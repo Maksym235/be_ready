@@ -32,7 +32,7 @@ export const SelectedList: FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [infoItem, setInfoItem] = useState<any>(null);
 	const [isOpenNewCategory, setIsOpenNewCategory] = useState(false);
-	// const [isCheckedItem, setIsCheckedItem] = useState(false);
+	const [itemPersons, setItemPersons] = useState(null);
 	const [isEditing, setIsEditing] = useState(false);
 	const listId = useParams();
 	const tripId = listId.id;
@@ -49,16 +49,16 @@ export const SelectedList: FC = () => {
 			queryClient.invalidateQueries({ queryKey: ["tours"] });
 		},
 	});
-	const {
-		mutate,
-		isSuccess,
-		data: personsData,
-	} = useMutation({
-		mutationFn: getUsersById,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["tours"] });
-		},
-	});
+	// const {
+	// 	mutate,
+	// 	isSuccess,
+	// 	data: personsData,
+	// } = useMutation({
+	// 	mutationFn: getUsersById,
+	// 	onSuccess: () => {
+	// 		queryClient.invalidateQueries({ queryKey: ["tours"] });
+	// 	},
+	// });
 	// const filteredByCategory = currentTrip.equipList.reduce(
 	// 	(acc: any, item: any) => {
 	// 		console.log(item.category);
@@ -94,16 +94,20 @@ export const SelectedList: FC = () => {
 	// 	: [];
 
 	const toggleIsOpen = () => {
+		setItemPersons(null);
 		setIsOpen((state) => !state);
 	};
 	const handleShowInfo = (item: ICategoryItem) => {
 		setInfoItem(item);
 		if (item.persons.length > 0) {
-			mutate(item.persons.join(","));
+			// mutate(item.persons.join(","));
+			getUsersById(item.persons.join(", ")).then((users) =>
+				setItemPersons(users.resp),
+			);
 			toggleIsOpen();
 			return;
 		}
-		// toggleIsOpen();
+		toggleIsOpen();
 	};
 	const toggleIsOpenNewCategory = () => {
 		setIsOpenNewCategory((state) => !state);
@@ -324,6 +328,7 @@ export const SelectedList: FC = () => {
 			<ShowInfoCategoryItem
 				tripName={listId.id ? listId.id : "-"}
 				item={infoItem}
+				usersInfo={itemPersons}
 				isOpen={isOpen}
 				toggleModal={toggleIsOpen}
 			/>

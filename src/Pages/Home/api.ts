@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import toast from "react-hot-toast";
 interface ILogin {
 	email: string;
 	password: string;
@@ -20,8 +20,11 @@ export const loginAsync = async ({ email, password }: ILogin) => {
 		window.localStorage.setItem("theme", resp.data.user.theme);
 		window.localStorage.setItem("lang", resp.data.user.language);
 		window.localStorage.setItem("isLoggedIn", JSON.stringify(true));
+		if (resp.status === 200) toast.success("Вітаю в системі!");
 		return resp.data;
-	} catch (error) {
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
+		toast.error(error.message);
 		console.log(error);
 	}
 };
@@ -35,8 +38,10 @@ export const getCurrent = async () => {
 		});
 		localStorage.setItem("token", resp.data.token);
 		localStorage.setItem("isLoggedIn", JSON.stringify(true));
+
 		return resp.data;
-	} catch (error) {
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
 		console.log(error);
 	}
 };
@@ -49,7 +54,8 @@ export const getUserRequests = async () => {
 			},
 		});
 		return resp.data;
-	} catch (error) {
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
 		console.log(error);
 	}
 };
@@ -68,7 +74,8 @@ export const editRequest = async ({ tripId, accept }: IEditRequest) => {
 			},
 		);
 		return resp.data;
-	} catch (error) {
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
 		console.log(error);
 	}
 };
@@ -76,7 +83,7 @@ export const editRequest = async ({ tripId, accept }: IEditRequest) => {
 export const getUsersById = async (usersIds: string) => {
 	try {
 		const resp = await axios.post(
-			`http://localhost:8080/auth/getById`,
+			`/auth/getById`,
 			{
 				ids: usersIds,
 			},
@@ -87,7 +94,8 @@ export const getUsersById = async (usersIds: string) => {
 			},
 		);
 		return resp.data;
-	} catch (error) {
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
 		console.log(error);
 	}
 };

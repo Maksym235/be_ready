@@ -20,11 +20,11 @@ export const PackingList: FC<IProps> = ({ lists }) => {
 	};
 	const [currentList, setCurrentList] = useState("personal");
 	const queryClient = useQueryClient();
-	const { data, isLoading, isError, refetch } = useQuery({
+	const { data, isLoading, isError } = useQuery({
 		queryKey: ["todos"],
 		queryFn: getUserRequests,
 	});
-	const { mutate, isPending, isSuccess } = useMutation({
+	const { mutate, isPending } = useMutation({
 		mutationFn: editRequest,
 		onSuccess: () => {
 			// Invalidate and refetch
@@ -61,15 +61,23 @@ export const PackingList: FC<IProps> = ({ lists }) => {
 				<p className={styles.title}>Packing list </p>
 				<TogglerLists toggle={setCurrentList} />
 				{userLists[currentList] && userLists[currentList].length > 0 ? (
-					<ul className={styles.list}>
-						{userLists[currentList].map((el: any, index: number) => (
-							<li key={index}>
-								<Link state={{ from: location }} to={`/selectedList/${el._id}`}>
-									<PersonalItem name={el.name} />
-								</Link>
-							</li>
-						))}
-					</ul>
+					<>
+						<p className={styles.awaitAccept}>
+							{currentList === "shared" ? "Accepted" : ""}
+						</p>
+						<ul className={styles.list}>
+							{userLists[currentList].map((el: any, index: number) => (
+								<li key={index}>
+									<Link
+										state={{ from: location }}
+										to={`/selectedList/${el._id}`}
+									>
+										<PersonalItem name={el.name} />
+									</Link>
+								</li>
+							))}
+						</ul>
+					</>
 				) : (
 					<EmptyLists list={currentList} />
 				)}

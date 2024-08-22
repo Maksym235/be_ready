@@ -1,24 +1,23 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { ModalContainer } from "../ModalContainer/ModalContainer";
 import styles from "./ShowInfoCategoryItem.module.css";
 import edit_icon from "../../../assets/SelectedList/Footer/icon_edit.svg";
 import icon_plus from "../../../assets/Modals/icon_plus.svg";
 import icon_minus from "../../../assets/Modals/icon_minus.svg";
 import { ICategoryItem } from "../../SelectedList/SelectedList";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getUsersById } from "../../../Pages/Home/api";
 interface IProps {
 	toggleModal: () => void;
 	isOpen: boolean;
 	tripName: string;
 	item: ICategoryItem;
+	usersInfo: any;
 }
 
 export const ShowInfoCategoryItem: FC<IProps> = ({
 	toggleModal,
 	tripName,
 	isOpen,
-	item,
+	usersInfo,
 }) => {
 	return (
 		<ModalContainer
@@ -48,14 +47,17 @@ export const ShowInfoCategoryItem: FC<IProps> = ({
 				<div>
 					<p className={styles.label}>Who takes the item</p>
 					<div className={styles.persons_wrapper}>
-						{item &&
-							item.persons.map((el) => (
+						{usersInfo ? (
+							usersInfo.map((el: any) => (
 								<div className={styles.person_block}>
-									<p className={styles.person_icon}>M</p>
-									<p className={styles.person_name}>{el}</p>
+									<p className={styles.person_icon}>{el.name.slice(0, 1)}</p>
+									<p className={styles.person_name}>{el.name}</p>
 									<p className={styles.person_counter}>1</p>
 								</div>
-							))}
+							))
+						) : (
+							<div>loading...</div>
+						)}
 						{/* <div className={styles.person_block}>
 							<p
 								className={`${styles.person_icon} ${styles.person_icon_disabled}`}

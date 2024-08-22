@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 axios.defaults.baseURL = "https://be-ready-api.vercel.app";
 export const getTours = async () => {
 	try {
@@ -8,7 +9,8 @@ export const getTours = async () => {
 			},
 		});
 		return resp.data;
-	} catch (error) {
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
 		console.log(error);
 	}
 };
@@ -25,7 +27,8 @@ export const getToursById = async (tripId: string, filtered: boolean) => {
 			},
 		});
 		return resp.data;
-	} catch (error) {
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
 		console.log(error);
 	}
 };
@@ -46,7 +49,8 @@ export const toggleEquipItemCheck = async ({
 			},
 		);
 		return resp.data;
-	} catch (error) {
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
 		console.log(error);
 	}
 };
@@ -63,7 +67,8 @@ export const createNewTour = async (newTripData: INewTripData) => {
 			},
 		});
 		return resp.data;
-	} catch (error) {
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
 		console.log(error);
 	}
 };
@@ -85,7 +90,8 @@ export const addUserToTrip = async ({ tripId, userId }: IAddNewUserToTrip) => {
 			},
 		);
 		return resp.data;
-	} catch (error) {
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
 		console.log(error);
 	}
 };
