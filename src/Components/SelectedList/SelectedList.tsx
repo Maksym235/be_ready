@@ -49,49 +49,12 @@ export const SelectedList: FC = () => {
 			queryClient.invalidateQueries({ queryKey: ["tours"] });
 		},
 	});
-	// const {
-	// 	mutate,
-	// 	isSuccess,
-	// 	data: personsData,
-	// } = useMutation({
-	// 	mutationFn: getUsersById,
-	// 	onSuccess: () => {
-	// 		queryClient.invalidateQueries({ queryKey: ["tours"] });
-	// 	},
-	// });
-	// const filteredByCategory = currentTrip.equipList.reduce(
-	// 	(acc: any, item: any) => {
-	// 		console.log(item.category);
-	// 	},
-	// 	{},
-	// );
-	// const filteredByCategory = currentTrip.equipList
-	// 	.flat()
-	// 	.reduce((acc: any, item: any) => {
-	// 		if (acc[item.category]) {
-	// 			acc[item.category] = [...acc[item.category], item];
-	// 		}
-	// 		acc[item.category] = [item];
-	// 		return acc;
-	// 	}, {});
 	if (isPending) {
 		return <div>Loading...</div>;
 	}
 	if (isError) {
 		return <div>Error</div>;
 	}
-	// const filteredByCategory = data
-	// 	? data.trip.equipList.flat().reduce((acc: any, item: any) => {
-	// 			const category = item.category;
-
-	// 			if (!acc[category]) {
-	// 				acc[category] = [];
-	// 			}
-
-	// 			acc[category].push(item);
-	// 			return acc;
-	// 	  }, {})
-	// 	: [];
 
 	const toggleIsOpen = () => {
 		setItemPersons(null);
@@ -153,6 +116,7 @@ export const SelectedList: FC = () => {
 			<SelectedListHeader
 				location={location}
 				listId={data.trip ? data.trip.name : ""}
+				listOwner={data.trip ? data.trip.owner : ""}
 				isEditing={isEditing}
 			/>
 			<div className={styles.container}>
@@ -161,14 +125,21 @@ export const SelectedList: FC = () => {
 						Object.keys(data.trip.equipList)
 							.sort((a: any, b: any) => a.localeCompare(b, "uk"))
 							.map((el) => (
-								<div className={styles.category}>
+								<div key={el} className={styles.category}>
 									<div className={styles.title_content}>
 										<div className={styles.title_img}>
 											<img src={camp} alt="camp icon" />
 											<h4 className={styles.title}>{el}</h4>
 										</div>
 										<div className={styles.cout_arrow}>
-											<div className={styles.counter}>0/9</div>
+											<div className={styles.counter}>
+												{
+													data.trip.equipList[el].filter((el: ICategoryItem) =>
+														el.persons.includes(user.id),
+													).length
+												}
+												/{data.trip.equipList[el].length}
+											</div>
 											<img
 												src={
 													opensCategories.includes(el) ? arrow_up : arrow_bottom

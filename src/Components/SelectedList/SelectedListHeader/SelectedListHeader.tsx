@@ -12,14 +12,17 @@ interface ISelectedListHeaderProps {
 	location: Location;
 	listId: string;
 	isEditing: boolean;
+	listOwner: string;
 }
 export const SelectedListHeader: React.FC<ISelectedListHeaderProps> = ({
 	location,
 	listId,
+	listOwner,
 	isEditing,
 }) => {
 	const [isOpenCm, setIsOpenCm] = useState(false);
 	const [isOpenAddUser, setIsOpenAddUser] = useState(false);
+	const user = JSON.parse(localStorage.getItem("user")!);
 	return (
 		<div>
 			<div className={styles.header}>
@@ -39,12 +42,14 @@ export const SelectedListHeader: React.FC<ISelectedListHeaderProps> = ({
 						onClick={() => setIsOpenCm((state) => !state)}
 					/>
 				) : (
-					<img
-						className={styles.header_icon_details}
-						src={plus_icon}
-						alt=""
-						onClick={() => setIsOpenAddUser((state) => !state)}
-					/>
+					listOwner === user.id && (
+						<img
+							className={styles.header_icon_details}
+							src={plus_icon}
+							alt=""
+							onClick={() => setIsOpenAddUser((state) => !state)}
+						/>
+					)
 				)}
 				<div
 					className={

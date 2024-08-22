@@ -9,11 +9,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { editRequest, getUserRequests } from "../../Pages/Home/api";
 import acceptIcon from "../../assets/accepRequest.svg";
 import disaccept from "../../assets/disacceptRequest.svg";
+import { AllListBelow } from "../AllListBelow/AllListBelow";
 export interface IProps {
 	lists: any;
 }
 export const PackingList: FC<IProps> = ({ lists }) => {
 	const location = useLocation();
+	const user = JSON.parse(localStorage.getItem("user")!);
+
 	const userLists: any = {
 		personal: lists.personal,
 		shared: lists.connected,
@@ -60,7 +63,8 @@ export const PackingList: FC<IProps> = ({ lists }) => {
 			<div className={styles.container}>
 				<p className={styles.title}>Packing list </p>
 				<TogglerLists toggle={setCurrentList} />
-				{userLists[currentList] && userLists[currentList].length > 0 ? (
+				<AllListBelow id={user.id} list={currentList} />
+				{userLists[currentList] ? (
 					<>
 						<p className={styles.awaitAccept}>
 							{currentList === "shared" ? "Accepted" : ""}
