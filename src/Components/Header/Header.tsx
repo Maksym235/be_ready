@@ -27,7 +27,9 @@ export const Header: FC = () => {
 					</Link>
 					{location.pathname === "/lists" ? (
 						<div className={styles.user_icon_wrapper}>
-							<img src={User} alt="user icon" />
+							<Link to="/profile">
+								<img src={User} alt="user icon" />
+							</Link>
 							<button onClick={handleToggleModal} className={styles.burger}>
 								<img src={Burger} />
 							</button>

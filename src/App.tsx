@@ -5,6 +5,7 @@ import { Layout } from "./Components/Layout/Layout";
 // const HomePage = lazy(() => import("./Pages/Home/Home"));
 import HomePage from "./Pages/Home/Home";
 import ListsPage from "./Pages/Lists/Lists";
+import Profile from "./Pages/Profile/Profile";
 import { SelectedList } from "./Components/SelectedList/SelectedList";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
 			{
 				path: "/selectedList/:id",
 				Component: () => <SelectedList />,
+			},
+			{
+				path: "/profile",
+				Component: () => <Profile />,
 			},
 		],
 	},
