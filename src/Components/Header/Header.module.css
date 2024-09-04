@@ -23,3 +23,9 @@
 	display: flex;
 	gap: 40px;
 }
+
+@media (min-width: 430px) {
+	.header {
+		width: 430px;
+	}
+}

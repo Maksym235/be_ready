@@ -1,9 +1,18 @@
 import { FC } from "react";
 import styles from "./ShortDesc.module.css";
+import { useNavigate } from "react-router-dom";
 interface IProps {
 	toggleModal: () => void;
 }
 export const ShortDesc: FC<IProps> = ({ toggleModal }) => {
+	const navigate = useNavigate();
+	const handleGetStarted = () => {
+		if (JSON.parse(localStorage.getItem("isLoggedIn")!)) {
+			navigate("/lists");
+			return;
+		}
+		toggleModal();
+	};
 	return (
 		<div className={styles.container}>
 			<p className={styles.text}>
@@ -12,7 +21,7 @@ export const ShortDesc: FC<IProps> = ({ toggleModal }) => {
 				hiking trip.
 			</p>
 			<div className={styles.btn_wrapper}>
-				<button onClick={toggleModal} className={styles.get_started}>
+				<button onClick={handleGetStarted} className={styles.get_started}>
 					<span className={styles.get_started_text}>Get started</span>
 				</button>
 				<button className={styles.lear_more}>

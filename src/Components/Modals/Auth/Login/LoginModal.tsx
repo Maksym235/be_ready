@@ -5,6 +5,14 @@ import { ModalContainer } from "../../ModalContainer/ModalContainer";
 // import { useAuth } from "../../../../Pages/Home/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { loginAsync } from "../../../../Pages/Home/api";
+import {
+	getAuth,
+	getRedirectResult,
+	signInWithCredential,
+	signInWithPopup,
+	signInWithRedirect,
+} from "firebase/auth";
+import { app, googleAuthProvider } from "../../../../firebase";
 interface IProps {
 	toggleModal: () => void;
 	isOpen: boolean;
@@ -17,6 +25,7 @@ export const LoginModal: FC<IProps> = ({
 }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [googleuser, setGoogleUser] = useState(null);
 	// const login = useAuth((state: any) => state.login);
 	// const stateEmail = useAuth((state: any) => state.user);
 	const queryClient = useQueryClient();
@@ -51,6 +60,17 @@ export const LoginModal: FC<IProps> = ({
 			toggleModal();
 		}
 	};
+	const auth = getAuth();
+	const handleAuthWithGoogle = async () => {
+		await signInWithPopup(auth, googleAuthProvider)
+			.then((creditinals) =>
+				localStorage.setItem("googleUser", JSON.stringify(creditinals)),
+			)
+			.catch((error) => alert(error.message));
+	};
+	// const userCred = await getRedirectResult(auth);
+	console.log(auth.currentUser);
+
 	return (
 		<ModalContainer
 			title="Log in to account"
@@ -78,7 +98,11 @@ export const LoginModal: FC<IProps> = ({
 					>
 						Sign in
 					</button>
-					<button className={styles.google} type="button">
+					<button
+						onClick={handleAuthWithGoogle}
+						className={styles.google}
+						type="button"
+					>
 						<img width={24} height={24} src={google} alt="google icon" />
 						Google
 					</button>

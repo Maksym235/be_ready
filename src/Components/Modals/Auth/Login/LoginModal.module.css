@@ -1,5 +1,6 @@
 .form {
 	display: flex;
+	align-items: center;
 	flex-direction: column;
 	gap: 8px;
 	margin: 0 20px 8px 20px;
@@ -93,7 +94,8 @@
 	height: 44px;
 	padding: 8px 24px;
 	margin-bottom: 40px;
-	margin-left: 20px;
+	margin-left: auto;
+	margin-right: auto;
 	justify-content: space-between;
 	align-items: center;
 	flex-shrink: 0;
