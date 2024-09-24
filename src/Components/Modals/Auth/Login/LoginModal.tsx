@@ -11,6 +11,7 @@ import {
 	signInWithCredential,
 	signInWithPopup,
 	signInWithRedirect,
+	signInWithEmailLink,
 } from "firebase/auth";
 import { app, googleAuthProvider } from "../../../../firebase";
 interface IProps {
@@ -62,13 +63,14 @@ export const LoginModal: FC<IProps> = ({
 	};
 	const auth = getAuth();
 	const handleAuthWithGoogle = async () => {
-		await signInWithPopup(auth, googleAuthProvider)
-			.then((creditinals) =>
-				localStorage.setItem("googleUser", JSON.stringify(creditinals)),
-			)
-			.catch((error) => alert(error.message));
+		const userCred = await signInWithPopup(auth, googleAuthProvider);
+		localStorage.setItem("googleUser", JSON.stringify(userCred));
+		alert(`name: ${userCred.user.displayName}`);
+		// .then((creditinals) =>
+		// 	localStorage.setItem("googleUser", JSON.stringify(creditinals)),
+		// )
+		// .catch((error) => alert(error.message));
 	};
-	// const userCred = await getRedirectResult(auth);
 	console.log(auth.currentUser);
 
 	return (
