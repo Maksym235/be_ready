@@ -4,7 +4,11 @@ import google from "../../../../assets/google.svg";
 import { ModalContainer } from "../../ModalContainer/ModalContainer";
 // import { useAuth } from "../../../../Pages/Home/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { loginAsync } from "../../../../Pages/Home/api";
+import {
+	IRegisterGoogleAuth,
+	googleAuth,
+	loginAsync,
+} from "../../../../Pages/Home/api";
 import {
 	getAuth,
 	getRedirectResult,
@@ -49,6 +53,13 @@ export const LoginModal: FC<IProps> = ({
 			queryClient.invalidateQueries({ queryKey: ["user"] });
 		},
 	});
+	const { mutate: mutateG, isPending: isPendingG } = useMutation({
+		mutationFn: googleAuth,
+		onSuccess: () => {
+			// Invalidate and refetch
+			queryClient.invalidateQueries({ queryKey: ["user"] });
+		},
+	});
 	const handleSubmit = (evt: any) => {
 		evt.preventDefault();
 		const loginData: { email: string; password: string } = {
@@ -65,13 +76,22 @@ export const LoginModal: FC<IProps> = ({
 	const handleAuthWithGoogle = async () => {
 		const userCred = await signInWithPopup(auth, googleAuthProvider);
 		localStorage.setItem("googleUser", JSON.stringify(userCred));
-		alert(`name: ${userCred.user.displayName}`);
+		// alert(`name: ${userCred.user.displayName}`);
+		const googleUser: IRegisterGoogleAuth = {
+			name: userCred.user.displayName!,
+			email: userCred.user.email!,
+			password: "googleAuth",
+		};
+		mutateG(googleUser);
+		if (!isPendingG) {
+			toggleModal();
+		}
 		// .then((creditinals) =>
 		// 	localStorage.setItem("googleUser", JSON.stringify(creditinals)),
 		// )
 		// .catch((error) => alert(error.message));
 	};
-	console.log(auth.currentUser);
+	// console.log(auth.currentUser);
 
 	return (
 		<ModalContainer

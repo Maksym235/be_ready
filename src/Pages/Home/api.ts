@@ -5,6 +5,12 @@ interface ILogin {
 	password: string;
 }
 
+export interface IRegisterGoogleAuth {
+	name: string;
+	email: string;
+	password: string;
+}
+
 axios.defaults.baseURL = "https://be-ready-api.vercel.app";
 
 export const loginAsync = async ({ email, password }: ILogin) => {
@@ -28,7 +34,30 @@ export const loginAsync = async ({ email, password }: ILogin) => {
 		console.log(error);
 	}
 };
-
+export const googleAuth = async ({
+	name,
+	email,
+	password,
+}: IRegisterGoogleAuth) => {
+	try {
+		const resp = await axios.post("/auth/googleAuth", {
+			name,
+			email,
+			password,
+		});
+		window.localStorage.setItem("token", resp.data.token);
+		window.localStorage.setItem("user", JSON.stringify(resp.data.user));
+		window.localStorage.setItem("theme", resp.data.user.theme);
+		window.localStorage.setItem("lang", resp.data.user.language);
+		window.localStorage.setItem("isLoggedIn", JSON.stringify(true));
+		if (resp.status === 200) toast.success("Вітаю в системі!");
+		return resp.data;
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
+		toast.error(error.message);
+		console.log(error);
+	}
+};
 export const getCurrent = async () => {
 	try {
 		const resp = await axios.get("/auth/current", {

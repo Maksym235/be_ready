@@ -2,6 +2,8 @@ import { FC } from "react";
 import styles from "./RegisterModal.module.css";
 import google from "../../../../assets/google.svg";
 import { ModalContainer } from "../../ModalContainer/ModalContainer";
+import { getAuth, signInWithPopup } from "firebase/auth";
+import { googleAuthProvider } from "../../../../firebase";
 interface IProps {
 	toggleModal: () => void;
 	isOpen: boolean;
@@ -12,6 +14,17 @@ export const RegisterModal: FC<IProps> = ({
 	isOpen,
 	setCurrentModal,
 }) => {
+	const auth = getAuth();
+	const handleAuthWithGoogle = async () => {
+		const userCred = await signInWithPopup(auth, googleAuthProvider);
+		localStorage.setItem("googleUser", JSON.stringify(userCred));
+		// alert(`name: ${userCred.user.displayName}`);
+		console.log(userCred);
+		// .then((creditinals) =>
+		// 	localStorage.setItem("googleUser", JSON.stringify(creditinals)),
+		// )
+		// .catch((error) => alert(error.message));
+	};
 	const title = "Create new account";
 	return (
 		<ModalContainer isOpen={isOpen} toggleModal={toggleModal} title={title}>
@@ -35,7 +48,11 @@ export const RegisterModal: FC<IProps> = ({
 					<button className={styles.sing_up} type="submit">
 						Sign up
 					</button>
-					<button className={styles.google} type="button">
+					<button
+						onClick={handleAuthWithGoogle}
+						className={styles.google}
+						type="button"
+					>
 						<img width={24} height={24} src={google} alt="google icon" />
 						Google
 					</button>
