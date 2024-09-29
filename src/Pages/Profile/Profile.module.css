@@ -7,3 +7,9 @@
 	position: relative;
 	background: #ecf4fe;
 }
+
+.content_wrapper {
+	border-radius: 32px 32px 0px 0px;
+	background: var(--white, #fff);
+	padding-top: 20px;
+}

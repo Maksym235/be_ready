@@ -1,0 +1,86 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.input {
+	display: flex;
+	width: 350px;
+	padding: 8px 0px;
+	align-items: center;
+	gap: 2px;
+	border: none;
+	border-bottom: 2px solid var(--black, #0d0d0d);
+	margin-bottom: 24px;
+	background-color: #fff;
+}
+
+.input:focus {
+	outline: none;
+}
+
+.input::placeholder {
+	color: var(--silver, #939393);
+
+	/* main text */
+	font-family: "Neue Montreal";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+
+.btn_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 144px;
+}
+
+.btn_save {
+	display: flex;
+	width: 350px;
+	height: 44px;
+	padding: 8px 24px;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 40px;
+	background: var(--accent, #458ef7);
+	border: none;
+	color: var(--white, #fff);
+	font-family: "Neue Montreal";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	text-transform: uppercase;
+}
+.btn_save:disabled {
+	border-radius: 40px;
+	background: var(--light-silver, #cecece);
+	color: var(--silver, #939393);
+}
+
+.btn_cancel {
+	display: flex;
+	width: 350px;
+	height: 44px;
+	padding: 8px 24px;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 40px;
+	border: 2px solid var(--accent, #458ef7);
+	color: var(--accent, #458ef7);
+	text-align: right;
+
+	/* list item */
+	font-family: "Neue Montreal";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	background-color: #fff;
+	text-transform: uppercase;
+}

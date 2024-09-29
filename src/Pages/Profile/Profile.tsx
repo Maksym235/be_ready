@@ -2,13 +2,17 @@ import { FC, useState } from "react";
 import styles from "./Profile.module.css";
 import { ProfileHeader } from "../../Components/ProfileHeader/ProfileHeader";
 import { ProfileToggler } from "../../Components/ProfileToggler/ProfileToggler";
+import { UserInformation } from "../../Components/UserInformation/UserInformation";
 const Profile: FC = () => {
-	const [currentList, setCurrentList] = useState("personal");
+	const [currentTab, setCurrentTab] = useState("info");
 	return (
 		<main className={styles.backdrop}>
 			<div className={styles.container}>
-				<ProfileHeader />
-				<ProfileToggler toggle={setCurrentList} />
+				<div className={styles.content_wrapper}>
+					<ProfileHeader />
+					<ProfileToggler toggle={setCurrentTab} />
+					{currentTab === "info" ? <UserInformation /> : <div>friends</div>}
+				</div>
 			</div>
 		</main>
 	);
