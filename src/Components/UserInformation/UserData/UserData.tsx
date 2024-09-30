@@ -6,6 +6,7 @@ export interface IUser {
 	email: string;
 	id: string;
 	language: string;
+	password: string;
 	name: string;
 	theme: string;
 }
@@ -20,7 +21,7 @@ export const UserData: FC<IUserDataProps> = ({ user, openModal }) => {
 		initialValues: {
 			name: user.name,
 			email: user.email,
-			password: "",
+			password: user.password,
 		},
 		onSubmit: (values) => {
 			alert(JSON.stringify(values, null, 2));
@@ -84,7 +85,7 @@ export const UserData: FC<IUserDataProps> = ({ user, openModal }) => {
 						name="password"
 						type="password"
 						onChange={formik.handleChange}
-						value={formik.values.password}
+						value={formik.values.password.slice(0, 10)}
 						disabled
 					/>
 

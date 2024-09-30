@@ -1,0 +1,11 @@
+.container {
+	margin-bottom: 20px;
+}
+
+.plus_btn {
+	position: fixed;
+	bottom: 24px;
+	right: 20px;
+	border: 2px solid #fff;
+	border-radius: 50%;
+}

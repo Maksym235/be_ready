@@ -128,3 +128,22 @@ export const getUsersById = async (usersIds: string) => {
 		console.log(error);
 	}
 };
+interface IUserDataToUpdate {
+	name: string;
+	email: string;
+	curPassword: string;
+	password: string;
+}
+export const updateUserData = async (data: IUserDataToUpdate) => {
+	try {
+		const resp = await axios.post(`/auth/update`, data, {
+			headers: {
+				Authorization: "Bearer " + window.localStorage.getItem("token"),
+			},
+		});
+		return resp.data;
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
+		console.log(error);
+	}
+};

@@ -1,31 +1,73 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserData } from "./UserData/UserData";
 import styles from "./UserIfnormation.module.css";
 import { UserImage } from "./UserImage/UserImage";
-import { getCurrent } from "../../Pages/Home/api";
+import { getCurrent, updateUserData } from "../../Pages/Home/api";
 import { ReactNode, useState } from "react";
 import { EditUserName } from "../Modals/EditUserName/EditUserName";
 import { EditUserEmail } from "../Modals/EditUserEmail/EditUserEmail";
+import { EditUserPassword } from "../Modals/EditUserPassoword/EditUserPassword";
+export interface IUserDataToUpdate {
+	name: string;
+	email: string;
+	curPassword: string;
+	password: string;
+}
 export const UserInformation = () => {
 	const [currentModal, setCurrentModal] = useState("");
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { data, isLoading, isError } = useQuery({
+	const queryClient = useQueryClient();
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateUserData,
+		onSuccess: () => {
+			// Invalidate and refetch
+			queryClient.invalidateQueries({ queryKey: ["user"] });
+		},
+	});
+	const { data, isLoading, isError, refetch } = useQuery({
 		queryKey: ["user"],
 		queryFn: getCurrent,
 	});
+
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
 	if (isError) {
 		return <div>Something went wrong.</div>;
 	}
+
+	const handleSubmit = (data: IUserDataToUpdate) => {
+		mutate(data);
+		if (!isPending) {
+			refetch();
+			toggleModal();
+		}
+	};
 	const toggleModal = () => {
 		setIsModalOpen((state) => !state);
 	};
 	const Modals: Record<string, ReactNode> = {
-		editName: <EditUserName isOpen={isModalOpen} toggleModal={toggleModal} />,
-		editEmail: <EditUserEmail isOpen={isModalOpen} toggleModal={toggleModal} />,
-		editPassword: <div></div>,
+		editName: (
+			<EditUserName
+				isOpen={isModalOpen}
+				toggleModal={toggleModal}
+				submit={handleSubmit}
+			/>
+		),
+		editEmail: (
+			<EditUserEmail
+				isOpen={isModalOpen}
+				toggleModal={toggleModal}
+				submit={handleSubmit}
+			/>
+		),
+		editPassword: (
+			<EditUserPassword
+				isOpen={isModalOpen}
+				toggleModal={toggleModal}
+				submit={handleSubmit}
+			/>
+		),
 	};
 	const handleToggleModal = (key: string) => {
 		if (isModalOpen) {
