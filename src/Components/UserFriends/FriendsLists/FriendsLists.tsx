@@ -3,6 +3,7 @@ import styles from "./FriendsLists.module.css";
 import cross_delete from "../../../assets/icon_close.svg";
 import { useQuery } from "@tanstack/react-query";
 import { getUserRequests } from "../../../Pages/Home/api";
+import accept_icon from "../../../assets/SelectedList/icon_dobble_check.svg";
 export interface IFriendsRequests {
 	id: string;
 	name: string;
@@ -33,7 +34,6 @@ export const FriendsLists = () => {
 			name: "Pasha",
 		},
 	];
-	console.log(data);
 	return (
 		<div className={styles.container}>
 			<div className={styles.list_container}>
@@ -56,7 +56,14 @@ export const FriendsLists = () => {
 						data.requests.friends.map((el: IFriendsRequests) => (
 							<li className={styles.list_item}>
 								{el.name}
-								<button className={styles.cancel_btn}>cancel</button>
+								<div className={styles.btn_wrapper}>
+									<button className={styles.accept_btn}>
+										<img src={accept_icon} alt="accept" />
+									</button>
+									<button className={styles.delete_btn}>
+										<img src={cross_delete} alt="delete" />
+									</button>
+								</div>
 							</li>
 						))}
 				</ul>

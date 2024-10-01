@@ -48,6 +48,11 @@
 	line-height: normal;
 }
 
+.btn_wrapper {
+	display: flex;
+	gap: 10px;
+}
+
 .delete_btn {
 	width: 32px;
 	height: 32px;
@@ -57,6 +62,16 @@
 	background-color: #e73a2e;
 	border: none;
 	border-radius: 50%;
+}
+
+.accept_btn {
+	width: 32px;
+	height: 32px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: transparent;
+	border: none;
 }
 
 .cancel_btn {

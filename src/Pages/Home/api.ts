@@ -147,3 +147,23 @@ export const updateUserData = async (data: IUserDataToUpdate) => {
 		console.log(error);
 	}
 };
+
+export const sendFriendRequest = async (userId: string) => {
+	try {
+		const resp = await axios.post(
+			"/auth/frreq",
+			{
+				userid: userId,
+			},
+			{
+				headers: {
+					Authorization: "Bearer " + window.localStorage.getItem("token"),
+				},
+			},
+		);
+		return resp.data;
+	} catch (error: any) {
+		console.log(error);
+		toast.error(error.message);
+	}
+};
