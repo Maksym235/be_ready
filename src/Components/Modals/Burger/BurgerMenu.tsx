@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import Logo from "../../../assets/⛰ beReady 🏕️.svg";
 import BurgerCross from "../../../assets/burger_cross.svg";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 // import { useAuth } from "../../../Pages/Home/store";
 interface IProps {
 	toggleBurger: () => void;
@@ -54,6 +55,20 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
 				});
 				toggleBurger();
 				break;
+			case "profile":
+				if (!isLoggedIn) {
+					toggleBurger();
+					toast.error("need authentication");
+					break;
+				}
+				contactUsEl.scrollIntoView({
+					behavior: "smooth",
+					block: "start",
+					inline: "nearest",
+				});
+				navigate("/profile");
+				toggleBurger();
+				break;
 			default:
 				break;
 		}
@@ -93,6 +108,12 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
 					className={styles.nav_list_item}
 				>
 					Contact us
+				</li>
+				<li
+					onClick={() => navigateToElement("profile")}
+					className={`${styles.nav_list_item} ${styles.profile_item}`}
+				>
+					Profile
 				</li>
 			</ul>
 		</div>,

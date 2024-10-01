@@ -59,6 +59,11 @@
 	text-transform: uppercase;
 }
 
+.profile_item {
+	position: absolute;
+	bottom: 0;
+}
+
 .link {
 	color: var(--accent, #458ef7);
 }

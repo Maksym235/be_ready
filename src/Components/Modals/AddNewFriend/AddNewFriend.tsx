@@ -43,6 +43,7 @@ export const AddNewFriend: FC<IProps> = ({ isOpen, toggleModal }) => {
 					value={formik.values.userid}
 					placeholder="Enter the ID of the user you want to add*"
 				/>
+				{/* <button onClick={handlePaste}>paste</button> */}
 				{formik.errors.userid ? (
 					<p className={styles.error_msg}>{formik.errors.userid}</p>
 				) : null}
@@ -50,7 +51,7 @@ export const AddNewFriend: FC<IProps> = ({ isOpen, toggleModal }) => {
 			<div className={styles.btn_wrapper}>
 				<button
 					className={styles.btn_save}
-					disabled={formik.values.userid.length <= 0}
+					disabled={formik.values.userid.length === 0}
 					type="submit"
 					onClick={() => formik.handleSubmit()}
 				>
