@@ -8,6 +8,7 @@ import plus from "../../assets/button plus.svg";
 import { AddNewFriend } from "../Modals/AddNewFriend/AddNewFriend";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrent } from "../../Pages/Home/api";
+import { FriendsRequesList } from "./FriendsRequestList/FriendsRequesList";
 // import copy from "../../assets/icon_copy.svg";
 
 export const UserFriends = () => {
@@ -30,7 +31,10 @@ export const UserFriends = () => {
 	return (
 		<div className={styles.container}>
 			<TextAndId user={data?.user} />
-			<FriendsLists />
+			<div className={styles.friends_container}>
+				<FriendsLists refetch={refetch} user={data?.user} />
+				<FriendsRequesList refetch={refetch} />
+			</div>
 			<img
 				onClick={handleToggleModal}
 				className={styles.plus_btn}

@@ -1,69 +1,58 @@
 // import React from 'react'
 import styles from "./FriendsLists.module.css";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { FC } from "react";
+import toast from "react-hot-toast";
 import cross_delete from "../../../assets/icon_close.svg";
-import { useQuery } from "@tanstack/react-query";
-import { getUserRequests } from "../../../Pages/Home/api";
-import accept_icon from "../../../assets/SelectedList/icon_dobble_check.svg";
+import { deleteFriend } from "../../../Pages/Home/api";
+
 export interface IFriendsRequests {
-	id: string;
+	_id: string;
 	name: string;
 }
-export const FriendsLists = () => {
-	const { data, isError, isLoading } = useQuery({
-		queryKey: ["userRequests"],
-		queryFn: getUserRequests,
+export interface IUser {
+	email: string;
+	id: string;
+	language: string;
+	password: string;
+	name: string;
+	theme: string;
+	friends: IFriendsRequests[];
+}
+export interface IFriendsListProps {
+	user: IUser;
+	refetch: any;
+}
+export const FriendsLists: FC<IFriendsListProps> = ({ user, refetch }) => {
+	const { mutate, isPending } = useMutation({
+		mutationFn: deleteFriend,
+		onSuccess: () => {
+			refetch();
+			// toggleModal();
+			toast.success("accepted");
+		},
 	});
-	if (isLoading) {
+	if (isPending) {
 		return <div>Loading...</div>;
 	}
-	if (isError) {
-		return <div>Error...</div>;
-	}
-
-	const friendsData = [
-		{
-			id: 1,
-			name: "Roman",
-		},
-		{
-			id: 2,
-			name: "Mykola",
-		},
-		{
-			id: 3,
-			name: "Pasha",
-		},
-	];
+	const handleDeleteFriend = (userId: string) => {
+		mutate(userId);
+	};
 	return (
 		<div className={styles.container}>
 			<div className={styles.list_container}>
 				<p className={styles.title}>My friends</p>
 				<ul className={styles.list}>
-					{friendsData.map((el) => (
-						<li className={styles.list_item}>
-							{el.name}
-							<button className={styles.delete_btn}>
-								<img src={cross_delete} alt="delete" />
-							</button>
-						</li>
-					))}
-				</ul>
-			</div>
-			<div className={styles.list_container}>
-				<p className={styles.title}>Awaiting acceptance</p>
-				<ul className={styles.list}>
-					{data &&
-						data.requests.friends.map((el: IFriendsRequests) => (
+					{user &&
+						user?.friends?.map((el: IFriendsRequests) => (
 							<li className={styles.list_item}>
 								{el.name}
-								<div className={styles.btn_wrapper}>
-									<button className={styles.accept_btn}>
-										<img src={accept_icon} alt="accept" />
-									</button>
-									<button className={styles.delete_btn}>
-										<img src={cross_delete} alt="delete" />
-									</button>
-								</div>
+								<button
+									onClick={() => handleDeleteFriend(el._id)}
+									className={styles.delete_btn}
+								>
+									<img src={cross_delete} alt="delete" />
+								</button>
 							</li>
 						))}
 				</ul>
