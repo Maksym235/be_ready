@@ -81,7 +81,7 @@ export const UserInformation = () => {
 	};
 	return (
 		<section className={styles.container}>
-			<UserImage />
+			<UserImage user={data?.user} refetch={refetch} />
 			<UserData user={data?.user} openModal={handleToggleModal} />
 			{Modals[currentModal]}
 		</section>
