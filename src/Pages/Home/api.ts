@@ -207,9 +207,26 @@ export const deleteFriend = async (friendId: string) => {
 
 export const changeAvatar = async (data: any) => {
 	try {
-		const resp = await axios.patch("http://localhost:8080/auth/avatars", data, {
+		const resp = await axios.patch("/auth/avatars", data, {
 			headers: {
 				Authorization: "Bearer " + window.localStorage.getItem("token"),
+				"Content-Type": "multipart/form-data",
+			},
+		});
+		return resp.data;
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
+		console.log(error);
+		toast.error(error.message);
+	}
+};
+
+export const resetToDefaultAvatar = async () => {
+	try {
+		const resp = await axios.get("/auth/resetAvatars", {
+			headers: {
+				Authorization: "Bearer " + window.localStorage.getItem("token"),
+				"Content-Type": "multipart/form-data",
 			},
 		});
 		return resp.data;

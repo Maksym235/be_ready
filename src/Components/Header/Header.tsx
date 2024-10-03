@@ -5,7 +5,21 @@ import User from "../../assets/user.svg";
 import styles from "./Header.module.css";
 import { BurgerMenu } from "../Modals/Burger/BurgerMenu";
 import { Link, useLocation } from "react-router-dom";
-export const Header: FC = () => {
+export interface IUser {
+	email: string;
+	id: string;
+	language: string;
+	password: string;
+	name: string;
+	theme: string;
+	avatarURL: string;
+	avatarName: string;
+}
+
+export interface IHeaderProps {
+	user: IUser;
+}
+export const Header: FC<IHeaderProps> = ({ user }) => {
 	const location = useLocation();
 
 	const [isOpenBurger, setIsOpenBurger] = useState(false);
@@ -28,7 +42,13 @@ export const Header: FC = () => {
 					{location.pathname === "/lists" ? (
 						<div className={styles.user_icon_wrapper}>
 							<Link to="/profile">
-								<img src={User} alt="user icon" />
+								<img
+									className={styles.user_icon}
+									width={40}
+									height={40}
+									src={user.avatarURL}
+									alt="user icon"
+								/>
 							</Link>
 							<button onClick={handleToggleModal} className={styles.burger}>
 								<img src={Burger} />

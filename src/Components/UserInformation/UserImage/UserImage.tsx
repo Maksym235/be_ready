@@ -1,7 +1,7 @@
 import { FC, useRef } from "react";
 import styles from "./UserImage.module.css";
 import { useMutation } from "@tanstack/react-query";
-import { changeAvatar } from "../../../Pages/Home/api";
+import { changeAvatar, resetToDefaultAvatar } from "../../../Pages/Home/api";
 export interface IUser {
 	email: string;
 	id: string;
@@ -10,6 +10,7 @@ export interface IUser {
 	name: string;
 	theme: string;
 	avatarURL: string;
+	avatarName: string;
 }
 export interface IUserImageProps {
 	refetch: any;
@@ -19,6 +20,12 @@ export const UserImage: FC<IUserImageProps> = ({ refetch, user }) => {
 	const inputFileRef: any = useRef();
 	const { mutate, isPending } = useMutation({
 		mutationFn: changeAvatar,
+		onSuccess: () => {
+			refetch();
+		},
+	});
+	const { mutate: resetM, isPending: resetPending } = useMutation({
+		mutationFn: resetToDefaultAvatar,
 		onSuccess: () => {
 			refetch();
 		},
@@ -43,7 +50,10 @@ export const UserImage: FC<IUserImageProps> = ({ refetch, user }) => {
 		// setImage(formData);
 		mutate(formData);
 	};
-	if (isPending) {
+	const resetToDefault = () => {
+		resetM();
+	};
+	if (isPending || resetPending) {
 		return <div>Loading...</div>;
 	}
 	return (
@@ -60,7 +70,11 @@ export const UserImage: FC<IUserImageProps> = ({ refetch, user }) => {
 				)}
 			</div>
 			<div className={styles.btn_wrapper}>
-				<button className={styles.btn} disabled>
+				<button
+					className={styles.btn}
+					onClick={resetToDefault}
+					disabled={user.avatarName === "default_user"}
+				>
 					Reset to default
 				</button>
 				<button onClick={onImageSelect} className={styles.btn}>
