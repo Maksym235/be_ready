@@ -148,6 +148,63 @@ export const updateUserData = async (data: IUserDataToUpdate) => {
 	}
 };
 
+export const sendFriendRequest = async (userId: string) => {
+	try {
+		const resp = await axios.post(
+			"/auth/frreq",
+			{
+				userid: userId,
+			},
+			{
+				headers: {
+					Authorization: "Bearer " + window.localStorage.getItem("token"),
+				},
+			},
+		);
+		return resp.data;
+	} catch (error: any) {
+		console.log(error);
+		toast.error(error.message);
+	}
+};
+export interface IEditRequestData {
+	reqId: string;
+	isAccept: boolean;
+}
+export const editFriendRequest = async ({
+	reqId,
+	isAccept,
+}: IEditRequestData) => {
+	try {
+		const resp = await axios.get(
+			`/auth/editFrRequest/${reqId}?accept=${isAccept}`,
+			{
+				headers: {
+					Authorization: "Bearer " + window.localStorage.getItem("token"),
+				},
+			},
+		);
+		return resp.data;
+	} catch (error: any) {
+		console.log(error);
+		toast.error(error.message);
+	}
+};
+
+export const deleteFriend = async (friendId: string) => {
+	try {
+		const resp = await axios.get(`/auth/deleteFriend/${friendId}`, {
+			headers: {
+				Authorization: "Bearer " + window.localStorage.getItem("token"),
+			},
+		});
+		return resp.data;
+	} catch (error: any) {
+		console.log(error);
+		toast.error(error.message);
+	}
+};
+
 export const changeAvatar = async (data: any) => {
 	try {
 		const resp = await axios.patch("http://localhost:8080/auth/avatars", data, {
