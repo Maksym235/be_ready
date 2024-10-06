@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./ProfileToggler.module.css";
 export const ProfileToggler = ({ toggle }: any) => {
 	const [currentList, setCurrentList] = useState("info");

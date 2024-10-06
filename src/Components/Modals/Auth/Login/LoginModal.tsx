@@ -9,15 +9,8 @@ import {
 	googleAuth,
 	loginAsync,
 } from "../../../../Pages/Home/api";
-import {
-	getAuth,
-	getRedirectResult,
-	signInWithCredential,
-	signInWithPopup,
-	signInWithRedirect,
-	signInWithEmailLink,
-} from "firebase/auth";
-import { app, googleAuthProvider } from "../../../../firebase";
+import { getAuth, signInWithPopup } from "firebase/auth";
+import { googleAuthProvider } from "../../../../firebase";
 interface IProps {
 	toggleModal: () => void;
 	isOpen: boolean;
@@ -30,7 +23,6 @@ export const LoginModal: FC<IProps> = ({
 }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [googleuser, setGoogleUser] = useState(null);
 	// const login = useAuth((state: any) => state.login);
 	// const stateEmail = useAuth((state: any) => state.user);
 	const queryClient = useQueryClient();

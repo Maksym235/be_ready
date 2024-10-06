@@ -1,6 +1,6 @@
 // import React from 'react'
 import styles from "./FriendsLists.module.css";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { FC } from "react";
 import toast from "react-hot-toast";
 import cross_delete from "../../../assets/icon_close.svg";
