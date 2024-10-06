@@ -16,7 +16,7 @@ export const AllListBelow: FC<IProps> = ({ list, id }) => {
 			{list === "personal" ? (
 				<div className={styles.container}>
 					<p className={styles.title}>
-						All personal lists are presented below.
+						All personal lists are presented below.///
 					</p>
 					<p className={styles.content}>
 						You can always add a new list by clicking “+” in the lower right
