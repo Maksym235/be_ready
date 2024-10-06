@@ -19,9 +19,9 @@ interface IToggleEquipItemType {
 	equipItemId: string;
 }
 
-export const getToursById = async (tripId: string, filtered: boolean) => {
+export const getToursById = async (tripId: string) => {
 	try {
-		const resp = await axios.get(`/tours/${tripId}/?filtered=${filtered}`, {
+		const resp = await axios.get(`/tours/${tripId}`, {
 			headers: {
 				Authorization: "Bearer " + window.localStorage.getItem("token"),
 			},
@@ -61,7 +61,7 @@ interface INewTripData {
 }
 export const createNewTour = async (newTripData: INewTripData) => {
 	try {
-		const resp = await axios.post(`/tours/add`, newTripData, {
+		const resp = await axios.post(`/tours/newAdd`, newTripData, {
 			headers: {
 				Authorization: "Bearer " + window.localStorage.getItem("token"),
 			},

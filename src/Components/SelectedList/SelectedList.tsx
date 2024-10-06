@@ -37,7 +37,7 @@ export const SelectedList: FC = () => {
 	const user = JSON.parse(localStorage.getItem("user")!);
 	const { isPending, isError, data, refetch } = useQuery({
 		queryKey: ["tours"],
-		queryFn: () => getToursById(tripId ? tripId : "", true),
+		queryFn: () => getToursById(tripId ? tripId : ""),
 	});
 	const mutation = useMutation({
 		mutationFn: toggleEquipItemCheck,
