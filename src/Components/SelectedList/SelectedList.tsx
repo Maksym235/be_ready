@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styles from "./SelectedList.module.css";
 import plus_icon from "../../assets/Modals/icon_plus.svg";
@@ -39,6 +39,7 @@ export const SelectedList: FC = () => {
 		queryKey: ["tours"],
 		queryFn: () => getToursById(tripId ? tripId : ""),
 	});
+	const [editedItem, setEditedItem] = useState<Record<string, any>[]>([]);
 	const mutation = useMutation({
 		mutationFn: toggleEquipItemCheck,
 		onSuccess: () => {
@@ -95,17 +96,67 @@ export const SelectedList: FC = () => {
 	};
 	const handleCheckedItem = (item: Record<string, any>) => {
 		// setIsCheckedItem(evt.target.checked);
+		if (editedItem.includes(item)) {
+			return;
+		}
+		setEditedItem((state) => [...state, item]);
+		//==============================================================
+		//==============================================================
+		const list = data.trip.equipList;
+		if (item.persons.includes(user.id)) {
+			const userIndex = item.persons.findIndex((p: string) => p === user.id);
+			const updatedItem = {
+				...item,
+				persons: item.persons.slice(1, userIndex),
+			};
+			const catIndex = list[item.category].findIndex(
+				(catItem: any) => catItem._id === item._id,
+			);
+			const updatedCategory = list[item.category];
+			updatedCategory.splice(catIndex, 1, updatedItem);
+			list[item.category] = updatedCategory;
+			console.log(list);
+		} else {
+			const updatedItem = {
+				...item,
+				persons: [...item.persons, user.id],
+			};
+			const updatedCategory = list[item.category];
+			const catIndex = updatedCategory.findIndex(
+				(catItem: any) => catItem._id === item._id,
+			);
+			updatedCategory.splice(catIndex, 1, updatedItem);
+			list[item.category] = updatedCategory;
+			console.log(list);
+		}
 
-		mutation.mutate({
-			tourId: tripId ? tripId : "",
-			equipItemId: item._id,
-		});
+		//==============================================================
+		//==============================================================
+		// console.log(index);
+		// mutation.mutate({
+		// 	tourId: tripId ? tripId : "",
+		// 	equipItemId: item._id,
+		// });
 		// const index = item.persons.findIndex((el: string) => el === user.id);
 		// if (index === -1) {
 		// 	item.persons.push(user.id);
 		// } else {
 		// 	item.persons.splice(index, 1);
 		// }
+	};
+	let timerId: any = null;
+	const onUpdateItem = (item: Record<string, any>) => {
+		console.log(timerId);
+		if (timerId !== null) {
+			clearTimeout(timerId);
+			console.log("таймер скинуто");
+		}
+
+		handleCheckedItem(item);
+
+		timerId = setTimeout(() => {
+			console.log(`go http://localhost:5713/updateItems`);
+		}, 10000);
 	};
 	return (
 		<>
@@ -120,26 +171,26 @@ export const SelectedList: FC = () => {
 					{data.trip &&
 						Object.keys(data.trip.equipList)
 							.sort((a: any, b: any) => a.localeCompare(b, "uk"))
-							.map((el) => (
-								<div key={el} className={styles.category}>
+							.map((category) => (
+								<div key={category} className={styles.category}>
 									<CategoryTitle
 										opensCategories={opensCategories}
 										toggleOpenCategory={toggleOpenCategory}
-										category={el}
+										category={category}
 										equipList={data && data.trip.equipList}
 									/>
-									{opensCategories.includes(el) && (
+									{opensCategories.includes(category) && (
 										<>
-											{data.trip.equipList[el]
+											{data.trip.equipList[category]
 												.sort((a: any, b: any) =>
 													a.name.localeCompare(b.name, "uk"),
 												)
-												.map((item: any) => (
+												.map((categoryItem: any) => (
 													<CategoryItem
-														handleCheckedItem={handleCheckedItem}
+														handleCheckedItem={onUpdateItem}
 														handleShowInfo={handleShowInfo}
 														isEditing={isEditing}
-														item={item}
+														item={categoryItem}
 														user={user}
 													/>
 												))}
