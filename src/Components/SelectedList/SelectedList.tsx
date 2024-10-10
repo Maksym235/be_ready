@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styles from "./SelectedList.module.css";
 import plus_icon from "../../assets/Modals/icon_plus.svg";
@@ -12,7 +12,7 @@ import {
 	useQuery,
 	useQueryClient,
 } from "@tanstack/react-query";
-import { getToursById, toggleEquipItemCheck } from "../../Pages/Lists/api";
+import { getToursById, updateList } from "../../Pages/Lists/api";
 import { getUsersById } from "../../Pages/Home/api";
 import { CategoryTitle } from "./CategoryTitle/CategoryTitle";
 import { CategoryItem } from "./CategoryItem/CategoryItem";
@@ -30,6 +30,7 @@ export const SelectedList: FC = () => {
 	const [isOpenNewCategory, setIsOpenNewCategory] = useState(false);
 	const [itemPersons, setItemPersons] = useState(null);
 	const [isEditing, setIsEditing] = useState(false);
+	const [timerId, setTimerId] = useState<any>(null);
 	const listId = useParams();
 	const tripId = listId.id;
 	const location = useLocation();
@@ -41,7 +42,7 @@ export const SelectedList: FC = () => {
 	});
 	const [editedItem, setEditedItem] = useState<Record<string, any>[]>([]);
 	const mutation = useMutation({
-		mutationFn: toggleEquipItemCheck,
+		mutationFn: updateList,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["tours"] });
 		},
@@ -60,7 +61,6 @@ export const SelectedList: FC = () => {
 	const handleShowInfo = (item: ICategoryItem) => {
 		setInfoItem(item);
 		if (item.persons.length > 0) {
-			// mutate(item.persons.join(","));
 			getUsersById(item.persons.join(", ")).then((users) =>
 				setItemPersons(users.resp),
 			);
@@ -80,28 +80,14 @@ export const SelectedList: FC = () => {
 		setOpensCategories((state) => [...state, id]);
 	};
 
-	// const mutation = useMutation({
-	// 	mutationFn: () =>
-	// 		toggleEquipItemCheck({
-	// 			tourId: tripId ? tripId : "",
-	// 			equipItemId: equipId,
-	// 		}),
-	// 	onSuccess: () => {
-	// 		queryClient.invalidateQueries({ queryKey: ["tours"] });
-	// 	},
-	// });
-
 	const toggleIsEditing = () => {
 		setIsEditing((state) => !state);
 	};
 	const handleCheckedItem = (item: Record<string, any>) => {
-		// setIsCheckedItem(evt.target.checked);
 		if (editedItem.includes(item)) {
 			return;
 		}
 		setEditedItem((state) => [...state, item]);
-		//==============================================================
-		//==============================================================
 		const list = data.trip.equipList;
 		if (item.persons.includes(user.id)) {
 			const userIndex = item.persons.findIndex((p: string) => p === user.id);
@@ -115,7 +101,6 @@ export const SelectedList: FC = () => {
 			const updatedCategory = list[item.category];
 			updatedCategory.splice(catIndex, 1, updatedItem);
 			list[item.category] = updatedCategory;
-			console.log(list);
 		} else {
 			const updatedItem = {
 				...item,
@@ -127,36 +112,23 @@ export const SelectedList: FC = () => {
 			);
 			updatedCategory.splice(catIndex, 1, updatedItem);
 			list[item.category] = updatedCategory;
-			console.log(list);
 		}
-
-		//==============================================================
-		//==============================================================
-		// console.log(index);
-		// mutation.mutate({
-		// 	tourId: tripId ? tripId : "",
-		// 	equipItemId: item._id,
-		// });
-		// const index = item.persons.findIndex((el: string) => el === user.id);
-		// if (index === -1) {
-		// 	item.persons.push(user.id);
-		// } else {
-		// 	item.persons.splice(index, 1);
-		// }
 	};
-	let timerId: any = null;
+
 	const onUpdateItem = (item: Record<string, any>) => {
-		console.log(timerId);
 		if (timerId !== null) {
 			clearTimeout(timerId);
-			console.log("таймер скинуто");
 		}
 
 		handleCheckedItem(item);
 
-		timerId = setTimeout(() => {
-			console.log(`go http://localhost:5713/updateItems`);
-		}, 10000);
+		const timer = setTimeout(() => {
+			mutation.mutate({
+				equipId: data.trip.equipListId,
+				newList: data.trip.equipList,
+			});
+		}, 5000);
+		setTimerId(timer);
 	};
 	return (
 		<>
@@ -186,13 +158,15 @@ export const SelectedList: FC = () => {
 													a.name.localeCompare(b.name, "uk"),
 												)
 												.map((categoryItem: any) => (
-													<CategoryItem
-														handleCheckedItem={onUpdateItem}
-														handleShowInfo={handleShowInfo}
-														isEditing={isEditing}
-														item={categoryItem}
-														user={user}
-													/>
+													<div key={categoryItem._id}>
+														<CategoryItem
+															handleCheckedItem={onUpdateItem}
+															handleShowInfo={handleShowInfo}
+															isEditing={isEditing}
+															item={categoryItem}
+															user={user}
+														/>
+													</div>
 												))}
 										</>
 									)}

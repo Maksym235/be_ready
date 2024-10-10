@@ -95,3 +95,26 @@ export const addUserToTrip = async ({ tripId, userId }: IAddNewUserToTrip) => {
 		console.log(error);
 	}
 };
+
+interface IUpdateList {
+	equipId: string;
+	newList: any;
+}
+
+export const updateList = async (data: IUpdateList) => {
+	try {
+		const resp = await axios.post(
+			`/equipList/${data.equipId}/update`,
+			data.newList,
+			{
+				headers: {
+					Authorization: "Bearer " + window.localStorage.getItem("token"),
+				},
+			},
+		);
+		return resp.data;
+	} catch (error: any) {
+		if (error.response.status === 401) toast.error("Потрібно авторизуватися");
+		console.log(error);
+	}
+};
