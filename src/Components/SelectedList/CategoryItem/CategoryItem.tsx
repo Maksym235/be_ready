@@ -3,7 +3,6 @@ import styles from './CategoryItem.module.css';
 import info_icon from '../../../assets/SelectedList/icon_info.svg';
 import checkbox from '../../../assets/SelectedList/checkbox.svg';
 import checkbox_ch from '../../../assets/SelectedList/checkbox_ch.svg';
-import plus_icon from '../../../assets/Modals/icon_plus.svg';
 export interface ICategoryItemProps {
   user: any;
   item: any;
@@ -16,7 +15,6 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
   user,
   handleCheckedItem,
   handleShowInfo,
-  isEditing,
 }) => {
   return (
     <div key={item._id}>
