@@ -1,25 +1,25 @@
 .container {
-	/* padding-top: 55px; */
-	margin-left: 20px;
-	margin-right: 20px;
-	overflow-y: auto;
-	max-height: 100%;
+  /* padding-top: 55px; */
+  margin-left: 20px;
+  margin-right: 20px;
+  overflow-y: auto;
+  max-height: 100%;
 }
 
 .categories_wrapper {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 60px;
 }
 
 .category {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	/* width: 350px; */
-	padding: 8px 16px;
-	gap: 16px;
-	border-radius: 16px;
-	border: 1px solid var(--light-silver, #cecece);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* width: 350px; */
+  padding: 8px 16px;
+  gap: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--light-silver, #cecece);
 }

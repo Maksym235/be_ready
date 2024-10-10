@@ -1,48 +1,51 @@
-@import "normalize.css";
+@import 'normalize.css';
 
 @font-face {
-	font-family: "Neue Montreal";
-	src: local("NeueMontreal-Medium.ttf"),
-		url("./assets/fonts/NeueMontreal-Medium.ttf") format("woff");
-}
-
-@font-face {
-	font-family: "NM-regular";
-	src: local("NeueMontreal-Regular.ttf"),
-		url("./assets/fonts/NeueMontreal-Regular.ttf") format("woff");
+  font-family: 'Neue Montreal';
+  src:
+    local('NeueMontreal-Medium.ttf'),
+    url('./assets/fonts/NeueMontreal-Medium.ttf') format('woff');
 }
 
 @font-face {
-	font-family: "Founders Grotesk";
-	src: local("FoundersGrotesk-Medium.ttf"),
-		url("./assets/fonts/FoundersGrotesk-Medium.ttf") format("woff");
+  font-family: 'NM-regular';
+  src:
+    local('NeueMontreal-Regular.ttf'),
+    url('./assets/fonts/NeueMontreal-Regular.ttf') format('woff');
 }
-:root[data-theme="light"] {
-	--bodyBcg: #f1e8e6;
-	--cardBg: #edd2cb;
-	/*--sideBarBg: #361d32;*/
-	--sideBarBg: #fff;
-	--activePage: #feeeee;
-	--blackColor: #000;
-	--curentPageColor: rgba(237, 210, 203, 0.2);
-	--accentColor: #f55951;
-	--silverColor: #9c9aa8;
-	--ligthSilverColor: #f7f7f7;
-	--creamColor: #eeeeee;
-	--disabledColor: #e8e8e8;
+
+@font-face {
+  font-family: 'Founders Grotesk';
+  src:
+    local('FoundersGrotesk-Medium.ttf'),
+    url('./assets/fonts/FoundersGrotesk-Medium.ttf') format('woff');
 }
-:root[data-theme="dark"] {
-	--bodyBcg: #000;
+:root[data-theme='light'] {
+  --bodyBcg: #f1e8e6;
+  --cardBg: #edd2cb;
+  /*--sideBarBg: #361d32;*/
+  --sideBarBg: #fff;
+  --activePage: #feeeee;
+  --blackColor: #000;
+  --curentPageColor: rgba(237, 210, 203, 0.2);
+  --accentColor: #f55951;
+  --silverColor: #9c9aa8;
+  --ligthSilverColor: #f7f7f7;
+  --creamColor: #eeeeee;
+  --disabledColor: #e8e8e8;
+}
+:root[data-theme='dark'] {
+  --bodyBcg: #000;
 }
 :root {
   --mobile: max-width: 767px;
   --table: min-width: 768px;
   --desktop: min-width: 1440px;
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-text-size-adjust: 100%;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 }
 h1,
 h2,
@@ -50,36 +53,36 @@ h3,
 h4,
 h5,
 h6 {
-	margin-top: 0;
-	margin-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 ul,
 ol {
-	list-style: none;
-	margin-top: 0;
-	margin-bottom: 0;
-	padding-left: 0;
+  list-style: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
 }
 
 button {
-	cursor: pointer;
+  cursor: pointer;
 }
 img {
-	display: block;
+  display: block;
 }
 
 p {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 body {
-	font-family: "Neue Montreal", serif;
+  font-family: 'Neue Montreal', serif;
 }
 
 /* @media (min-width: 390px) {

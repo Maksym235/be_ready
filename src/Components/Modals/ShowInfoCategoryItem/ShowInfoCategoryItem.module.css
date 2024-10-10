@@ -1,186 +1,186 @@
 .container {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	margin: 0 20px 16px 20px;
-	gap: 24px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 20px 16px 20px;
+  gap: 24px;
 }
 
 .input_container {
-	display: flex;
-	gap: 8px;
+  display: flex;
+  gap: 8px;
 }
 
 .input {
-	display: flex;
-	/* width: 317px; */
-	/* height: 44px; */
-	padding: 8px 16px;
-	align-items: center;
-	gap: 10px;
-	flex-shrink: 0;
-	border-radius: 40px;
-	border: 1px solid var(--light-silver, #cecece);
+  display: flex;
+  /* width: 317px; */
+  /* height: 44px; */
+  padding: 8px 16px;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 40px;
+  border: 1px solid var(--light-silver, #cecece);
 }
 
 .edit_btn {
-	background-color: transparent;
-	border: none;
+  background-color: transparent;
+  border: none;
 }
 
 .count_wrapper {
-	display: flex;
-	width: 70px;
-	padding: 4px 8px;
-	justify-content: space-between;
-	align-items: center;
-	border-radius: 24px;
-	background: var(--light-blue, #ecf4fe);
+  display: flex;
+  width: 70px;
+  padding: 4px 8px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 24px;
+  background: var(--light-blue, #ecf4fe);
 }
 
 .label {
-	color: var(--black, #0d0d0d);
-	font-family: "Neue Montreal";
-	font-size: 13px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	margin-bottom: 8px;
+  color: var(--black, #0d0d0d);
+  font-family: 'Neue Montreal';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 8px;
 }
 
 .persons_wrapper {
-	display: flex;
-	justify-content: flex-start;
-	gap: 8px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
 }
 
 .person_block {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 4px;
-	position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  position: relative;
 }
 .person_icon {
-	width: 18px;
-	height: 18px;
-	flex-shrink: 0;
-	color: var(--accent, #458ef7);
-	text-align: center;
-	font-family: "Founders Grotesk";
-	font-size: 24px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 28px; /* 116.667% */
-	text-transform: uppercase;
-	padding: 20px;
-	background-color: rgba(69, 142, 247, 0.2);
-	border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--accent, #458ef7);
+  text-align: center;
+  font-family: 'Founders Grotesk';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px; /* 116.667% */
+  text-transform: uppercase;
+  padding: 20px;
+  background-color: rgba(69, 142, 247, 0.2);
+  border-radius: 50%;
 }
 
 .person_icon_disabled {
-	color: var(--silver, #939393);
-	background-color: rgba(147, 147, 147, 0.2);
+  color: var(--silver, #939393);
+  background-color: rgba(147, 147, 147, 0.2);
 }
 
 .person_name {
-	color: var(--accent, #458ef7);
-	text-align: center;
-	font-family: "Neue Montreal";
-	font-size: 10px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
+  color: var(--accent, #458ef7);
+  text-align: center;
+  font-family: 'Neue Montreal';
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .person_name_disabled {
-	color: var(--silver, #939393);
+  color: var(--silver, #939393);
 }
 
 .person_counter {
-	position: absolute;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	top: -5px;
-	right: -5px;
-	background-color: #e73a2e;
-	padding: 5px;
-	width: 15px;
-	height: 15px;
-	border-radius: 50%;
-	color: #fff;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -5px;
+  right: -5px;
+  background-color: #e73a2e;
+  padding: 5px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  color: #fff;
 }
 
 .person_counter_disabled {
-	color: var(--silver, #939393);
-	background-color: #dcdcdc;
+  color: var(--silver, #939393);
+  background-color: #dcdcdc;
 }
 
 .btn_wrapper {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .save {
-	display: flex;
-	width: 350px;
-	height: 44px;
-	padding: 8px 24px;
-	justify-content: space-between;
-	align-items: center;
-	border-radius: 40px;
-	background: var(--accent, #458ef7);
-	color: var(--white, #fff);
-	font-family: "Neue Montreal";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	border: none;
-	position: relative;
-	text-transform: uppercase;
+  display: flex;
+  width: 350px;
+  height: 44px;
+  padding: 8px 24px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 40px;
+  background: var(--accent, #458ef7);
+  color: var(--white, #fff);
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  position: relative;
+  text-transform: uppercase;
 }
 
 .save::after {
-	content: "";
-	position: absolute;
-	top: 18px;
-	right: 24px;
-	width: 8px;
-	height: 8px;
-	background-color: #fff;
-	border-radius: 50%;
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
 }
 .cancel {
-	display: flex;
-	width: 350px;
-	height: 44px;
-	padding: 8px 24px;
-	justify-content: space-between;
-	align-items: center;
-	border-radius: 40px;
-	color: var(--accent, #458ef7);
-	font-family: "Neue Montreal";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	border: 2px solid var(--accent, #458ef7);
-	text-transform: uppercase;
-	position: relative;
-	background-color: #fff;
+  display: flex;
+  width: 350px;
+  height: 44px;
+  padding: 8px 24px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 40px;
+  color: var(--accent, #458ef7);
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: 2px solid var(--accent, #458ef7);
+  text-transform: uppercase;
+  position: relative;
+  background-color: #fff;
 }
 
 .cancel::after {
-	content: "";
-	position: absolute;
-	top: 18px;
-	right: 24px;
-	width: 8px;
-	height: 8px;
-	background-color: #458ef7;
-	border-radius: 50%;
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  background-color: #458ef7;
+  border-radius: 50%;
 }

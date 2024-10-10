@@ -1,52 +1,52 @@
 .container {
-	margin-top: 34px;
+  margin-top: 34px;
 }
 
 .toggle_wrapper {
-	display: flex;
-	justify-content: space-around;
-	width: 352px;
-	background-color: #ecf4fe;
-	border-radius: 15px;
-	margin-left: auto;
-	margin-right: auto;
-	position: relative;
+  display: flex;
+  justify-content: space-around;
+  width: 352px;
+  background-color: #ecf4fe;
+  border-radius: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
 }
 
 .toggle_background {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 50%;
-	height: 100%;
-	background-color: #007bff;
-	border-radius: 15px;
-	transition: left 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #007bff;
+  border-radius: 15px;
+  transition: left 0.3s ease;
 }
 
 .left {
-	left: 0;
+  left: 0;
 }
 
 .right {
-	left: 50%;
+  left: 50%;
 }
 
 .btn {
-	color: #939393;
-	text-align: center;
-	font-family: "Neue Montreal";
-	font-size: 13px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	background-color: transparent;
-	border: none;
-	padding: 4px 63px;
-	transition: all 0.3s ease;
-	z-index: 2;
+  color: #939393;
+  text-align: center;
+  font-family: 'Neue Montreal';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background-color: transparent;
+  border: none;
+  padding: 4px 63px;
+  transition: all 0.3s ease;
+  z-index: 2;
 }
 
 .active {
-	color: #fff;
+  color: #fff;
 }

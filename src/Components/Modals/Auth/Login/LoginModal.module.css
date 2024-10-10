@@ -1,177 +1,177 @@
 .form {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	gap: 8px;
-	margin: 0 20px 8px 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 20px 8px 20px;
 }
 
 .input {
-	display: flex;
-	width: 350px;
-	padding: 8px 0px;
-	align-items: center;
-	gap: 2px;
-	border: none;
-	border-bottom: 2px solid var(--black, #0d0d0d);
+  display: flex;
+  width: 350px;
+  padding: 8px 0px;
+  align-items: center;
+  gap: 2px;
+  border: none;
+  border-bottom: 2px solid var(--black, #0d0d0d);
 }
 
 .input::placeholder {
-	color: var(--silver, #939393);
+  color: var(--silver, #939393);
 
-	/* main text */
-	font-family: "NM-regular";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
+  /* main text */
+  font-family: 'NM-regular';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .sing_up {
-	display: flex;
-	width: 167px;
-	height: 44px;
-	padding: 8px 24px;
-	justify-content: space-between;
-	align-items: center;
-	border: none;
-	border-radius: 40px;
-	background: var(--accent, #458ef7);
-	color: var(--white, #fff);
-	text-align: right;
-	font-family: "Neue Montreal";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	position: relative;
-	text-transform: uppercase;
+  display: flex;
+  width: 167px;
+  height: 44px;
+  padding: 8px 24px;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  border-radius: 40px;
+  background: var(--accent, #458ef7);
+  color: var(--white, #fff);
+  text-align: right;
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  position: relative;
+  text-transform: uppercase;
 }
 
 .sing_up::after {
-	content: "";
-	position: absolute;
-	top: 18px;
-	right: 24px;
-	width: 8px;
-	height: 8px;
-	background-color: #fff;
-	border-radius: 50%;
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
 }
 
 .btn_wrapper {
-	margin-top: 16px;
-	display: flex;
-	gap: 16px;
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
 }
 
 .google {
-	display: flex;
-	width: 167px;
-	height: 44px;
-	padding: 8px 24px;
-	justify-content: center;
-	align-items: center;
-	gap: 8px;
-	border: none;
-	border-radius: 40px;
-	background: var(--accent, #458ef7);
-	color: var(--white, #fff);
-	text-align: right;
+  display: flex;
+  width: 167px;
+  height: 44px;
+  padding: 8px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 40px;
+  background: var(--accent, #458ef7);
+  color: var(--white, #fff);
+  text-align: right;
 
-	/* list item */
-	font-family: "Neue Montreal";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	text-transform: uppercase;
+  /* list item */
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
 }
 
 .resetPass {
-	display: flex;
-	width: 350px;
-	height: 44px;
-	padding: 8px 24px;
-	margin-bottom: 40px;
-	margin-left: auto;
-	margin-right: auto;
-	justify-content: space-between;
-	align-items: center;
-	flex-shrink: 0;
-	border: none;
-	border-radius: 40px;
-	border: 2px solid var(--accent, #458ef7);
-	background-color: #fff;
-	color: var(--accent, #458ef7);
-	text-align: right;
-	font-family: "Neue Montreal";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	position: relative;
+  display: flex;
+  width: 350px;
+  height: 44px;
+  padding: 8px 24px;
+  margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 40px;
+  border: 2px solid var(--accent, #458ef7);
+  background-color: #fff;
+  color: var(--accent, #458ef7);
+  text-align: right;
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  position: relative;
 }
 
 .resetPass::after {
-	content: "";
-	position: absolute;
-	top: 18px;
-	right: 24px;
-	width: 8px;
-	height: 8px;
-	background-color: #458ef7;
-	border-radius: 50%;
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  background-color: #458ef7;
+  border-radius: 50%;
 }
 
 .alredy_have_acc_block {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 8px;
-	margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 60px;
 }
 
 .alredy_have_acc_text {
-	color: var(--accent, #458ef7);
+  color: var(--accent, #458ef7);
 
-	/* h4 */
-	font-family: "Founders Grotesk";
-	font-size: 18px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 24px; /* 133.333% */
+  /* h4 */
+  font-family: 'Founders Grotesk';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
 }
 
 .sing_in {
-	display: flex;
-	width: 350px;
-	height: 44px;
-	padding: 8px 24px;
-	justify-content: space-between;
-	align-items: center;
-	border: none;
-	border-radius: 40px;
-	background: var(--accent, #458ef7);
-	color: var(--white, #fff);
-	/* list item */
-	font-family: "Neue Montreal";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	text-transform: uppercase;
-	position: relative;
+  display: flex;
+  width: 350px;
+  height: 44px;
+  padding: 8px 24px;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  border-radius: 40px;
+  background: var(--accent, #458ef7);
+  color: var(--white, #fff);
+  /* list item */
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+  position: relative;
 }
 
 .sing_in::after {
-	content: "";
-	position: absolute;
-	top: 18px;
-	right: 24px;
-	width: 8px;
-	height: 8px;
-	background-color: #fff;
-	border-radius: 50%;
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
 }

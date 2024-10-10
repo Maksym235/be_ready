@@ -1,7 +1,7 @@
-import { FC, useState } from "react";
-import { ModalContainer } from "../ModalContainer/ModalContainer";
-import styles from "./AddNewCategory.module.css";
-import axios from "axios";
+import { FC, useState } from 'react';
+import { ModalContainer } from '../ModalContainer/ModalContainer';
+import styles from './AddNewCategory.module.css';
+import axios from 'axios';
 interface IProps {
   toggleModal: () => void;
   isOpen: boolean;
@@ -12,14 +12,14 @@ export const AddNewCategory: FC<IProps> = ({
   isOpen,
   refetch,
 }) => {
-  const [categoryName, setCategoryName] = useState("");
-  const [categoryCategory, setCategoryCategory] = useState("");
-  const [categoryDesc, setCategoryDesc] = useState("");
+  const [categoryName, setCategoryName] = useState('');
+  const [categoryCategory, setCategoryCategory] = useState('');
+  const [categoryDesc, setCategoryDesc] = useState('');
   const handleSetCategoryName = (evt: React.FormEvent<HTMLInputElement>) => {
     setCategoryName(evt.currentTarget.value);
   };
   const handleSetCategoryCategory = (
-    evt: React.FormEvent<HTMLInputElement>,
+    evt: React.FormEvent<HTMLInputElement>
   ) => {
     setCategoryCategory(evt.currentTarget.value);
   };
@@ -37,9 +37,9 @@ export const AddNewCategory: FC<IProps> = ({
         },
         {
           headers: {
-            Authorization: "Bearer " + window.localStorage.getItem("token"),
+            Authorization: 'Bearer ' + window.localStorage.getItem('token'),
           },
-        },
+        }
       );
       console.log(resp);
       if (resp.status === 200) {
@@ -54,26 +54,26 @@ export const AddNewCategory: FC<IProps> = ({
     <ModalContainer
       toggleModal={toggleModal}
       isOpen={isOpen}
-      title="New category"
+      title='New category'
     >
       <div className={styles.container}>
         <input
           onChange={handleSetCategoryName}
           className={styles.input}
-          type="text"
-          placeholder="Enter new category name...*"
+          type='text'
+          placeholder='Enter new category name...*'
         />
         <input
           onChange={handleSetCategoryCategory}
           className={styles.input}
-          type="text"
-          placeholder="Enter new category category...*"
+          type='text'
+          placeholder='Enter new category category...*'
         />
         <input
           onChange={handleSetCategoryDesc}
           className={styles.input}
-          type="text"
-          placeholder="Enter new category desc...*"
+          type='text'
+          placeholder='Enter new category desc...*'
         />
         <div className={styles.btn_wrapper}>
           <button

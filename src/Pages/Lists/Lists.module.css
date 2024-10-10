@@ -1,12 +1,12 @@
 .main {
-	/* height: calc(100dvh - 88px);
+  /* height: calc(100dvh - 88px);
 	padding-top: 88px; */
-	height: 100dvh;
-	background-color: #fff;
+  height: 100dvh;
+  background-color: #fff;
 }
 
 .plus_btn {
-	position: absolute;
-	bottom: 24px;
-	right: 20px;
+  position: absolute;
+  bottom: 24px;
+  right: 20px;
 }

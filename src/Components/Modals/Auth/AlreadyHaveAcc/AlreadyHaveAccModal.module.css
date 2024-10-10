@@ -1,107 +1,107 @@
 .container {
-	display: flex;
-	flex-direction: column;
-	margin: 0 20px 179px 20px;
-	gap: 16px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px 179px 20px;
+  gap: 16px;
 }
 
 .text_wrapper {
-	display: flex;
-	flex-direction: column;
-	gap: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .incorectData {
-	color: #458ef7;
+  color: #458ef7;
 
-	/* h4 */
-	font-family: "Founders Grotesk";
-	font-size: 18px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 24px; /* 133.333% */
+  /* h4 */
+  font-family: 'Founders Grotesk';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
 }
 
 .information {
-	color: var(--black, #0d0d0d);
+  color: var(--black, #0d0d0d);
 
-	/* main text */
-	font-family: "NM-regular";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
+  /* main text */
+  font-family: 'NM-regular';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .btn_wrapper {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .try_again {
-	display: flex;
-	width: 350px;
-	height: 44px;
-	padding: 8px 24px;
-	justify-content: space-between;
-	align-items: center;
-	border: none;
-	border-radius: 40px;
-	background: var(--accent, #458ef7);
-	color: var(--white, #fff);
-	text-align: right;
+  display: flex;
+  width: 350px;
+  height: 44px;
+  padding: 8px 24px;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  border-radius: 40px;
+  background: var(--accent, #458ef7);
+  color: var(--white, #fff);
+  text-align: right;
 
-	/* list item */
-	font-family: "Neue Montreal";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	position: relative;
-	text-transform: uppercase;
+  /* list item */
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  position: relative;
+  text-transform: uppercase;
 }
 
 .try_again::after {
-	content: "";
-	position: absolute;
-	top: 18px;
-	right: 24px;
-	width: 8px;
-	height: 8px;
-	background-color: #fff;
-	border-radius: 50%;
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
 }
 
 .reset_password {
-	display: flex;
-	width: 350px;
-	height: 44px;
-	padding: 8px 24px;
-	justify-content: space-between;
-	align-items: center;
-	border-radius: 40px;
-	border: 2px solid var(--accent, #458ef7);
-	color: var(--accent, #458ef7);
-	text-align: right;
-	background-color: #fff;
-	/* list item */
-	font-family: "Neue Montreal";
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
-	position: relative;
-	text-transform: uppercase;
+  display: flex;
+  width: 350px;
+  height: 44px;
+  padding: 8px 24px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 40px;
+  border: 2px solid var(--accent, #458ef7);
+  color: var(--accent, #458ef7);
+  text-align: right;
+  background-color: #fff;
+  /* list item */
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  position: relative;
+  text-transform: uppercase;
 }
 
 .reset_password::after {
-	content: "";
-	position: absolute;
-	top: 18px;
-	right: 24px;
-	width: 8px;
-	height: 8px;
-	background-color: #458ef7;
-	border-radius: 50%;
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  background-color: #458ef7;
+  border-radius: 50%;
 }
