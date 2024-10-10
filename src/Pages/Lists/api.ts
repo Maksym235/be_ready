@@ -96,6 +96,60 @@ export const addUserToTrip = async ({ tripId, userId }: IAddNewUserToTrip) => {
   }
 };
 
+export interface IAddNewCategory {
+  listId: string;
+  categoryName: string;
+}
+
+export const addNewCategory = async ({
+  listId,
+  categoryName,
+}: IAddNewCategory) => {
+  try {
+    const resp = await axios.post(
+      `/equipList/${listId}/addNewCategory`,
+      {
+        name: categoryName,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
+    return resp.data;
+  } catch (error: any) {
+    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
+    console.log(error);
+  }
+};
+
+export interface IAddNewItemToCategory {
+  listId: string;
+  itemData: {
+    category: string;
+    name: string;
+    description: string;
+  };
+}
+
+export const addNewItemToCategory = async ({
+  listId,
+  itemData,
+}: IAddNewItemToCategory) => {
+  try {
+    const resp = await axios.post(`/equipList/${listId}/addNewItem`, itemData, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
+    return resp.data;
+  } catch (error: any) {
+    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
+    console.log(error);
+  }
+};
+
 interface IUpdateList {
   equipId: string;
   newList: any;

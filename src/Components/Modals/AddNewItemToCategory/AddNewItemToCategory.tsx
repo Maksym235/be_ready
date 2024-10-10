@@ -1,26 +1,28 @@
 import { FC } from 'react';
-import { ModalContainer } from '../ModalContainer/ModalContainer';
-import styles from './AddNewCategory.module.css';
-import { useFormik } from 'formik';
+import styles from './AddNewItemToCategory.module.css';
 import { useMutation } from '@tanstack/react-query';
-import { addNewCategory } from '../../../Pages/Lists/api';
+import { useFormik } from 'formik';
+import { ModalContainer } from '../ModalContainer/ModalContainer';
+import { addNewItemToCategory } from '../../../Pages/Lists/api';
 interface IProps {
   toggleModal: (key: string) => void;
   isOpen: boolean;
   refetch: any;
+  category: string;
   listId: string;
 }
-export const AddNewCategory: FC<IProps> = ({
+export const AddNewItemToCategory: FC<IProps> = ({
   toggleModal,
   isOpen,
   refetch,
   listId,
+  category,
 }) => {
   const mutation = useMutation({
-    mutationFn: addNewCategory,
+    mutationFn: addNewItemToCategory,
     onSuccess: () => {
       refetch();
-      toggleModal('newCategory');
+      toggleModal('newItem');
     },
   });
   // const validate = (values: { name: string; category: string }) => {
@@ -39,20 +41,29 @@ export const AddNewCategory: FC<IProps> = ({
   const formik = useFormik({
     initialValues: {
       name: '',
+      category: category,
+      description: '',
     },
     // validate,
     onSubmit: (values) => {
       console.log(values);
       mutation.mutate({
         listId,
-        categoryName: values.name,
+        itemData: {
+          name: values.name,
+          category: values.category,
+          description: values.description,
+        },
       });
-      // alert({ values });
+      alert({ values });
     },
   });
   return (
     <ModalContainer
-      toggleModal={() => toggleModal('newCategory')}
+      toggleModal={() => {
+        toggleModal('newItem');
+        formik.resetForm();
+      }}
       isOpen={isOpen}
       title='New category'
     >
@@ -71,12 +82,13 @@ export const AddNewCategory: FC<IProps> = ({
             <p className={styles.error_msg}>{formik.errors.name}</p>
           ) : null}
         </label>
-        {/* <label className={styles.label}>
+        <label className={styles.label}>
           <input
             className={styles.input}
             id='category'
             name='category'
             type='text'
+            disabled
             onChange={formik.handleChange}
             value={formik.values.category}
             placeholder='Enter new category category...*'
@@ -95,7 +107,7 @@ export const AddNewCategory: FC<IProps> = ({
             value={formik.values.description}
             placeholder='Enter new category desc...*'
           />
-        </label> */}
+        </label>
         <div className={styles.btn_wrapper}>
           <button
             type='submit'
@@ -110,7 +122,10 @@ export const AddNewCategory: FC<IProps> = ({
           </button>
           <button
             type='button'
-            onClick={() => toggleModal('NewCategory')}
+            onClick={() => {
+              toggleModal('newItem');
+              formik.resetForm();
+            }}
             className={styles.cancel}
           >
             Cancel

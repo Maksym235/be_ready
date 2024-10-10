@@ -49,12 +49,6 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
           alt='information icon'
         />
       </div>
-      {isEditing && (
-        <button className={styles.add_category_item}>
-          <img src={plus_icon} alt='add item icon' />
-          <p className={styles.add_category_item_text}>Add Item</p>
-        </button>
-      )}
     </div>
   );
 };

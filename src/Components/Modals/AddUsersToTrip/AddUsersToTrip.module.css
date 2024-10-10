@@ -16,6 +16,17 @@
   outline: none;
 }
 
+.select {
+  display: flex;
+  width: 350px;
+  padding: 8px 0px;
+  align-items: center;
+  gap: 2px;
+  border: none;
+  border-bottom: 2px solid #0d0d0d;
+  outline: none;
+}
+
 .input::placeholder {
   color: var(--silver, #939393);
   font-family: 'Neue Montreal';

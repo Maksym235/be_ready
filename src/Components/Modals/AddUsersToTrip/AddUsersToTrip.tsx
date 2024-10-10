@@ -1,9 +1,10 @@
 import { FC, FormEvent, useState } from 'react';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import styles from './AddUsersToTrip.module.css';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addUserToTrip } from '../../../Pages/Lists/api';
 import { useParams } from 'react-router-dom';
+import { getCurrent } from '../../../Pages/Home/api';
 interface IProps {
   toggleModal: () => void;
   isOpen: boolean;
@@ -20,10 +21,18 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
-  if (isPending) {
+  const {
+    data,
+    isLoading,
+    isError: isErrorCurrent,
+  } = useQuery({
+    queryKey: ['user'],
+    queryFn: getCurrent,
+  });
+  if (isPending || isLoading) {
     return <div>Loading...</div>;
   }
-  if (isError) {
+  if (isError || isErrorCurrent) {
     return <div>Error</div>;
   }
   const handdleSetUserId = (evt: FormEvent<HTMLInputElement>) => {
@@ -36,6 +45,10 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
   if (isSuccess) {
     toggleModal();
   }
+  const handleSelectFriend = (evt: any) => {
+    console.log(evt.target.value);
+    setUserId(evt.target.value);
+  };
   return (
     <ModalContainer
       toggleModal={toggleModal}
@@ -47,8 +60,22 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
           onChange={handdleSetUserId}
           className={styles.input}
           type='text'
+          value={userId}
           placeholder='Enter new user id...*'
         />
+        <select
+          className={styles.select}
+          onChange={handleSelectFriend}
+          name='friends'
+          id=''
+        >
+          <option value=''>select friend</option>
+          {data.user.friends.map((friend: { name: string; _id: string }) => (
+            <option className={styles.select_option} value={friend._id}>
+              {friend.name}
+            </option>
+          ))}
+        </select>
         <div className={styles.btn_wrapper}>
           <button
             onClick={handleSubmitUser}

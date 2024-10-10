@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import styles from './SelectedList.module.css';
 import plus_icon from '../../assets/Modals/icon_plus.svg';
@@ -16,6 +16,7 @@ import { getToursById, updateList } from '../../Pages/Lists/api';
 import { getUsersById } from '../../Pages/Home/api';
 import { CategoryTitle } from './CategoryTitle/CategoryTitle';
 import { CategoryItem } from './CategoryItem/CategoryItem';
+import { AddNewItemToCategory } from '../Modals/AddNewItemToCategory/AddNewItemToCategory';
 export interface ICategoryItem {
   _id: string;
   name: string;
@@ -27,10 +28,12 @@ export const SelectedList: FC = () => {
   const [opensCategories, setOpensCategories] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [infoItem, setInfoItem] = useState<any>(null);
-  const [isOpenNewCategory, setIsOpenNewCategory] = useState(false);
+  const [isOpenAddModals, setIsOpenAddModals] = useState(false);
   const [itemPersons, setItemPersons] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [timerId, setTimerId] = useState<any>(null);
+  const [currentModal, setCurrentModal] = useState('newCategory');
+  const [currentCategory, setCurrentCategory] = useState('');
   const listId = useParams();
   const tripId = listId.id;
   const location = useLocation();
@@ -69,9 +72,11 @@ export const SelectedList: FC = () => {
     }
     toggleIsOpen();
   };
-  const toggleIsOpenNewCategory = () => {
-    setIsOpenNewCategory((state) => !state);
+  const toggleIsOpenAddModal = (key: string) => {
+    setCurrentModal(key);
+    setIsOpenAddModals((state) => !state);
   };
+
   const toggleOpenCategory = (id: string) => {
     if (opensCategories.includes(id)) {
       setOpensCategories(opensCategories.filter((el) => el !== id));
@@ -130,6 +135,25 @@ export const SelectedList: FC = () => {
     }, 5000);
     setTimerId(timer);
   };
+  const modals: Record<string, ReactNode> = {
+    newCategory: (
+      <AddNewCategory
+        listId={data.trip && data.trip.equipListId}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+        refetch={refetch}
+      />
+    ),
+    newItem: (
+      <AddNewItemToCategory
+        category={currentCategory}
+        listId={data.trip && data.trip.equipListId}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+        refetch={refetch}
+      />
+    ),
+  };
   return (
     <>
       <SelectedListHeader
@@ -170,10 +194,23 @@ export const SelectedList: FC = () => {
                         ))}
                     </>
                   )}
+                  {isEditing && opensCategories.includes(category) && (
+                    <button
+                      onClick={() => {
+                        console.log(category);
+                        setCurrentCategory(category);
+                        toggleIsOpenAddModal('newItem');
+                      }}
+                      className={styles.add_category_item}
+                    >
+                      <img src={plus_icon} alt='add item icon' />
+                      <p className={styles.add_category_item_text}>Add Item</p>
+                    </button>
+                  )}
                 </div>
               ))}
           <button
-            onClick={toggleIsOpenNewCategory}
+            onClick={() => toggleIsOpenAddModal('newCategory')}
             className={styles.add_category}
           >
             Add category
@@ -189,11 +226,7 @@ export const SelectedList: FC = () => {
         isOpen={isOpen}
         toggleModal={toggleIsOpen}
       />
-      <AddNewCategory
-        isOpen={isOpenNewCategory}
-        toggleModal={toggleIsOpenNewCategory}
-        refetch={refetch}
-      />
+      {modals[currentModal]}
     </>
   );
 };
