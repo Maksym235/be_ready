@@ -18,7 +18,7 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
     mutationFn: addUserToTrip,
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['user'] });
+      // queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
   const {
@@ -26,7 +26,7 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
     isLoading,
     isError: isErrorCurrent,
   } = useQuery({
-    queryKey: ['user'],
+    queryKey: ['current'],
     queryFn: getCurrent,
   });
   if (isPending || isLoading) {
