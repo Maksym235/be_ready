@@ -1,18 +1,18 @@
 .container {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .plus_btn {
-	position: fixed;
-	bottom: 24px;
-	right: 20px;
-	border: 2px solid #fff;
-	border-radius: 50%;
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  border: 2px solid #fff;
+  border-radius: 50%;
 }
 .friends_container {
-	display: flex;
-	flex-direction: column;
-	gap: 24px;
-	margin: 20px 20px 0 20px;
-	padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 20px 20px 0 20px;
+  padding-bottom: 30px;
 }

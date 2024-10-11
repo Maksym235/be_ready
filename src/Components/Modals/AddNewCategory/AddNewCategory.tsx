@@ -1,91 +1,122 @@
-import { FC, useState } from "react";
-import { ModalContainer } from "../ModalContainer/ModalContainer";
-import styles from "./AddNewCategory.module.css";
-import axios from "axios";
+import { FC } from 'react';
+import { ModalContainer } from '../ModalContainer/ModalContainer';
+import styles from './AddNewCategory.module.css';
+import { useFormik } from 'formik';
+import { useMutation } from '@tanstack/react-query';
+import { addNewCategory } from '../../../Pages/Lists/api';
 interface IProps {
-  toggleModal: () => void;
+  toggleModal: (key: string) => void;
   isOpen: boolean;
   refetch: any;
+  listId: string;
 }
 export const AddNewCategory: FC<IProps> = ({
   toggleModal,
   isOpen,
   refetch,
+  listId,
 }) => {
-  const [categoryName, setCategoryName] = useState("");
-  const [categoryCategory, setCategoryCategory] = useState("");
-  const [categoryDesc, setCategoryDesc] = useState("");
-  const handleSetCategoryName = (evt: React.FormEvent<HTMLInputElement>) => {
-    setCategoryName(evt.currentTarget.value);
-  };
-  const handleSetCategoryCategory = (
-    evt: React.FormEvent<HTMLInputElement>,
-  ) => {
-    setCategoryCategory(evt.currentTarget.value);
-  };
-  const handleSetCategoryDesc = (evt: React.FormEvent<HTMLInputElement>) => {
-    setCategoryDesc(evt.currentTarget.value);
-  };
-  const handleAddNewItem = async () => {
-    try {
-      const resp = await axios.post(
-        `http://localhost:8080/tours/66e491a111e5d62646dd0ce3/addNewItem`,
-        {
-          name: categoryName,
-          description: categoryDesc,
-          category: categoryCategory,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + window.localStorage.getItem("token"),
-          },
-        },
-      );
-      console.log(resp);
-      if (resp.status === 200) {
-        refetch();
-        toggleModal();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const mutation = useMutation({
+    mutationFn: addNewCategory,
+    onSuccess: () => {
+      refetch();
+      toggleModal('newCategory');
+    },
+  });
+  // const validate = (values: { name: string; category: string }) => {
+  //   const errors: Record<string, undefined | string> = {
+  //     name: undefined,
+  //     category: undefined,
+  //   };
+  //   if (!values.name) {
+  //     errors.name = 'Required';
+  //   }
+  //   if (!values.category) {
+  //     errors.category = 'Required';
+  //   }
+  //   return errors;
+  // };
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+    },
+    // validate,
+    onSubmit: (values) => {
+      console.log(values);
+      mutation.mutate({
+        listId,
+        categoryName: values.name,
+      });
+      // alert({ values });
+    },
+  });
   return (
     <ModalContainer
-      toggleModal={toggleModal}
+      toggleModal={() => toggleModal('newCategory')}
       isOpen={isOpen}
-      title="New category"
+      title='New category'
     >
-      <div className={styles.container}>
-        <input
-          onChange={handleSetCategoryName}
-          className={styles.input}
-          type="text"
-          placeholder="Enter new category name...*"
-        />
-        <input
-          onChange={handleSetCategoryCategory}
-          className={styles.input}
-          type="text"
-          placeholder="Enter new category category...*"
-        />
-        <input
-          onChange={handleSetCategoryDesc}
-          className={styles.input}
-          type="text"
-          placeholder="Enter new category desc...*"
-        />
+      <form onSubmit={formik.handleSubmit} className={styles.container}>
+        <label className={styles.label}>
+          <input
+            className={styles.input}
+            id='name'
+            name='name'
+            type='text'
+            onChange={formik.handleChange}
+            value={formik.values.name}
+            placeholder='Enter new category name...*'
+          />
+          {formik.errors.name ? (
+            <p className={styles.error_msg}>{formik.errors.name}</p>
+          ) : null}
+        </label>
+        {/* <label className={styles.label}>
+          <input
+            className={styles.input}
+            id='category'
+            name='category'
+            type='text'
+            onChange={formik.handleChange}
+            value={formik.values.category}
+            placeholder='Enter new category category...*'
+          />
+          {formik.errors.category ? (
+            <p className={styles.error_msg}>{formik.errors.category}</p>
+          ) : null}
+        </label>
+        <label className={styles.label}>
+          <input
+            className={styles.input}
+            id='description'
+            name='description'
+            type='text'
+            onChange={formik.handleChange}
+            value={formik.values.description}
+            placeholder='Enter new category desc...*'
+          />
+        </label> */}
         <div className={styles.btn_wrapper}>
           <button
-            onClick={handleAddNewItem}
-            disabled={categoryName.length < 1}
+            type='submit'
+            // onClick={handleAddNewItem}
+            disabled={
+              formik.values.name.length === 0
+              // formik.values.category.length === 0
+            }
             className={styles.create}
           >
             Create
           </button>
-          <button className={styles.cancel}>Cancel</button>
+          <button
+            type='button'
+            onClick={() => toggleModal('NewCategory')}
+            className={styles.cancel}
+          >
+            Cancel
+          </button>
         </div>
-      </div>
+      </form>
     </ModalContainer>
   );
 };

@@ -1,15 +1,15 @@
 .backdrop {
-	height: 100dvh;
-	background-color: #fff;
+  height: 100dvh;
+  background-color: #fff;
 }
 .container {
-	padding-top: 88px;
-	position: relative;
-	background: #ecf4fe;
+  padding-top: 88px;
+  position: relative;
+  background: #ecf4fe;
 }
 
 .content_wrapper {
-	border-radius: 32px 32px 0px 0px;
-	background: var(--white, #fff);
-	padding-top: 20px;
+  border-radius: 32px 32px 0px 0px;
+  background: var(--white, #fff);
+  padding-top: 20px;
 }

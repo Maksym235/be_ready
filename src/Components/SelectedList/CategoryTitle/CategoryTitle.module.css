@@ -1,0 +1,36 @@
+.title_content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  color: var(--black, #0d0d0d);
+  padding-top: 8px;
+  font-family: 'Founders Grotesk';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
+}
+
+.title_img {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.cout_arrow {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.counter {
+  display: flex;
+  width: 60px;
+  padding: 4px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 24px;
+  background: var(--light-blue, #ecf4fe);
+}

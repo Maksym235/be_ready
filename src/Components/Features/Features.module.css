@@ -1,46 +1,46 @@
 .features {
-	margin-top: 40px;
-	background: #ecf4fe;
-	padding-top: 32px;
-	border-top-left-radius: 32px;
-	border-top-right-radius: 32px;
+  margin-top: 40px;
+  background: #ecf4fe;
+  padding-top: 32px;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
 }
 
 .title {
-	color: var(--accent, #458ef7);
-	/* h2 */
-	font-family: "Founders Grotesk";
-	font-size: 32px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 32px; /* 100% */
-	text-transform: uppercase;
-	/* margin-top: 32px; */
-	margin-left: 44px;
-	position: relative;
+  color: var(--accent, #458ef7);
+  /* h2 */
+  font-family: 'Founders Grotesk';
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 100% */
+  text-transform: uppercase;
+  /* margin-top: 32px; */
+  margin-left: 44px;
+  position: relative;
 }
 
 .title::before {
-	content: "";
-	display: block;
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background-color: #458ef7;
-	position: absolute;
-	top: 50%;
-	left: -22px;
-	transform: translateY(-50%);
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #458ef7;
+  position: absolute;
+  top: 50%;
+  left: -22px;
+  transform: translateY(-50%);
 }
 .title::after {
-	content: "";
-	position: absolute;
-	bottom: -16px;
-	left: -44px;
-	display: block;
-	width: calc(100% + 44px);
-	height: 1px;
-	opacity: 0.2;
-	z-index: 2;
-	background: var(--accent, #458ef7);
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: -44px;
+  display: block;
+  width: calc(100% + 44px);
+  height: 1px;
+  opacity: 0.2;
+  z-index: 2;
+  background: var(--accent, #458ef7);
 }

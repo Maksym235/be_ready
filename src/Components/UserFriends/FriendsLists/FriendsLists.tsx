@@ -1,62 +1,62 @@
 // import React from 'react'
-import styles from "./FriendsLists.module.css";
-import { useMutation } from "@tanstack/react-query";
-import { FC } from "react";
-import toast from "react-hot-toast";
-import cross_delete from "../../../assets/icon_close.svg";
-import { deleteFriend } from "../../../Pages/Home/api";
+import styles from './FriendsLists.module.css';
+import { useMutation } from '@tanstack/react-query';
+import { FC } from 'react';
+import toast from 'react-hot-toast';
+import cross_delete from '../../../assets/icon_close.svg';
+import { deleteFriend } from '../../../Pages/Home/api';
 
 export interface IFriendsRequests {
-	_id: string;
-	name: string;
+  _id: string;
+  name: string;
 }
 export interface IUser {
-	email: string;
-	id: string;
-	language: string;
-	password: string;
-	name: string;
-	theme: string;
-	friends: IFriendsRequests[];
+  email: string;
+  id: string;
+  language: string;
+  password: string;
+  name: string;
+  theme: string;
+  friends: IFriendsRequests[];
 }
 export interface IFriendsListProps {
-	user: IUser;
-	refetch: any;
+  user: IUser;
+  refetch: any;
 }
 export const FriendsLists: FC<IFriendsListProps> = ({ user, refetch }) => {
-	const { mutate, isPending } = useMutation({
-		mutationFn: deleteFriend,
-		onSuccess: () => {
-			refetch();
-			// toggleModal();
-			toast.success("accepted");
-		},
-	});
-	if (isPending) {
-		return <div>Loading...</div>;
-	}
-	const handleDeleteFriend = (userId: string) => {
-		mutate(userId);
-	};
-	return (
-		<div className={styles.container}>
-			<div className={styles.list_container}>
-				<p className={styles.title}>My friends</p>
-				<ul className={styles.list}>
-					{user &&
-						user?.friends?.map((el: IFriendsRequests) => (
-							<li className={styles.list_item}>
-								{el.name}
-								<button
-									onClick={() => handleDeleteFriend(el._id)}
-									className={styles.delete_btn}
-								>
-									<img src={cross_delete} alt="delete" />
-								</button>
-							</li>
-						))}
-				</ul>
-			</div>
-		</div>
-	);
+  const { mutate, isPending } = useMutation({
+    mutationFn: deleteFriend,
+    onSuccess: () => {
+      refetch();
+      // toggleModal();
+      toast.success('accepted');
+    },
+  });
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
+  const handleDeleteFriend = (userId: string) => {
+    mutate(userId);
+  };
+  return (
+    <div className={styles.container}>
+      <div className={styles.list_container}>
+        <p className={styles.title}>My friends</p>
+        <ul className={styles.list}>
+          {user &&
+            user?.friends?.map((el: IFriendsRequests) => (
+              <li className={styles.list_item}>
+                {el.name}
+                <button
+                  onClick={() => handleDeleteFriend(el._id)}
+                  className={styles.delete_btn}
+                >
+                  <img src={cross_delete} alt='delete' />
+                </button>
+              </li>
+            ))}
+        </ul>
+      </div>
+    </div>
+  );
 };
