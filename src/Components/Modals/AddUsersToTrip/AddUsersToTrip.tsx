@@ -1,7 +1,7 @@
 import { FC, FormEvent, useState } from 'react';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import styles from './AddUsersToTrip.module.css';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { addUserToTrip } from '../../../Pages/Lists/api';
 import { useParams } from 'react-router-dom';
 import { getCurrent } from '../../../Pages/Home/api';
@@ -13,7 +13,7 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
   const params = useParams();
   const tripId = params.id;
   const [userId, setUserId] = useState('');
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: addUserToTrip,
     onSuccess: () => {
