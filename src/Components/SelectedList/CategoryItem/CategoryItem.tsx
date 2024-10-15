@@ -39,7 +39,15 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
               alt=''
             />
           </div>
-          <p className={item.persons.includes(user.id) ? `${styles.item_name} ${styles.item_name_checked}` : styles.item_name}>{item.name}</p>
+          <p
+            className={
+              item.persons.includes(user.id)
+                ? `${styles.item_name} ${styles.item_name_checked}`
+                : styles.item_name
+            }
+          >
+            {item.name}
+          </p>
         </div>
         <img
           onClick={() => handleShowInfo(item)}
