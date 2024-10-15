@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 export interface IFriendsRequests {
   id: string;
   name: string;
+  avatar: string;
 }
 
 export interface IFriendRequestsList {
@@ -57,6 +58,7 @@ export const FriendsRequesList: FC<IFriendRequestsList> = ({ refetch }) => {
         {data &&
           data.requests.friends.map((el: IFriendsRequests) => (
             <li className={styles.list_item}>
+              <img className={styles.avatar} src={el.avatar} />
               {el.name}
               <div className={styles.btn_wrapper}>
                 <button

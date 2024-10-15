@@ -26,7 +26,7 @@
   display: flex;
   /* width: 350px; */
   padding: 8px 16px;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   border-radius: 8px;
   border: 1px solid var(--accent, #458ef7);
@@ -38,6 +38,13 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 8px;
 }
 
 .btn_wrapper {
@@ -54,6 +61,7 @@
   background-color: #e73a2e;
   border: none;
   border-radius: 50%;
+  margin-left: auto;
 }
 
 .accept_btn {

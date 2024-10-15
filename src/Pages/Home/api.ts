@@ -67,9 +67,12 @@ export const getCurrent = async () => {
     });
     localStorage.setItem('token', resp.data.token);
     localStorage.setItem('isLoggedIn', JSON.stringify(true));
-
+    localStorage.setItem('user', JSON.stringify(resp.data.user));
     return resp.data;
   } catch (error: any) {
+    window.localStorage.removeItem('user');
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('googleUser');
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');
     console.log(error);
   }
