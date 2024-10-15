@@ -45,8 +45,24 @@
   padding: 4px 63px;
   transition: all 0.3s ease;
   z-index: 2;
+  position: relative;
 }
 
 .active {
   color: #fff;
 }
+
+.requests_count {
+  position: absolute;
+  right: 10px;
+  top: -5px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #e73a2e;
+  color: #fff;
+}
+
