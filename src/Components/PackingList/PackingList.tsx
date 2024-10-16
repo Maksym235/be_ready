@@ -5,7 +5,7 @@ import { EmptyLists } from '../EmptyLists/EmptyLists';
 import { PersonalItem } from './PersonalItem/PersonalItem';
 // import { AllListBelow } from "../AllListBelow/AllListBelow";
 import { Link, useLocation } from 'react-router-dom';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { editRequest, getUserRequests } from '../../Pages/Home/api';
 import acceptIcon from '../../assets/accepRequest.svg';
 import disaccept from '../../assets/disacceptRequest.svg';
@@ -22,16 +22,17 @@ export const PackingList: FC<IProps> = ({ lists }) => {
     shared: lists.connected,
   };
   const [currentList, setCurrentList] = useState('personal');
-  const queryClient = useQueryClient();
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['todos'],
+  // const queryClient = useQueryClient();
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ['tripRequests'],
     queryFn: getUserRequests,
   });
   const { mutate, isPending } = useMutation({
     mutationFn: editRequest,
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['tours'] });
+      refetch();
+      // queryClient.invalidateQueries({ queryKey: ['tours'] });
     },
   });
 
@@ -47,6 +48,7 @@ export const PackingList: FC<IProps> = ({ lists }) => {
       tripId: id,
       accept: true,
     });
+    refetch();
   };
 
   const handdleRejectRequest = (id: string) => {
@@ -54,6 +56,7 @@ export const PackingList: FC<IProps> = ({ lists }) => {
       tripId: id,
       accept: false,
     });
+    refetch();
   };
   if (isPending) {
     return <div>Loading...</div>;
@@ -62,7 +65,7 @@ export const PackingList: FC<IProps> = ({ lists }) => {
     <div className={styles.background}>
       <div className={styles.container}>
         <p className={styles.title}>Packing list </p>
-        <TogglerLists toggle={setCurrentList} />
+        <TogglerLists requests={data.requests} toggle={setCurrentList} />
         <AllListBelow id={user.id} list={currentList} />
         {userLists[currentList] ? (
           <>

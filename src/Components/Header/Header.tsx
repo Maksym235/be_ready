@@ -28,8 +28,8 @@ export const Header: FC = () => {
     queryKey: ['user'],
     queryFn: getCurrent,
   });
-  const { data:requestData } = useQuery({
-    queryKey: ['requests'],
+  const { data: requestData } = useQuery({
+    queryKey: ['userRequests'],
     queryFn: getUserRequests,
   });
 
@@ -62,11 +62,11 @@ export const Header: FC = () => {
                   src={data && data.user.avatarURL}
                   alt='user icon'
                 />
-                {requestData && requestData.requests.friends.length &&
+                {requestData && requestData.requests.friends.length > 0 && (
                   <div className={styles.requests_count}>
                     {requestData.requests.friends.length}
                   </div>
-                }
+                )}
               </Link>
               <button onClick={handleToggleModal} className={styles.burger}>
                 <img src={Burger} />

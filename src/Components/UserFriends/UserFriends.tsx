@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { FriendsLists } from './FriendsLists/FriendsLists';
 import { TextAndId } from './TextAndId/TextAndId';
 import styles from './UserFriends.module.css';
@@ -10,8 +10,17 @@ import { useQuery } from '@tanstack/react-query';
 import { getCurrent } from '../../Pages/Home/api';
 import { FriendsRequesList } from './FriendsRequestList/FriendsRequesList';
 // import copy from "../../assets/icon_copy.svg";
-
-export const UserFriends = () => {
+export interface IUserFriendsProps {
+  refetchRequest: any;
+  requests: {
+    friends: any[];
+    trips: any[];
+  };
+}
+export const UserFriends: FC<IUserFriendsProps> = ({
+  refetchRequest,
+  requests,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['user'],
@@ -33,7 +42,11 @@ export const UserFriends = () => {
       <TextAndId user={data?.user} />
       <div className={styles.friends_container}>
         <FriendsLists refetch={refetch} user={data?.user} />
-        <FriendsRequesList refetch={refetch} />
+        <FriendsRequesList
+          requests={requests}
+          refetchRequest={refetchRequest}
+          refetch={refetch}
+        />
       </div>
       <img
         onClick={handleToggleModal}

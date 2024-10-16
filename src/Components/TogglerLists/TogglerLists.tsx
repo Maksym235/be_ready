@@ -2,8 +2,12 @@ import { FC, useState } from 'react';
 import styles from './ToggleLists.module.css';
 interface IProps {
   toggle: (key: string) => void;
+  requests: {
+    friends: string[];
+    trips: string[];
+  };
 }
-export const TogglerLists: FC<IProps> = ({ toggle }) => {
+export const TogglerLists: FC<IProps> = ({ toggle, requests }) => {
   const [currentList, setCurrentList] = useState('personal');
 
   const toggleCurrentList = (key: string) => {
@@ -39,6 +43,9 @@ export const TogglerLists: FC<IProps> = ({ toggle }) => {
           }
         >
           Shared
+          {requests.trips.length > 0 && (
+            <div className={styles.requests_count}>{requests.trips.length}</div>
+          )}
         </button>
       </div>
     </div>

@@ -13,13 +13,22 @@ export interface IFriendsRequests {
 
 export interface IFriendRequestsList {
   refetch: any;
+  requests: {
+    friends: any[];
+    trips: any[];
+  };
+  refetchRequest: any;
 }
-export const FriendsRequesList: FC<IFriendRequestsList> = ({ refetch }) => {
+export const FriendsRequesList: FC<IFriendRequestsList> = ({
+  refetch,
+  refetchRequest,
+}) => {
   const { mutate, isPending } = useMutation({
     mutationFn: editFriendRequest,
     onSuccess: () => {
       refetch();
       refetchReq();
+      refetchRequest();
       // toggleModal();
       toast.success('accepted');
     },

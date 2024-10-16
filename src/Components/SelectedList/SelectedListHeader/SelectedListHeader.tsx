@@ -23,6 +23,21 @@ export const SelectedListHeader: React.FC<ISelectedListHeaderProps> = ({
   const [isOpenCm, setIsOpenCm] = useState(false);
   const [isOpenAddUser, setIsOpenAddUser] = useState(false);
   const user = JSON.parse(localStorage.getItem('user')!);
+  /*
+color: var(--Neutral-White, #FFF);
+font-family: e-Ukraine;
+font-size: 13px;
+font-style: normal;
+font-weight: 300;
+line-height: 20px; 
+color: var(--Neutral-Neutral-100, #E2E8F0);
+
+font-family: e-Ukraine;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 16px;
+  */
   return (
     <div>
       <div className={styles.header}>
@@ -53,7 +68,7 @@ export const SelectedListHeader: React.FC<ISelectedListHeaderProps> = ({
         )}
         <div
           className={
-            isOpenCm
+            isOpenCm && isEditing
               ? `${styles.context_menu_details}`
               : `${styles.context_menu_details} ${styles.hidden}`
           }
