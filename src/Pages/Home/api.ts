@@ -61,22 +61,27 @@ export const googleAuth = async ({
 
 export const userLogout = async () => {
   try {
-    const resp = await axios.post(`/auth/logout`, {}, {
-      headers: {
-        Authorization: 'Bearer ' +  window.localStorage.getItem('token'),
-      },
-    })
-    if (resp.status === 200) {toast.success('До зустрічі!');
-    localStorage.setItem("isLoggedIn", JSON.stringify(false))
-    window.localStorage.removeItem('user');
-    window.localStorage.removeItem('token');
-    window.localStorage.removeItem('googleUser');
-  }
-    return resp.data
+    const resp = await axios.post(
+      `/auth/logout`,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
+    if (resp.status === 200) {
+      toast.success('До зустрічі!');
+      localStorage.setItem('isLoggedIn', JSON.stringify(false));
+      window.localStorage.removeItem('user');
+      window.localStorage.removeItem('token');
+      window.localStorage.removeItem('googleUser');
+    }
+    return resp.data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 export const getCurrent = async () => {
   try {
     const resp = await axios.get('/auth/current', {

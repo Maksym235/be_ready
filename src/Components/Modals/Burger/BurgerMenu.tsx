@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import BurgerCross from '../../../assets/burger_cross.svg';
 import Logo from '../../../assets/⛰ beReady 🏕️.svg';
-import logout from '../../../assets/logout.svg'
+import logout from '../../../assets/logout.svg';
 import { useMutation } from '@tanstack/react-query';
 import { userLogout } from '../../../Pages/Home/api';
 // import { useAuth } from "../../../Pages/Home/store";
@@ -23,9 +23,9 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
     mutationFn: userLogout,
     onSuccess: () => {
       toggleBurger();
-      navigate('/')
-    }
-  })
+      navigate('/');
+    },
+  });
   // const { token } = useAuth((store: any) => ({
   // 	token: store.token,
   // }));
@@ -120,20 +120,24 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
           Contact us
         </li>
         <div className={styles.bottom_list_item_wrapper}>
-        <li
-          onClick={() => navigateToElement('profile')}
-          className={`${styles.nav_list_item} ${styles.profile_item}`}
+          <li
+            onClick={() => navigateToElement('profile')}
+            className={`${styles.nav_list_item} ${styles.profile_item}`}
           >
-          Profile
-        </li>
-        <li
-          onClick={() => mutation.mutate()}
-          className={`${styles.nav_list_item} ${styles.logout}`}
+            Profile
+          </li>
+          <li
+            onClick={() => mutation.mutate()}
+            className={`${styles.nav_list_item} ${styles.logout}`}
           >
-          Logout 
-          <img className={styles.logout_icon} src={logout} alt='logout icon'/>
-        </li>
-          </div>
+            Logout
+            <img
+              className={styles.logout_icon}
+              src={logout}
+              alt='logout icon'
+            />
+          </li>
+        </div>
       </ul>
     </div>,
     root
