@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import { addNewItemToCategory } from '../../../Pages/Lists/api';
 interface IProps {
-  toggleModal: (key: string) => void;
+  toggleModal: () => void;
   isOpen: boolean;
   refetch: any;
   category: string;
@@ -22,7 +22,7 @@ export const AddNewItemToCategory: FC<IProps> = ({
     mutationFn: addNewItemToCategory,
     onSuccess: () => {
       refetch();
-      toggleModal('newItem');
+      toggleModal();
     },
   });
   // const validate = (values: { name: string; category: string }) => {
@@ -55,17 +55,16 @@ export const AddNewItemToCategory: FC<IProps> = ({
           description: values.description,
         },
       });
-      alert({ values });
     },
   });
   return (
     <ModalContainer
       toggleModal={() => {
-        toggleModal('newItem');
+        toggleModal();
         formik.resetForm();
       }}
       isOpen={isOpen}
-      title='New category'
+      title='Add new item'
     >
       <form onSubmit={formik.handleSubmit} className={styles.container}>
         <label className={styles.label}>
@@ -76,7 +75,7 @@ export const AddNewItemToCategory: FC<IProps> = ({
             type='text'
             onChange={formik.handleChange}
             value={formik.values.name}
-            placeholder='Enter new category name...*'
+            placeholder='Enter new item name...*'
           />
           {formik.errors.name ? (
             <p className={styles.error_msg}>{formik.errors.name}</p>
@@ -91,7 +90,7 @@ export const AddNewItemToCategory: FC<IProps> = ({
             disabled
             onChange={formik.handleChange}
             value={formik.values.category}
-            placeholder='Enter new category category...*'
+            placeholder='Enter category category...*'
           />
           {formik.errors.category ? (
             <p className={styles.error_msg}>{formik.errors.category}</p>
@@ -105,7 +104,7 @@ export const AddNewItemToCategory: FC<IProps> = ({
             type='text'
             onChange={formik.handleChange}
             value={formik.values.description}
-            placeholder='Enter new category desc...*'
+            placeholder='Enter new item desc...*'
           />
         </label>
         <div className={styles.btn_wrapper}>
@@ -123,7 +122,7 @@ export const AddNewItemToCategory: FC<IProps> = ({
           <button
             type='button'
             onClick={() => {
-              toggleModal('newItem');
+              toggleModal();
               formik.resetForm();
             }}
             className={styles.cancel}

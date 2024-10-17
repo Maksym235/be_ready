@@ -13,14 +13,21 @@ interface ISelectedListHeaderProps {
   listId: string;
   isEditing: boolean;
   listOwner: string;
+  isOpen: boolean;
+  toggleIsOpen: () => void;
+  setCurrentModal: (key: string) => void;
+  toggleOpen: () => void;
 }
 export const SelectedListHeader: React.FC<ISelectedListHeaderProps> = ({
   location,
   listId,
   listOwner,
   isEditing,
+  isOpen,
+  toggleIsOpen,
+  setCurrentModal,
+  toggleOpen,
 }) => {
-  const [isOpenCm, setIsOpenCm] = useState(false);
   const [isOpenAddUser, setIsOpenAddUser] = useState(false);
   const user = JSON.parse(localStorage.getItem('user')!);
   /*
@@ -38,6 +45,18 @@ font-style: normal;
 font-weight: 400;
 line-height: 16px;
   */
+  const handleRenameTrip = () => {
+    setCurrentModal('renameTrip');
+    toggleOpen();
+  };
+  const handleChangeTripDuration = () => {
+    setCurrentModal('changeDuration');
+    toggleOpen();
+  };
+  const handleDeleteTrip = () => {
+    setCurrentModal('deleteTrip');
+    toggleOpen();
+  };
   return (
     <div>
       <div className={styles.header}>
@@ -54,7 +73,7 @@ line-height: 16px;
             className={styles.header_icon_details}
             src={details_icon}
             alt='details icon'
-            onClick={() => setIsOpenCm((state) => !state)}
+            onClick={toggleIsOpen}
           />
         ) : (
           listOwner === user.id && (
@@ -68,21 +87,21 @@ line-height: 16px;
         )}
         <div
           className={
-            isOpenCm && isEditing
+            isOpen && isEditing
               ? `${styles.context_menu_details}`
               : `${styles.context_menu_details} ${styles.hidden}`
           }
         >
           <ul>
-            <li className={styles.cm_item}>
+            <li onClick={handleRenameTrip} className={styles.cm_item}>
               <p className={styles.cm_text}>Rename</p>
               <img src={pencil} alt=' edit trip icon' />
             </li>
-            <li className={styles.cm_item}>
+            <li onClick={handleChangeTripDuration} className={styles.cm_item}>
               <p className={styles.cm_text}>Change trip duration</p>
               <img src={calendar} alt='icon' />
             </li>
-            <li className={styles.cm_item}>
+            <li onClick={handleDeleteTrip} className={styles.cm_item}>
               <p className={`${styles.cm_text} ${styles.cm_text_delete}`}>
                 Delete list
               </p>

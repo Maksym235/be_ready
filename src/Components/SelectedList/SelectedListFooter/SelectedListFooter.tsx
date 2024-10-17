@@ -10,6 +10,7 @@ interface IFootersContentProps {
 }
 interface ISelectedListFooter {
   toggleIsEditing: () => void;
+  toggleIsEditMenu: any;
 }
 const DefaultFooterContent: FC<IFootersContentProps> = ({
   changeFooterState,
@@ -67,11 +68,12 @@ const EditFooterContent: FC<IFootersContentProps> = ({ changeFooterState }) => {
 };
 export const SelectedListFooter: FC<ISelectedListFooter> = ({
   toggleIsEditing,
+  toggleIsEditMenu,
 }) => {
   const [footerState, setFooterState] = useState('default');
   const handleSetFooterState = (state: string) => {
     setFooterState(state);
-
+    toggleIsEditMenu(false);
     toggleIsEditing();
   };
   const footers: Record<string, ReactNode> = {

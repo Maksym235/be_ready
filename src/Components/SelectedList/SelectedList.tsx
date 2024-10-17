@@ -17,6 +17,9 @@ import { getUsersById } from '../../Pages/Home/api';
 import { CategoryTitle } from './CategoryTitle/CategoryTitle';
 import { CategoryItem } from './CategoryItem/CategoryItem';
 import { AddNewItemToCategory } from '../Modals/AddNewItemToCategory/AddNewItemToCategory';
+import { RenameTrip } from '../Modals/RenameTrip/RenameTrip';
+import { ChangeTripDuration } from '../Modals/ChangeTripDuration/ChangeTripDuration';
+import { DeleteTrip } from '../Modals/DeleteTrip/DeleteTrip';
 export interface ICategoryItem {
   _id: string;
   name: string;
@@ -32,6 +35,7 @@ export const SelectedList: FC = () => {
   const [itemPersons, setItemPersons] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [timerId, setTimerId] = useState<any>(null);
+  const [isOpenEditMenu, setIsOpenEditMenu] = useState(false);
   const [currentModal, setCurrentModal] = useState('newCategory');
   const [currentCategory, setCurrentCategory] = useState('');
   const listId = useParams();
@@ -72,9 +76,15 @@ export const SelectedList: FC = () => {
     }
     toggleIsOpen();
   };
-  const toggleIsOpenAddModal = (key: string) => {
-    setCurrentModal(key);
+
+  const toggleIsOpenAddModal = () => {
     setIsOpenAddModals((state) => !state);
+  };
+  const toggleIsEditMenu = () => {
+    setIsOpenEditMenu((state) => !state);
+  };
+  const handleSetCurrentModal = (key: string) => {
+    setCurrentModal(key);
   };
 
   const toggleOpenCategory = (id: string) => {
@@ -135,6 +145,7 @@ export const SelectedList: FC = () => {
     }, 5000);
     setTimerId(timer);
   };
+  // console.log(data.trip.id);
   const modals: Record<string, ReactNode> = {
     newCategory: (
       <AddNewCategory
@@ -153,6 +164,31 @@ export const SelectedList: FC = () => {
         refetch={refetch}
       />
     ),
+    renameTrip: (
+      <RenameTrip
+        tripId={data.trip && data.trip.id}
+        tripName={data.trip && data.trip.name}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+        refetch={refetch}
+      />
+    ),
+    changeDuration: (
+      <ChangeTripDuration
+        tripId={data.trip && data.trip.id}
+        tripDuraition={data.trip && data.trip.duration}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+        refetch={refetch}
+      />
+    ),
+    deleteTrip: (
+      <DeleteTrip
+        tripId={data.trip && data.trip.id}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+      />
+    ),
   };
   return (
     <>
@@ -160,7 +196,11 @@ export const SelectedList: FC = () => {
         location={location}
         listId={data.trip ? data.trip.name : ''}
         listOwner={data.trip ? data.trip.owner : ''}
+        isOpen={isOpenEditMenu}
+        toggleIsOpen={toggleIsEditMenu}
         isEditing={isEditing}
+        setCurrentModal={handleSetCurrentModal}
+        toggleOpen={toggleIsOpenAddModal}
       />
       <div className={styles.container}>
         <div className={styles.categories_wrapper}>
@@ -197,9 +237,9 @@ export const SelectedList: FC = () => {
                   {isEditing && opensCategories.includes(category) && (
                     <button
                       onClick={() => {
-                        console.log(category);
                         setCurrentCategory(category);
-                        toggleIsOpenAddModal('newItem');
+                        handleSetCurrentModal('newItem');
+                        toggleIsOpenAddModal();
                       }}
                       className={styles.add_category_item}
                     >
@@ -210,14 +250,20 @@ export const SelectedList: FC = () => {
                 </div>
               ))}
           <button
-            onClick={() => toggleIsOpenAddModal('newCategory')}
+            onClick={() => {
+              handleSetCurrentModal('newCategory');
+              toggleIsOpenAddModal();
+            }}
             className={styles.add_category}
           >
             Add category
             <img width={24} height={24} src={plus_icon} />
           </button>
         </div>
-        <SelectedListFooter toggleIsEditing={toggleIsEditing} />
+        <SelectedListFooter
+          toggleIsEditMenu={setIsOpenEditMenu}
+          toggleIsEditing={toggleIsEditing}
+        />
       </div>
       <ShowInfoCategoryItem
         tripName={listId.id ? listId.id : '-'}

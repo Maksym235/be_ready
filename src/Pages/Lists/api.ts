@@ -54,6 +54,71 @@ export const toggleEquipItemCheck = async ({
     console.log(error);
   }
 };
+
+export const renameTrip = async ({
+  newName,
+  tripId,
+}: {
+  newName: string;
+  tripId: string;
+}) => {
+  try {
+    const reps = await axios.post(
+      `/tours/${tripId}/rename`,
+      {
+        name: newName,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
+    return reps.data;
+  } catch (error: any) {
+    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
+    console.log(error);
+  }
+};
+export const changeDuration = async ({
+  duration,
+  tripId,
+}: {
+  duration: number;
+  tripId: string;
+}) => {
+  try {
+    const resp = await axios.post(
+      `/tours/${tripId}/changeDuration`,
+      {
+        duration,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
+    return resp.data;
+  } catch (error: any) {
+    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
+    console.log(error);
+  }
+};
+
+export const deleteTrip = async ({ tripId }: { tripId: string }) => {
+  try {
+    const resp = await axios.delete(`/tours/${tripId}`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
+    return resp.data;
+  } catch (error: any) {
+    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
+    console.log(error);
+  }
+};
 interface INewTripData {
   name: string;
   listType: number;
