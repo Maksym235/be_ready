@@ -7,7 +7,6 @@ import pencil from '../../../assets/SelectedList/icon_editpen.svg';
 import calendar from '../../../assets/SelectedList/icon_calendar.svg';
 import trash from '../../../assets/SelectedList/icon_trash.svg';
 import plus_icon from '../../../assets/Modals/icon_plus.svg';
-import { AddUsersToTrip } from '../../Modals/AddUsersToTrip/AddUsersToTrip';
 interface ISelectedListHeaderProps {
   location: Location;
   listId: string;
@@ -68,22 +67,13 @@ line-height: 16px;
           />
         </Link>
         <p className={styles.header_title}>{listId}</p>
-        {isEditing ? (
+        {isEditing && (
           <img
             className={styles.header_icon_details}
             src={details_icon}
             alt='details icon'
             onClick={toggleIsOpen}
           />
-        ) : (
-          listOwner === user.id && (
-            <img
-              className={styles.header_icon_details}
-              src={plus_icon}
-              alt=''
-              onClick={() => setIsOpenAddUser((state) => !state)}
-            />
-          )
         )}
         <div
           className={
@@ -110,10 +100,6 @@ line-height: 16px;
           </ul>
         </div>
       </div>
-      <AddUsersToTrip
-        isOpen={isOpenAddUser}
-        toggleModal={() => setIsOpenAddUser((state) => !state)}
-      />
     </div>
   );
 };

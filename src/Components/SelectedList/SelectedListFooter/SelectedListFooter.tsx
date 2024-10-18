@@ -2,28 +2,52 @@ import { FC, ReactNode, useState } from 'react';
 import edit from '../../../assets/SelectedList/Footer/icon_edit.svg';
 import share from '../../../assets/SelectedList/Footer/icon_share.svg';
 import marked_eye from '../../../assets/SelectedList/Footer/icon_marked_eye.svg';
+import show_marked from '../../../assets/SelectedList/Footer/icon_marked.svg';
 import styles from './SelectedListFooter.module.css';
 import cross from '../../../assets/SelectedList/icon_close.svg';
 import dobble_check from '../../../assets/SelectedList/icon_dobble_check.svg';
 interface IFootersContentProps {
   changeFooterState: (state: string) => void;
 }
+interface IDefaultFooterProps extends IFootersContentProps {
+  isHidden: boolean;
+  toggleIsHidden: () => void;
+  setModal: (key: string) => void;
+  toggleModal: () => void;
+}
 interface ISelectedListFooter {
   toggleIsEditing: () => void;
   toggleIsEditMenu: any;
+  isHidden: boolean;
+  toggleIsHidden: () => void;
+  setModal: (key: string) => void;
+  toggleModal: () => void;
 }
-const DefaultFooterContent: FC<IFootersContentProps> = ({
+const DefaultFooterContent: FC<IDefaultFooterProps> = ({
   changeFooterState,
+  isHidden,
+  toggleIsHidden,
+  setModal,
+  toggleModal,
 }) => {
+  const handleShareTrip = () => {
+    setModal('shareTrip');
+    toggleModal();
+  };
   return (
     <>
-      <div className={styles.footer_btns}>
+      <div onClick={handleShareTrip} className={styles.footer_btns}>
         <img className={styles.footer_icon} src={share} />
         <p className={styles.footer_text}>Share List</p>
       </div>
-      <div className={styles.footer_btns}>
-        <img className={styles.footer_icon} src={marked_eye} />
-        <p className={styles.footer_text}>Hide Marked</p>
+      <div onClick={toggleIsHidden} className={styles.footer_btns}>
+        <img
+          className={styles.footer_icon}
+          src={isHidden ? show_marked : marked_eye}
+        />
+        <p className={styles.footer_text}>
+          {isHidden ? `Show marked` : `Hide Marked`}
+        </p>
       </div>
       <div
         className={styles.footer_btns}
@@ -69,6 +93,10 @@ const EditFooterContent: FC<IFootersContentProps> = ({ changeFooterState }) => {
 export const SelectedListFooter: FC<ISelectedListFooter> = ({
   toggleIsEditing,
   toggleIsEditMenu,
+  isHidden,
+  toggleIsHidden,
+  setModal,
+  toggleModal,
 }) => {
   const [footerState, setFooterState] = useState('default');
   const handleSetFooterState = (state: string) => {
@@ -77,7 +105,15 @@ export const SelectedListFooter: FC<ISelectedListFooter> = ({
     toggleIsEditing();
   };
   const footers: Record<string, ReactNode> = {
-    default: <DefaultFooterContent changeFooterState={handleSetFooterState} />,
+    default: (
+      <DefaultFooterContent
+        isHidden={isHidden}
+        toggleIsHidden={toggleIsHidden}
+        changeFooterState={handleSetFooterState}
+        setModal={setModal}
+        toggleModal={toggleModal}
+      />
+    ),
     edit: <EditFooterContent changeFooterState={handleSetFooterState} />,
   };
   return <div className={styles.footer}>{footers[footerState]}</div>;

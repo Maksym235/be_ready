@@ -20,6 +20,8 @@ import { AddNewItemToCategory } from '../Modals/AddNewItemToCategory/AddNewItemT
 import { RenameTrip } from '../Modals/RenameTrip/RenameTrip';
 import { ChangeTripDuration } from '../Modals/ChangeTripDuration/ChangeTripDuration';
 import { DeleteTrip } from '../Modals/DeleteTrip/DeleteTrip';
+import { AddUsersToTrip } from '../Modals/AddUsersToTrip/AddUsersToTrip';
+import { SelectNewUserFromFriends } from '../Modals/SelectNewUserFromFriends/SelectNewUserFromFriends';
 export interface ICategoryItem {
   _id: string;
   name: string;
@@ -34,6 +36,7 @@ export const SelectedList: FC = () => {
   const [isOpenAddModals, setIsOpenAddModals] = useState(false);
   const [itemPersons, setItemPersons] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [timerId, setTimerId] = useState<any>(null);
   const [isOpenEditMenu, setIsOpenEditMenu] = useState(false);
   const [currentModal, setCurrentModal] = useState('newCategory');
@@ -86,7 +89,9 @@ export const SelectedList: FC = () => {
   const handleSetCurrentModal = (key: string) => {
     setCurrentModal(key);
   };
-
+  const toogleIsHidden = () => {
+    setIsHidden((state) => !state);
+  };
   const toggleOpenCategory = (id: string) => {
     if (opensCategories.includes(id)) {
       setOpensCategories(opensCategories.filter((el) => el !== id));
@@ -189,6 +194,21 @@ export const SelectedList: FC = () => {
         toggleModal={toggleIsOpenAddModal}
       />
     ),
+    shareTrip: (
+      <AddUsersToTrip
+        friends={user && user.friends}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+        setModal={handleSetCurrentModal}
+      />
+    ),
+    shareTripSelectFromFriends: (
+      <SelectNewUserFromFriends
+        friends={user && user.friends}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+      />
+    ),
   };
   return (
     <>
@@ -217,21 +237,38 @@ export const SelectedList: FC = () => {
                   />
                   {opensCategories.includes(category) && (
                     <>
-                      {data.trip.equipList[category]
-                        .sort((a: any, b: any) =>
-                          a.name.localeCompare(b.name, 'uk')
-                        )
-                        .map((categoryItem: any) => (
-                          <div key={categoryItem._id}>
-                            <CategoryItem
-                              handleCheckedItem={onUpdateItem}
-                              handleShowInfo={handleShowInfo}
-                              isEditing={isEditing}
-                              item={categoryItem}
-                              user={user}
-                            />
-                          </div>
-                        ))}
+                      {!isHidden
+                        ? data.trip.equipList[category]
+                            .sort((a: any, b: any) =>
+                              a.name.localeCompare(b.name, 'uk')
+                            )
+                            .map((categoryItem: any) => (
+                              <div key={categoryItem._id}>
+                                <CategoryItem
+                                  handleCheckedItem={onUpdateItem}
+                                  handleShowInfo={handleShowInfo}
+                                  isEditing={isEditing}
+                                  item={categoryItem}
+                                  user={user}
+                                />
+                              </div>
+                            ))
+                        : data.trip.equipList[category]
+                            .sort((a: any, b: any) =>
+                              a.name.localeCompare(b.name, 'uk')
+                            )
+                            .filter((el: any) => !el.persons.includes(user.id))
+                            .map((categoryItem: any) => (
+                              <div key={categoryItem._id}>
+                                <CategoryItem
+                                  handleCheckedItem={onUpdateItem}
+                                  handleShowInfo={handleShowInfo}
+                                  isEditing={isEditing}
+                                  item={categoryItem}
+                                  user={user}
+                                />
+                              </div>
+                            ))}
                     </>
                   )}
                   {isEditing && opensCategories.includes(category) && (
@@ -261,8 +298,12 @@ export const SelectedList: FC = () => {
           </button>
         </div>
         <SelectedListFooter
+          isHidden={isHidden}
+          toggleIsHidden={toogleIsHidden}
           toggleIsEditMenu={setIsOpenEditMenu}
           toggleIsEditing={toggleIsEditing}
+          setModal={handleSetCurrentModal}
+          toggleModal={toggleIsOpenAddModal}
         />
       </div>
       <ShowInfoCategoryItem

@@ -5,11 +5,24 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { addUserToTrip } from '../../../Pages/Lists/api';
 import { useParams } from 'react-router-dom';
 import { getCurrent } from '../../../Pages/Home/api';
+interface IFriend {
+  _id: string;
+  avatar: string;
+  name: string;
+}
+
 interface IProps {
   toggleModal: () => void;
   isOpen: boolean;
+  setModal: (key: string) => void;
+  friends: IFriend[];
 }
-export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
+export const AddUsersToTrip: FC<IProps> = ({
+  toggleModal,
+  isOpen,
+  setModal,
+  friends,
+}) => {
   const params = useParams();
   const tripId = params.id;
   const [userId, setUserId] = useState('');
@@ -45,9 +58,8 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
   if (isSuccess) {
     toggleModal();
   }
-  const handleSelectFriend = (evt: any) => {
-    console.log(evt.target.value);
-    setUserId(evt.target.value);
+  const handleSelectFriend = () => {
+    setModal('shareTripSelectFromFriends');
   };
   return (
     <ModalContainer
@@ -63,7 +75,7 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
           value={userId}
           placeholder='Enter new user id...*'
         />
-        <select
+        {/* <select
           className={styles.select}
           onChange={handleSelectFriend}
           name='friends'
@@ -75,7 +87,7 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
               {friend.name}
             </option>
           ))}
-        </select>
+        </select> */}
         <div className={styles.btn_wrapper}>
           <button
             onClick={handleSubmitUser}
@@ -88,6 +100,13 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
             Cancel
           </button>
         </div>
+        <button
+          onClick={handleSelectFriend}
+          disabled={friends.length < 1}
+          className={styles.create}
+        >
+          SELECT FROM FRIENDS
+        </button>
       </div>
     </ModalContainer>
   );

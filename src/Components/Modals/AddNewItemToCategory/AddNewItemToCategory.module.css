@@ -1,6 +1,8 @@
 .container {
-  margin: 0 20px 168px 20px;
+  /* margin: 0 20px 168px 20px; */
+  margin-bottom: 168px;
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 24px;
 }
