@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, Location } from 'react-router-dom';
 import styles from './SelectedListHeader.module.css';
 import details_icon from '../../../assets/SelectedList/icon_details.svg';
@@ -6,7 +6,7 @@ import arrow_back from '../../../assets/SelectedList/icon_back.svg';
 import pencil from '../../../assets/SelectedList/icon_editpen.svg';
 import calendar from '../../../assets/SelectedList/icon_calendar.svg';
 import trash from '../../../assets/SelectedList/icon_trash.svg';
-import plus_icon from '../../../assets/Modals/icon_plus.svg';
+import group from '../../../assets/SelectedList/Group.svg'
 interface ISelectedListHeaderProps {
   location: Location;
   listId: string;
@@ -20,42 +20,17 @@ interface ISelectedListHeaderProps {
 export const SelectedListHeader: React.FC<ISelectedListHeaderProps> = ({
   location,
   listId,
-  listOwner,
   isEditing,
   isOpen,
   toggleIsOpen,
   setCurrentModal,
   toggleOpen,
 }) => {
-  const [isOpenAddUser, setIsOpenAddUser] = useState(false);
-  const user = JSON.parse(localStorage.getItem('user')!);
-  /*
-color: var(--Neutral-White, #FFF);
-font-family: e-Ukraine;
-font-size: 13px;
-font-style: normal;
-font-weight: 300;
-line-height: 20px; 
-color: var(--Neutral-Neutral-100, #E2E8F0);
 
-font-family: e-Ukraine;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: 16px;
-  */
-  const handleRenameTrip = () => {
-    setCurrentModal('renameTrip');
+  const handleTogleModal = (key: string) => {
+    setCurrentModal(key);
     toggleOpen();
-  };
-  const handleChangeTripDuration = () => {
-    setCurrentModal('changeDuration');
-    toggleOpen();
-  };
-  const handleDeleteTrip = () => {
-    setCurrentModal('deleteTrip');
-    toggleOpen();
-  };
+  }
   return (
     <div>
       <div className={styles.header}>
@@ -67,14 +42,19 @@ line-height: 16px;
           />
         </Link>
         <p className={styles.header_title}>{listId}</p>
-        {isEditing && (
+        {isEditing ? (
           <img
             className={styles.header_icon_details}
             src={details_icon}
             alt='details icon'
             onClick={toggleIsOpen}
           />
-        )}
+        ) : <img
+        className={styles.header_icon_details}
+        src={group}
+        alt='details icon'
+        onClick={() => handleTogleModal('usersInTrip')}
+      />}
         <div
           className={
             isOpen && isEditing
@@ -83,15 +63,15 @@ line-height: 16px;
           }
         >
           <ul>
-            <li onClick={handleRenameTrip} className={styles.cm_item}>
+            <li onClick={() => handleTogleModal('renameTrip')} className={styles.cm_item}>
               <p className={styles.cm_text}>Rename</p>
               <img src={pencil} alt=' edit trip icon' />
             </li>
-            <li onClick={handleChangeTripDuration} className={styles.cm_item}>
+            <li onClick={() => handleTogleModal('changeDuration')} className={styles.cm_item}>
               <p className={styles.cm_text}>Change trip duration</p>
               <img src={calendar} alt='icon' />
             </li>
-            <li onClick={handleDeleteTrip} className={styles.cm_item}>
+            <li onClick={() => handleTogleModal('deleteTrip')} className={styles.cm_item}>
               <p className={`${styles.cm_text} ${styles.cm_text_delete}`}>
                 Delete list
               </p>

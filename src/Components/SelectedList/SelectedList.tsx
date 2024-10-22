@@ -22,6 +22,7 @@ import { ChangeTripDuration } from '../Modals/ChangeTripDuration/ChangeTripDurat
 import { DeleteTrip } from '../Modals/DeleteTrip/DeleteTrip';
 import { AddUsersToTrip } from '../Modals/AddUsersToTrip/AddUsersToTrip';
 import { SelectNewUserFromFriends } from '../Modals/SelectNewUserFromFriends/SelectNewUserFromFriends';
+import { UsersInTrip } from '../Modals/UsersInTrip/UsersInTrip';
 export interface ICategoryItem {
   _id: string;
   name: string;
@@ -204,11 +205,18 @@ export const SelectedList: FC = () => {
     ),
     shareTripSelectFromFriends: (
       <SelectNewUserFromFriends
-        friends={user && user.friends}
+        tripId={data.trip && data.trip.id}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
       />
     ),
+    usersInTrip: (
+      <UsersInTrip
+      tripId={data.trip && data.trip.id}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+      />
+    )
   };
   return (
     <>

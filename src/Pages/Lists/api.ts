@@ -237,3 +237,17 @@ export const updateList = async (data: IUpdateList) => {
     console.log(error);
   }
 };
+
+export const getFriendsTripRequests = async(tripId: string) => {
+  try {
+    const resp = await axios.get(`/auth/friendsTripRequests/${tripId}`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
+    return resp.data;
+  } catch (error:any) {
+    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
+    console.log(error);
+  }
+}

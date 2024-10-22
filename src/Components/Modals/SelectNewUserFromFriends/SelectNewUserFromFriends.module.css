@@ -29,7 +29,7 @@
   display: flex;
   width: 320px;
   padding: 8px 16px;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   align-items: center;
   border-radius: 8px;
   border: 1px solid var(--accent, #458ef7);
@@ -43,6 +43,12 @@
   line-height: normal;
 }
 
+.list_item_info_block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .avatar {
   width: 32px;
   height: 32px;
@@ -50,14 +56,26 @@
   margin-right: 8px;
 }
 
-.delete_btn {
-  width: 32px;
-  height: 32px;
+.invite_btn {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e73a2e;
-  border: none;
-  border-radius: 50%;
-  margin-left: auto;
+/* width: 100px;
+height: 24px; */
+padding: 8px 24px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+flex-shrink: 0;
+border-radius: 40px;
+background: var(--accent, #458EF7);
+color: var(--white, #FFF);
+text-align: right;
+
+/* text 13 */
+font-family: "Neue Montreal";
+font-size: 13px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+border: none;
+text-transform: uppercase;
 }

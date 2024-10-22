@@ -1,10 +1,9 @@
 import { FC, FormEvent, useState } from 'react';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import styles from './AddUsersToTrip.module.css';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { addUserToTrip } from '../../../Pages/Lists/api';
 import { useParams } from 'react-router-dom';
-import { getCurrent } from '../../../Pages/Home/api';
 interface IFriend {
   _id: string;
   avatar: string;
@@ -31,21 +30,19 @@ export const AddUsersToTrip: FC<IProps> = ({
     mutationFn: addUserToTrip,
     onSuccess: () => {
       // Invalidate and refetch
+      toggleModal()
       // queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
-  const {
-    data,
-    isLoading,
-    isError: isErrorCurrent,
-  } = useQuery({
-    queryKey: ['current'],
-    queryFn: getCurrent,
-  });
-  if (isPending || isLoading) {
-    return <div>Loading...</div>;
+
+  if (isPending ) {
+    return <ModalContainer
+    toggleModal={toggleModal}
+    isOpen={isOpen}
+    title='Connect users'
+  ><div>Loading...</div></ModalContainer>;
   }
-  if (isError || isErrorCurrent) {
+  if (isError ) {
     return <div>Error</div>;
   }
   const handdleSetUserId = (evt: FormEvent<HTMLInputElement>) => {
