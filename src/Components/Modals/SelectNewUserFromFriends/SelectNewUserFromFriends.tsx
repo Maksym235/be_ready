@@ -42,11 +42,8 @@ export const SelectNewUserFromFriends: FC<IProps> = ({
   if (isError || MError) {
     return <div>Error</div>;
   }
-  const handleSubmitUser = (cancel: boolean, userId: string) => {
-    if (cancel ) {
-      return
-    }
-    mutate({ tripId: tripId ? tripId : '', userId });
+  const handleSubmitUser = (invite: boolean, userId: string) => {
+    mutate({ tripId: tripId ? tripId : '', userId, invite });
     // data.resp.find((f:) => f._id === userId).invite = true;
   };
   return (
@@ -67,7 +64,7 @@ export const SelectNewUserFromFriends: FC<IProps> = ({
                   {friend.name}
                   </div>
                   <button
-                    onClick={() => handleSubmitUser(false, friend._id)}
+                    onClick={() => handleSubmitUser(friend.invited ? false : true, friend._id)}
                     className={styles.invite_btn}
                   >
                   {friend.invited ? `cancel` : `send invite`}

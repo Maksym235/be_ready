@@ -140,11 +140,16 @@ export const createNewTour = async (newTripData: INewTripData) => {
 interface IAddNewUserToTrip {
   tripId: string;
   userId: string;
+  invite: boolean;
 }
-export const addUserToTrip = async ({ tripId, userId }: IAddNewUserToTrip) => {
+export const addUserToTrip = async ({
+  tripId,
+  userId,
+  invite,
+}: IAddNewUserToTrip) => {
   try {
     const resp = await axios.post(
-      `/tours/${tripId}/addUser`,
+      `/tours/${tripId}/addUser?invite=${invite}`,
       {
         usersId: userId,
       },
@@ -238,7 +243,7 @@ export const updateList = async (data: IUpdateList) => {
   }
 };
 
-export const getFriendsTripRequests = async(tripId: string) => {
+export const getFriendsTripRequests = async (tripId: string) => {
   try {
     const resp = await axios.get(`/auth/friendsTripRequests/${tripId}`, {
       headers: {
@@ -246,8 +251,22 @@ export const getFriendsTripRequests = async(tripId: string) => {
       },
     });
     return resp.data;
-  } catch (error:any) {
+  } catch (error: any) {
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');
     console.log(error);
   }
-}
+};
+
+export const getUsersInTrips = async (tripId: string) => {
+  try {
+    const resp = await axios.get(`/tours/${tripId}/usersInfo`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
+    return resp.data;
+  } catch (error: any) {
+    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
+    console.log(error);
+  }
+};

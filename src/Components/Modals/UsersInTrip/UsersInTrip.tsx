@@ -1,12 +1,29 @@
-import {FC} from 'react'
-import styles from './UsersInTrip.module.css'
+import { FC } from 'react';
+import styles from './UsersInTrip.module.css';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
+import { useQuery } from '@tanstack/react-query';
+import { getUsersInTrips } from '../../../Pages/Lists/api';
 interface IProps {
-    toggleModal: () => void;
-    isOpen: boolean;
-    tripId: string;
+  toggleModal: () => void;
+  isOpen: boolean;
+  tripId: string;
+}
+export const UsersInTrip: FC<IProps> = ({ toggleModal, isOpen, tripId }) => {
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ['usersInTripInfo'],
+    queryFn: () => getUsersInTrips(tripId),
+  });
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
-export const UsersInTrip:FC<IProps> = ({toggleModal, isOpen}) => {
+  if (isError) {
+    return <div>Something went wrong.</div>;
+  }
+  const permisionsText: Record<string, string> = {
+    owner: 'CREATOR',
+    current_user: 'You',
+    user: '',
+  };
   return (
     <ModalContainer
       toggleModal={toggleModal}
@@ -14,27 +31,37 @@ export const UsersInTrip:FC<IProps> = ({toggleModal, isOpen}) => {
       title='Users in shared list'
     >
       <div className={styles.container}>
-        <p className={styles.title}>Friends List</p>
+        {/* <p className={styles.title}>Friends List</p> */}
         <ul className={styles.list}>
-          {/* {data && data?.resp.length > 0 &&
-            data?.resp.map(
-              (friend: { name: string; _id: string; avatar: string, invited: boolean }) => (
+          {data &&
+            data.users.map(
+              (friend: {
+                _id: string;
+                name: string;
+                avatar: string;
+                permision: string;
+              }) => (
                 <li className={styles.list_item} key={friend._id}>
                   <div className={styles.list_item_info_block}>
-                  <img className={styles.avatar} src={friend.avatar} />
-                  {friend.name}
+                    <img className={styles.avatar} src={friend.avatar} />
+                    {friend.name}
                   </div>
+
                   <button
-                    onClick={() => handleSubmitUser(false, friend._id)}
-                    className={styles.invite_btn}
+                    disabled={
+                      friend.permision === 'owner' ||
+                      friend.permision === 'current_user'
+                    }
+                    // onClick={() => handleSubmitUser(false, friend._id)}
+                    className={styles[`${friend.permision}`]}
                   >
-                  {friend.invited ? `cancel` : `send invite`}
+                    {permisionsText[friend.permision]}
                   </button>
                 </li>
               )
-            )} */}
+            )}
         </ul>
       </div>
     </ModalContainer>
-  )
-}
+  );
+};
