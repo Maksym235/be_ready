@@ -66,3 +66,42 @@
   background-color: #fff;
   border-radius: 50%;
 }
+.resetPass {
+  display: flex;
+  width: 350px;
+  height: 44px;
+  padding: 8px 24px;
+  margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 40px;
+  border: 2px solid var(--accent, #458ef7);
+  background-color: #fff;
+  color: var(--accent, #458ef7);
+  text-align: right;
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  position: relative;
+  text-transform: uppercase; 
+}
+
+
+.resetPass::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  background-color: #458ef7;
+  border-radius: 50%;
+}
+
+
