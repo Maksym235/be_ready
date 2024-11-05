@@ -69,9 +69,12 @@ export const LoginModal: FC<IProps> = ({
     const userCred = await signInWithPopup(auth, googleAuthProvider);
     localStorage.setItem('googleUser', JSON.stringify(userCred));
     // alert(`name: ${userCred.user.displayName}`);
+    console.log(userCred)
     const googleUser: IRegisterGoogleAuth = {
       name: userCred.user.displayName!,
       email: userCred.user.email!,
+      avatarURL: userCred.user.photoURL!,
+      avatarName: "google_avatar",
       password: 'googleAuth',
     };
     mutateG(googleUser);

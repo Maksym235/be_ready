@@ -8,6 +8,8 @@ interface ILogin {
 export interface IRegisterGoogleAuth {
   name: string;
   email: string;
+  avatarURL: string;
+  avatarName: string;
   password: string;
 }
 
@@ -37,12 +39,16 @@ export const loginAsync = async ({ email, password }: ILogin) => {
 export const googleAuth = async ({
   name,
   email,
+  avatarName,
+  avatarURL,
   password,
 }: IRegisterGoogleAuth) => {
   try {
     const resp = await axios.post('/auth/googleAuth', {
       name,
       email,
+      avatarName,
+      avatarURL,
       password,
     });
     window.localStorage.setItem('token', resp.data.token);
