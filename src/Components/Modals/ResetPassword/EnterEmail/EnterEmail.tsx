@@ -30,11 +30,11 @@ export const EnterEmail: FC<IProps> = ({
         >
           Send code to my email
         </button>
-      <button
+        <button
           onClick={() => setCurrentModal('login')}
           className={styles.resetPass}
         >
-       cancel 
+          cancel
         </button>
       </div>
     </ModalContainer>

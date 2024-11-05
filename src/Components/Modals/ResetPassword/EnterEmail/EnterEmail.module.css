@@ -89,9 +89,8 @@
   font-weight: 500;
   line-height: normal;
   position: relative;
-  text-transform: uppercase; 
+  text-transform: uppercase;
 }
-
 
 .resetPass::after {
   content: '';
@@ -103,5 +102,3 @@
   background-color: #458ef7;
   border-radius: 50%;
 }
-
-
