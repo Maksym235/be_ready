@@ -15,6 +15,7 @@ import { WeSendEmail } from '../../Components/Modals/ResetPassword/WeSendEmail/W
 import { NotFoundEmail } from '../../Components/Modals/ResetPassword/NotFoundEmail/NotFoundEmail';
 import { getCurrent } from './api';
 import { useQuery } from '@tanstack/react-query';
+import { Spinner } from '../../Components/Spinner/Spinner';
 const Home: FC = () => {
   const [currentModal, setCurrentModal] = useState<string>('login');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +24,7 @@ const Home: FC = () => {
     queryFn: getCurrent,
   });
   if (isPending) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isError) {
     // toast.error("This didn't work.");
@@ -103,6 +104,7 @@ const Home: FC = () => {
       <FirstChecklist toggleModal={handleToggleModal} />
       <ContactUs />
       <Footer />
+
       {Modals[currentModal]}
     </main>
   );

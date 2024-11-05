@@ -3,6 +3,7 @@ import styles from './UsersInTrip.module.css';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import { useQuery } from '@tanstack/react-query';
 import { getUsersInTrips } from '../../../Pages/Lists/api';
+import { Spinner } from '../../Spinner/Spinner';
 interface IProps {
   toggleModal: () => void;
   isOpen: boolean;
@@ -14,7 +15,7 @@ export const UsersInTrip: FC<IProps> = ({ toggleModal, isOpen, tripId }) => {
     queryFn: () => getUsersInTrips(tripId),
   });
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isError) {
     return <div>Something went wrong.</div>;

@@ -10,6 +10,7 @@ import { editRequest, getUserRequests } from '../../Pages/Home/api';
 import acceptIcon from '../../assets/accepRequest.svg';
 import disaccept from '../../assets/disacceptRequest.svg';
 import { AllListBelow } from '../AllListBelow/AllListBelow';
+import { Spinner } from '../Spinner/Spinner';
 export interface IProps {
   lists: any;
 }
@@ -37,7 +38,7 @@ export const PackingList: FC<IProps> = ({ lists }) => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isError) {
     return <div>Error...</div>;
@@ -59,7 +60,7 @@ export const PackingList: FC<IProps> = ({ lists }) => {
     refetch();
   };
   if (isPending) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   return (
     <div className={styles.background}>

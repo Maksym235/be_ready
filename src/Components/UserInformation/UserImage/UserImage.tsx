@@ -2,6 +2,7 @@ import { FC, useRef } from 'react';
 import styles from './UserImage.module.css';
 import { useMutation } from '@tanstack/react-query';
 import { changeAvatar, resetToDefaultAvatar } from '../../../Pages/Home/api';
+import { Spinner } from '../../Spinner/Spinner';
 export interface IUser {
   email: string;
   id: string;
@@ -54,7 +55,7 @@ export const UserImage: FC<IUserImageProps> = ({ refetch, user }) => {
     resetM();
   };
   if (isPending || resetPending) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   return (
     <div className={styles.container}>

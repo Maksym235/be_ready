@@ -7,6 +7,7 @@ import { ReactNode, useState } from 'react';
 import { EditUserName } from '../Modals/EditUserName/EditUserName';
 import { EditUserEmail } from '../Modals/EditUserEmail/EditUserEmail';
 import { EditUserPassword } from '../Modals/EditUserPassoword/EditUserPassword';
+import { Spinner } from '../Spinner/Spinner';
 export interface IUserDataToUpdate {
   name: string;
   email: string;
@@ -30,7 +31,7 @@ export const UserInformation = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isError) {
     return <div>Something went wrong.</div>;

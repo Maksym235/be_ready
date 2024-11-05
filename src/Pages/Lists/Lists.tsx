@@ -8,6 +8,7 @@ import { SetTripDuration } from '../../Components/Modals/SetTripDuration/SetTrip
 import { SetRecOrEmpty } from '../../Components/Modals/SetRecOtEmpty/SetRecOrEmpty';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createNewTour, getTours } from './api';
+import { Spinner } from '../../Components/Spinner/Spinner';
 
 const Lists: FC = () => {
   const [currentModal, setCurrentModal] = useState<string>('setTripName');
@@ -34,7 +35,7 @@ const Lists: FC = () => {
   });
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isError) {
     // console.log(query);

@@ -9,6 +9,7 @@ import { AddNewFriend } from '../Modals/AddNewFriend/AddNewFriend';
 import { useQuery } from '@tanstack/react-query';
 import { getCurrent } from '../../Pages/Home/api';
 import { FriendsRequesList } from './FriendsRequestList/FriendsRequesList';
+import { Spinner } from '../Spinner/Spinner';
 // import copy from "../../assets/icon_copy.svg";
 export interface IUserFriendsProps {
   refetchRequest: any;
@@ -28,7 +29,7 @@ export const UserFriends: FC<IUserFriendsProps> = ({
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isError) {
     return <div>Something went wrong.</div>;

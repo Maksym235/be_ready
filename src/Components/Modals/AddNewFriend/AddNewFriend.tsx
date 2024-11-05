@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { useMutation } from '@tanstack/react-query';
 import { sendFriendRequest } from '../../../Pages/Home/api';
 import toast from 'react-hot-toast';
+import { Spinner } from '../../Spinner/Spinner';
 interface IProps {
   isOpen: boolean;
   toggleModal: () => void;
@@ -18,7 +19,7 @@ export const AddNewFriend: FC<IProps> = ({ isOpen, toggleModal }) => {
     },
   });
   if (isPending) {
-    <div>Loading...</div>;
+    return <Spinner />;
   }
   // const validate = (values: { userid: string }) => {
   // 	const errors: Record<string, undefined | string> = {

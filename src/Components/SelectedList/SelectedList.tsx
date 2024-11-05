@@ -23,6 +23,7 @@ import { DeleteTrip } from '../Modals/DeleteTrip/DeleteTrip';
 import { AddUsersToTrip } from '../Modals/AddUsersToTrip/AddUsersToTrip';
 import { SelectNewUserFromFriends } from '../Modals/SelectNewUserFromFriends/SelectNewUserFromFriends';
 import { UsersInTrip } from '../Modals/UsersInTrip/UsersInTrip';
+import { Spinner } from '../Spinner/Spinner';
 export interface ICategoryItem {
   _id: string;
   name: string;
@@ -47,7 +48,7 @@ export const SelectedList: FC = () => {
   const location = useLocation();
   const queryClient = useQueryClient();
   const user = JSON.parse(localStorage.getItem('user')!);
-  const { isPending, isError, data, refetch } = useQuery({
+  const { isLoading, isError, data, refetch } = useQuery({
     queryKey: ['tours'],
     queryFn: () => getToursById(tripId ? tripId : ''),
   });
@@ -58,8 +59,8 @@ export const SelectedList: FC = () => {
       queryClient.invalidateQueries({ queryKey: ['tours'] });
     },
   });
-  if (isPending) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return <Spinner />;
   }
   if (isError) {
     return <div>Error</div>;
@@ -212,11 +213,11 @@ export const SelectedList: FC = () => {
     ),
     usersInTrip: (
       <UsersInTrip
-      tripId={data.trip && data.trip.id}
+        tripId={data.trip && data.trip.id}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
       />
-    )
+    ),
   };
   return (
     <>

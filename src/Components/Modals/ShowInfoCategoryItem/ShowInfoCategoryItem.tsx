@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import styles from './ShowInfoCategoryItem.module.css';
 import edit_icon from '../../../assets/SelectedList/Footer/icon_edit.svg';
@@ -19,6 +19,7 @@ export const ShowInfoCategoryItem: FC<IProps> = ({
   isOpen,
   usersInfo,
 }) => {
+  const [count, setCount] = useState(1);
   return (
     <ModalContainer
       toggleModal={toggleModal}
@@ -35,11 +36,19 @@ export const ShowInfoCategoryItem: FC<IProps> = ({
         <div>
           <p className={styles.label}>Count</p>
           <div className={styles.count_wrapper}>
-            <button className={styles.edit_btn}>
+            <button
+              onClick={() =>
+                count > 1 ? setCount((state) => state - 1) : null
+              }
+              className={styles.edit_btn}
+            >
               <img src={icon_minus} alt='count minus' />
             </button>
-            <p>1</p>
-            <button className={styles.edit_btn}>
+            <p>{count}</p>
+            <button
+              onClick={() => setCount((state) => state + 1)}
+              className={styles.edit_btn}
+            >
               <img src={icon_plus} alt='count plus' />
             </button>
           </div>
@@ -47,17 +56,14 @@ export const ShowInfoCategoryItem: FC<IProps> = ({
         <div>
           <p className={styles.label}>Who takes the item</p>
           <div className={styles.persons_wrapper}>
-            {usersInfo ? (
+            {usersInfo &&
               usersInfo.map((el: any) => (
                 <div className={styles.person_block}>
                   <p className={styles.person_icon}>{el.name.slice(0, 1)}</p>
                   <p className={styles.person_name}>{el.name}</p>
-                  <p className={styles.person_counter}>1</p>
+                  <p className={styles.person_counter}>{count}</p>
                 </div>
-              ))
-            ) : (
-              <div>loading...</div>
-            )}
+              ))}
             {/* <div className={styles.person_block}>
 							<p
 								className={`${styles.person_icon} ${styles.person_icon_disabled}`}

@@ -5,6 +5,7 @@ import { editFriendRequest, getUserRequests } from '../../../Pages/Home/api';
 import accept_icon from '../../../assets/SelectedList/icon_dobble_check.svg';
 import cross_delete from '../../../assets/icon_close.svg';
 import toast from 'react-hot-toast';
+import { Spinner } from '../../Spinner/Spinner';
 export interface IFriendsRequests {
   id: string;
   name: string;
@@ -52,10 +53,10 @@ export const FriendsRequesList: FC<IFriendRequestsList> = ({
   };
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isError) {
     return <div>Error...</div>;

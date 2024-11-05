@@ -4,6 +4,7 @@ import styles from './AddUsersToTrip.module.css';
 import { useMutation } from '@tanstack/react-query';
 import { addUserToTrip } from '../../../Pages/Lists/api';
 import { useParams } from 'react-router-dom';
+import { Spinner } from '../../Spinner/Spinner';
 interface IFriend {
   _id: string;
   avatar: string;
@@ -30,19 +31,23 @@ export const AddUsersToTrip: FC<IProps> = ({
     mutationFn: addUserToTrip,
     onSuccess: () => {
       // Invalidate and refetch
-      toggleModal()
+      toggleModal();
       // queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
 
-  if (isPending ) {
-    return <ModalContainer
-    toggleModal={toggleModal}
-    isOpen={isOpen}
-    title='Connect users'
-  ><div>Loading...</div></ModalContainer>;
+  if (isPending) {
+    return (
+      <ModalContainer
+        toggleModal={toggleModal}
+        isOpen={isOpen}
+        title='Connect users'
+      >
+        <Spinner />
+      </ModalContainer>
+    );
   }
-  if (isError ) {
+  if (isError) {
     return <div>Error</div>;
   }
   const handdleSetUserId = (evt: FormEvent<HTMLInputElement>) => {
