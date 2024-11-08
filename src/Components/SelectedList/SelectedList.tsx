@@ -239,9 +239,12 @@ export const SelectedList: FC = () => {
               .map((category) => (
                 <div key={category} className={styles.category}>
                   <CategoryTitle
+                    isEditing={isEditing}
+                    refetch={refetch}
                     opensCategories={opensCategories}
                     toggleOpenCategory={toggleOpenCategory}
                     category={category}
+                    listId={data.trip && data.trip.equipListId}
                     equipList={data && data.trip.equipList}
                   />
                   {opensCategories.includes(category) && (
@@ -257,8 +260,11 @@ export const SelectedList: FC = () => {
                                   handleCheckedItem={onUpdateItem}
                                   handleShowInfo={handleShowInfo}
                                   isEditing={isEditing}
+                                  category={category}
                                   item={categoryItem}
                                   user={user}
+                                  refetch={refetch}
+                                  listId={data.trip && data.trip.equipListId}
                                 />
                               </div>
                             ))
@@ -274,7 +280,10 @@ export const SelectedList: FC = () => {
                                   handleShowInfo={handleShowInfo}
                                   isEditing={isEditing}
                                   item={categoryItem}
+                                  category={category}
                                   user={user}
+                                  refetch={refetch}
+                                  listId={data.trip && data.trip.equipListId}
                                 />
                               </div>
                             ))}

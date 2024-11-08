@@ -108,7 +108,7 @@ export const changeDuration = async ({
 
 export const deleteTrip = async ({ tripId }: { tripId: string }) => {
   try {
-    const resp = await axios.delete(`/tours/${tripId}`, {
+    const resp = await axios.delete(`/tours/${tripId}/delete`, {
       headers: {
         Authorization: 'Bearer ' + window.localStorage.getItem('token'),
       },
@@ -264,6 +264,61 @@ export const getUsersInTrips = async (tripId: string) => {
         Authorization: 'Bearer ' + window.localStorage.getItem('token'),
       },
     });
+    return resp.data;
+  } catch (error: any) {
+    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
+    console.log(error);
+  }
+};
+export interface IDeleteCategoryProps {
+  listId: string;
+  categoryName: string;
+}
+export const deleteCategory = async ({
+  listId,
+  categoryName,
+}: IDeleteCategoryProps) => {
+  try {
+    const resp = await axios.post(
+      `equipList/${listId}/deleteCategory`,
+      {
+        name: categoryName,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
+    return resp.data;
+  } catch (error: any) {
+    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
+    console.log(error);
+  }
+};
+export interface IDeleteListItemProps {
+  listId: string;
+  itemId: string;
+  category: string;
+}
+export const deleteListItem = async ({
+  listId,
+  itemId,
+  category,
+}: IDeleteListItemProps) => {
+  try {
+    const resp = await axios.post(
+      `equipList/${listId}/deleteItem`,
+      {
+        itemid: itemId,
+        category: category,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: any) {
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');
