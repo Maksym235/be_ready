@@ -6,6 +6,7 @@ import checkbox_ch from '../../../assets/SelectedList/checkbox_ch.svg';
 import trash from '../../../assets/SelectedList/icon_trash.svg';
 import { useMutation } from '@tanstack/react-query';
 import { deleteListItem } from '../../../Pages/Lists/api';
+import { IPersons } from '../SelectedList';
 export interface ICategoryItemProps {
   user: any;
   item: any;
@@ -55,17 +56,21 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
               onChange={() => handleCheckedItem(item)}
               className={styles.checkbox_input}
               type='checkbox'
-              checked={item.persons.includes(user.id)}
+              checked={item.persons.find((p: IPersons) => p._id === user.id)}
             />
             <img
               className={styles.checkbox_icon}
-              src={item.persons.includes(user.id) ? checkbox_ch : checkbox}
+              src={
+                item.persons.find((p: IPersons) => p._id === user.id)
+                  ? checkbox_ch
+                  : checkbox
+              }
               alt=''
             />
           </div>
           <p
             className={
-              item.persons.includes(user.id)
+              item.persons.find((p: IPersons) => p._id === user.id)
                 ? `${styles.item_name} ${styles.item_name_checked}`
                 : styles.item_name
             }

@@ -5,21 +5,52 @@ import edit_icon from '../../../assets/SelectedList/Footer/icon_edit.svg';
 import icon_plus from '../../../assets/Modals/icon_plus.svg';
 import icon_minus from '../../../assets/Modals/icon_minus.svg';
 import { ICategoryItem } from '../../SelectedList/SelectedList';
+import { useMutation } from '@tanstack/react-query';
+import { updateCount } from '../../../Pages/Lists/api';
 interface IProps {
   toggleModal: () => void;
   isOpen: boolean;
   tripName: string;
+  listId: string;
   item: ICategoryItem;
-  usersInfo: any;
+  refetch: any;
 }
 
 export const ShowInfoCategoryItem: FC<IProps> = ({
   toggleModal,
   tripName,
   isOpen,
-  usersInfo,
+  listId,
+  item,
+  refetch,
 }) => {
+  const mutation = useMutation({
+    mutationFn: updateCount,
+    onSuccess: () => {
+      refetch();
+      // queryClient.invalidateQueries({ queryKey: ['tours'] });
+    },
+  });
   const [count, setCount] = useState(1);
+  const handleUpdateCount = (key: string) => {
+    if (key === 'plus') {
+      mutation.mutate({
+        listId: listId,
+        count: count + 1,
+        category: item.category,
+        equipId: item._id,
+      });
+      setCount((state) => state + 1);
+    } else {
+      mutation.mutate({
+        listId: listId,
+        count: count > 1 ? count - 1 : 1,
+        category: item.category,
+        equipId: item._id,
+      });
+      count > 1 ? setCount((state) => state - 1) : null;
+    }
+  };
   return (
     <ModalContainer
       toggleModal={toggleModal}
@@ -28,7 +59,11 @@ export const ShowInfoCategoryItem: FC<IProps> = ({
     >
       <div className={styles.container}>
         <div className={styles.input_container}>
-          <input placeholder={tripName} className={styles.input} type='text' />
+          <input
+            placeholder={item?.name}
+            className={styles.input}
+            type='text'
+          />
           <button className={styles.edit_btn}>
             <img src={edit_icon} alt='edit name trip icon' />
           </button>
@@ -37,16 +72,14 @@ export const ShowInfoCategoryItem: FC<IProps> = ({
           <p className={styles.label}>Count</p>
           <div className={styles.count_wrapper}>
             <button
-              onClick={() =>
-                count > 1 ? setCount((state) => state - 1) : null
-              }
+              onClick={() => handleUpdateCount('minus')}
               className={styles.edit_btn}
             >
               <img src={icon_minus} alt='count minus' />
             </button>
             <p>{count}</p>
             <button
-              onClick={() => setCount((state) => state + 1)}
+              onClick={() => handleUpdateCount('plus')}
               className={styles.edit_btn}
             >
               <img src={icon_plus} alt='count plus' />
@@ -56,11 +89,11 @@ export const ShowInfoCategoryItem: FC<IProps> = ({
         <div>
           <p className={styles.label}>Who takes the item</p>
           <div className={styles.persons_wrapper}>
-            {usersInfo &&
-              usersInfo.map((el: any) => (
+            {item?.persons &&
+              item?.persons.map((el: any) => (
                 <div className={styles.person_block}>
-                  <p className={styles.person_icon}>{el.name.slice(0, 1)}</p>
-                  <p className={styles.person_name}>{el.name}</p>
+                  <p className={styles.person_icon}>{el?.name?.slice(0, 1)}</p>
+                  <p className={styles.person_name}>{el?.name}</p>
                   <p className={styles.person_counter}>{count}</p>
                 </div>
               ))}

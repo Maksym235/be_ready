@@ -52,7 +52,7 @@ export const CategoryTitle: FC<ICategoryTitleProps> = ({
           <div className={styles.counter}>
             {
               equipList[category].filter((el: ICategoryItem) =>
-                el.persons.includes(user.id)
+                el.persons.find((item) => item._id === user.id)
               ).length
             }
             /{equipList[category].length}

@@ -24,19 +24,24 @@ import { AddUsersToTrip } from '../Modals/AddUsersToTrip/AddUsersToTrip';
 import { SelectNewUserFromFriends } from '../Modals/SelectNewUserFromFriends/SelectNewUserFromFriends';
 import { UsersInTrip } from '../Modals/UsersInTrip/UsersInTrip';
 import { Spinner } from '../Spinner/Spinner';
+export interface IPersons {
+  _id: string;
+  name: string;
+  count: number;
+}
 export interface ICategoryItem {
   _id: string;
   name: string;
   description: string;
   category: string;
-  persons: string[];
+  persons: IPersons[];
 }
 export const SelectedList: FC = () => {
   const [opensCategories, setOpensCategories] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [infoItem, setInfoItem] = useState<any>(null);
   const [isOpenAddModals, setIsOpenAddModals] = useState(false);
-  const [itemPersons, setItemPersons] = useState(null);
+  const [itemPersons, setItemPersons] = useState<IPersons[] | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [timerId, setTimerId] = useState<any>(null);
@@ -73,8 +78,8 @@ export const SelectedList: FC = () => {
   const handleShowInfo = (item: ICategoryItem) => {
     setInfoItem(item);
     if (item.persons.length > 0) {
-      getUsersById(item.persons.join(', ')).then((users) =>
-        setItemPersons(users.resp)
+      getUsersById(item.persons.map((p: IPersons) => p._id).join(', ')).then(
+        (users) => setItemPersons(users.resp)
       );
       toggleIsOpen();
       return;
@@ -111,8 +116,10 @@ export const SelectedList: FC = () => {
     }
     setEditedItem((state) => [...state, item]);
     const list = data.trip.equipList;
-    if (item.persons.includes(user.id)) {
-      const userIndex = item.persons.findIndex((p: string) => p === user.id);
+    if (item.persons.find((p: IPersons) => p._id === user.id)) {
+      const userIndex = item.persons.findIndex(
+        (p: IPersons) => p._id === user.id
+      );
       const updatedItem = {
         ...item,
         persons: item.persons.slice(1, userIndex),
@@ -126,7 +133,7 @@ export const SelectedList: FC = () => {
     } else {
       const updatedItem = {
         ...item,
-        persons: [...item.persons, user.id],
+        persons: [...item.persons, { _id: user.id, name: user.name, count: 1 }],
       };
       const updatedCategory = list[item.category];
       const catIndex = updatedCategory.findIndex(
@@ -272,7 +279,12 @@ export const SelectedList: FC = () => {
                             .sort((a: any, b: any) =>
                               a.name.localeCompare(b.name, 'uk')
                             )
-                            .filter((el: any) => !el.persons.includes(user.id))
+                            .filter(
+                              (el: any) =>
+                                !el.persons.find(
+                                  (p: IPersons) => p._id === user.id
+                                )
+                            )
                             .map((categoryItem: any) => (
                               <div key={categoryItem._id}>
                                 <CategoryItem
@@ -325,11 +337,12 @@ export const SelectedList: FC = () => {
         />
       </div>
       <ShowInfoCategoryItem
-        tripName={listId.id ? listId.id : '-'}
+        listId={data?.trip?.equipListId ? data?.trip?.equipListId : '-'}
+        tripName={data?.trip?.name ? data?.trip?.name : '-'}
         item={infoItem}
-        usersInfo={itemPersons}
         isOpen={isOpen}
         toggleModal={toggleIsOpen}
+        refetch={refetch}
       />
       {modals[currentModal]}
     </>

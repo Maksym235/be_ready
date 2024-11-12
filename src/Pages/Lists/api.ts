@@ -325,3 +325,34 @@ export const deleteListItem = async ({
     console.log(error);
   }
 };
+export interface IUpdateCountProps {
+  listId: string;
+  count: number;
+  category: string;
+  equipId: string;
+}
+export const updateCount = async ({
+  listId,
+  count,
+  category,
+  equipId,
+}: IUpdateCountProps) => {
+  try {
+    const resp = await axios.post(
+      `equipList/${listId}/updateCount`,
+      {
+        count: count,
+        category: category,
+        equipId: equipId,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
+    return resp.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
