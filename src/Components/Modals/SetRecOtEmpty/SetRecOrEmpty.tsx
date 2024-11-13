@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import { ModalContainerCreateList } from '../ModalContainerCreateList/ModalContainerCreateList';
 import styles from './SetRecOrEmpty.module.css';
 interface IProps {
   isOpen: boolean;
   toggleModal: () => void;
   setCurrentModal: (key: string) => void;
-  submit: (type: string) => void;
+  submit: (type: string, data: any) => void;
 }
 export const SetRecOrEmpty: FC<IProps> = ({
   isOpen,
@@ -13,9 +13,38 @@ export const SetRecOrEmpty: FC<IProps> = ({
   setCurrentModal,
   submit,
 }) => {
-  const handleNextPage = (type: string) => {
-    submit(type);
+  const inputFileRef: any = useRef();
+  const handleNextPage = (type: string, data: any) => {
+    submit(type, data);
   };
+  const onImageSelect = () => {
+    inputFileRef.current.click();
+    // if (e.target.files && e.target.files[0]) {
+    // 	let img = e.target.files[0];
+    // 	const formData = new FormData();
+    // 	formData.append("avatar", img);
+    // 	console.log(formData);
+    // }
+  };
+  const handleFileChange = (event: any) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        //@ts-ignore
+        const content = JSON.parse(e.target.result);
+        console.log('File content:', content);
+        handleNextPage('custom', content);
+      } catch (error) {
+        console.error('Invalid JSON file', error);
+      }
+    };
+    if (file) {
+      reader.readAsText(file);
+    }
+  };
+
+  // Функція для відправки JSON-даних на сервер
   return (
     <ModalContainerCreateList
       isOpen={isOpen}
@@ -30,17 +59,31 @@ export const SetRecOrEmpty: FC<IProps> = ({
         </p>
         <div className={styles.btn_wrapper}>
           <button
-            onClick={() => handleNextPage('rec')}
+            onClick={() => handleNextPage('rec', null)}
             className={styles.recomend}
           >
             I WANT RECOMMENDATIONS
           </button>
+
           <button
-            onClick={() => handleNextPage('empty')}
+            onClick={() => handleNextPage('empty', null)}
             className={styles.empty_back}
           >
             CREATE EMPTY LIST
           </button>
+          <button onClick={onImageSelect} className={styles.empty_back}>
+            Upload custom packing list
+          </button>
+          <input
+            hidden
+            ref={inputFileRef}
+            onChange={handleFileChange}
+            className={styles.empty_back}
+            placeholder='select custom'
+            type='file'
+            accept='.json'
+          />
+
           <button
             onClick={() => setCurrentModal('setTripDuration')}
             className={styles.empty_back}

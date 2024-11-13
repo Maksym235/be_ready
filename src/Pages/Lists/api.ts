@@ -123,14 +123,19 @@ interface INewTripData {
   name: string;
   listType: number;
   duration: number;
+  customData: string;
 }
 export const createNewTour = async (newTripData: INewTripData) => {
   try {
-    const resp = await axios.post(`/tours/newAdd`, newTripData, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
+    const resp = await axios.post(
+      `http://localhost:8080/tours/newAdd`,
+      newTripData,
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: any) {
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');
@@ -351,6 +356,19 @@ export const updateCount = async ({
         },
       }
     );
+    return resp.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const downloadList = async (listId: string) => {
+  try {
+    const resp = await axios.get(`/equipList/${listId}/downloadList`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error) {
     console.log(error);

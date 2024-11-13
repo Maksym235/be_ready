@@ -1,0 +1,19 @@
+.download {
+  display: flex;
+  width: 350px;
+  height: 44px;
+  padding: 8px 24px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 40px;
+  border: 2px solid var(--accent, #458ef7);
+  background-color: #fff;
+  position: relative;
+  text-transform: uppercase;
+  color: var(--accent, #458ef7);
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

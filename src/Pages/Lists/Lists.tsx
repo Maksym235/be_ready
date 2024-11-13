@@ -59,21 +59,26 @@ const Lists: FC = () => {
   const toggleCurrentModal = (key: string) => {
     setCurrentModal(key);
   };
-
-  const handleSubmitNewTrip = (recOrEmpty: string) => {
+  const typesList: Record<string, number> = {
+    empty: 0,
+    rec: 1,
+    custom: 2,
+  };
+  const handleSubmitNewTrip = (recOrEmpty: string, data: any) => {
     const newTrip = {
       name: tripName,
       // type: tripType,
       duration: Number(tripDuration),
-      listType: recOrEmpty === 'rec' ? 1 : 0,
+      listType: typesList[recOrEmpty],
+      customData: data ? JSON.stringify(data) : JSON.stringify([]),
     };
+    mutate(newTrip);
 
     // name: resp.name,
     // 		users: resp.users,
     // 		owner: resp.owner,
     // 		duration: resp.duration,
     // 		equipList: filteredByCategory
-    mutate(newTrip);
     // if (!IsPenMutation) {
     // 	setIsModalOpen(false);
     // 	refetch();
@@ -116,7 +121,7 @@ const Lists: FC = () => {
         setCurrentModal={toggleCurrentModal}
         isOpen={isModalOpen}
         toggleModal={handleToggleModal}
-        submit={(recOrEmpty) => handleSubmitNewTrip(recOrEmpty)}
+        submit={(recOrEmpty, data) => handleSubmitNewTrip(recOrEmpty, data)}
       />
     ),
   };

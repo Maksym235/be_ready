@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { addUserToTrip } from '../../../Pages/Lists/api';
 import { useParams } from 'react-router-dom';
 import { Spinner } from '../../Spinner/Spinner';
+import { DownloadList } from '../../DownloadList/DownloadList';
 interface IFriend {
   _id: string;
   avatar: string;
@@ -16,12 +17,16 @@ interface IProps {
   isOpen: boolean;
   setModal: (key: string) => void;
   friends: IFriend[];
+  listId: string;
+  tripName: string;
 }
 export const AddUsersToTrip: FC<IProps> = ({
   toggleModal,
   isOpen,
   setModal,
   friends,
+  listId,
+  tripName,
 }) => {
   const params = useParams();
   const tripId = params.id;
@@ -55,7 +60,7 @@ export const AddUsersToTrip: FC<IProps> = ({
   };
 
   const handleSubmitUser = () => {
-    mutate({ tripId: tripId ? tripId : '', userId });
+    mutate({ tripId: tripId ? tripId : '', userId, invite: true });
   };
   if (isSuccess) {
     toggleModal();
@@ -109,6 +114,7 @@ export const AddUsersToTrip: FC<IProps> = ({
         >
           SELECT FROM FRIENDS
         </button>
+        <DownloadList tripName={tripName} listId={listId} />
       </div>
     </ModalContainer>
   );

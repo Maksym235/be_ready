@@ -13,7 +13,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { getToursById, updateList } from '../../Pages/Lists/api';
-import { getUsersById } from '../../Pages/Home/api';
+// import { getUsersById } from '../../Pages/Home/api';
 import { CategoryTitle } from './CategoryTitle/CategoryTitle';
 import { CategoryItem } from './CategoryItem/CategoryItem';
 import { AddNewItemToCategory } from '../Modals/AddNewItemToCategory/AddNewItemToCategory';
@@ -41,7 +41,7 @@ export const SelectedList: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [infoItem, setInfoItem] = useState<any>(null);
   const [isOpenAddModals, setIsOpenAddModals] = useState(false);
-  const [itemPersons, setItemPersons] = useState<IPersons[] | null>(null);
+  // const [itemPersons, setItemPersons] = useState<IPersons[] | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [timerId, setTimerId] = useState<any>(null);
@@ -72,15 +72,15 @@ export const SelectedList: FC = () => {
   }
 
   const toggleIsOpen = () => {
-    setItemPersons(null);
+    // setItemPersons(null);
     setIsOpen((state) => !state);
   };
   const handleShowInfo = (item: ICategoryItem) => {
     setInfoItem(item);
     if (item.persons.length > 0) {
-      getUsersById(item.persons.map((p: IPersons) => p._id).join(', ')).then(
-        (users) => setItemPersons(users.resp)
-      );
+      // getUsersById(item.persons.map((p: IPersons) => p._id).join(', ')).then(
+      //   (users) => setItemPersons(users.resp)
+      // );
       toggleIsOpen();
       return;
     }
@@ -205,6 +205,8 @@ export const SelectedList: FC = () => {
     ),
     shareTrip: (
       <AddUsersToTrip
+        listId={data?.trip?.equipListId ? data?.trip?.equipListId : '-'}
+        tripName={data?.trip?.name ? data?.trip?.name : '-'}
         friends={user && user.friends}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}

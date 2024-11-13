@@ -18,7 +18,6 @@ interface IProps {
 
 export const ShowInfoCategoryItem: FC<IProps> = ({
   toggleModal,
-  tripName,
   isOpen,
   listId,
   item,
