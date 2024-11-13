@@ -1,15 +1,33 @@
 import { FC, FormEvent, useState } from 'react';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import styles from './AddUsersToTrip.module.css';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { addUserToTrip } from '../../../Pages/Lists/api';
 import { useParams } from 'react-router-dom';
-import { getCurrent } from '../../../Pages/Home/api';
+import { Spinner } from '../../Spinner/Spinner';
+import { DownloadList } from '../../DownloadList/DownloadList';
+interface IFriend {
+  _id: string;
+  avatar: string;
+  name: string;
+}
+
 interface IProps {
   toggleModal: () => void;
   isOpen: boolean;
+  setModal: (key: string) => void;
+  friends: IFriend[];
+  listId: string;
+  tripName: string;
 }
-export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
+export const AddUsersToTrip: FC<IProps> = ({
+  toggleModal,
+  isOpen,
+  setModal,
+  friends,
+  listId,
+  tripName,
+}) => {
   const params = useParams();
   const tripId = params.id;
   const [userId, setUserId] = useState('');
@@ -18,21 +36,23 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
     mutationFn: addUserToTrip,
     onSuccess: () => {
       // Invalidate and refetch
+      toggleModal();
       // queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
-  const {
-    data,
-    isLoading,
-    isError: isErrorCurrent,
-  } = useQuery({
-    queryKey: ['current'],
-    queryFn: getCurrent,
-  });
-  if (isPending || isLoading) {
-    return <div>Loading...</div>;
+
+  if (isPending) {
+    return (
+      <ModalContainer
+        toggleModal={toggleModal}
+        isOpen={isOpen}
+        title='Connect users'
+      >
+        <Spinner />
+      </ModalContainer>
+    );
   }
-  if (isError || isErrorCurrent) {
+  if (isError) {
     return <div>Error</div>;
   }
   const handdleSetUserId = (evt: FormEvent<HTMLInputElement>) => {
@@ -40,14 +60,13 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
   };
 
   const handleSubmitUser = () => {
-    mutate({ tripId: tripId ? tripId : '', userId });
+    mutate({ tripId: tripId ? tripId : '', userId, invite: true });
   };
   if (isSuccess) {
     toggleModal();
   }
-  const handleSelectFriend = (evt: any) => {
-    console.log(evt.target.value);
-    setUserId(evt.target.value);
+  const handleSelectFriend = () => {
+    setModal('shareTripSelectFromFriends');
   };
   return (
     <ModalContainer
@@ -63,7 +82,7 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
           value={userId}
           placeholder='Enter new user id...*'
         />
-        <select
+        {/* <select
           className={styles.select}
           onChange={handleSelectFriend}
           name='friends'
@@ -75,7 +94,7 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
               {friend.name}
             </option>
           ))}
-        </select>
+        </select> */}
         <div className={styles.btn_wrapper}>
           <button
             onClick={handleSubmitUser}
@@ -88,6 +107,14 @@ export const AddUsersToTrip: FC<IProps> = ({ toggleModal, isOpen }) => {
             Cancel
           </button>
         </div>
+        <button
+          onClick={handleSelectFriend}
+          disabled={friends.length < 1}
+          className={styles.create}
+        >
+          SELECT FROM FRIENDS
+        </button>
+        <DownloadList tripName={tripName} listId={listId} />
       </div>
     </ModalContainer>
   );

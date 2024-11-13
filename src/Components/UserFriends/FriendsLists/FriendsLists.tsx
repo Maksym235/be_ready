@@ -5,10 +5,12 @@ import { FC } from 'react';
 import toast from 'react-hot-toast';
 import cross_delete from '../../../assets/icon_close.svg';
 import { deleteFriend } from '../../../Pages/Home/api';
+import { Spinner } from '../../Spinner/Spinner';
 
 export interface IFriendsRequests {
   _id: string;
   name: string;
+  avatar: string;
 }
 export interface IUser {
   email: string;
@@ -33,7 +35,7 @@ export const FriendsLists: FC<IFriendsListProps> = ({ user, refetch }) => {
     },
   });
   if (isPending) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   const handleDeleteFriend = (userId: string) => {
     mutate(userId);
@@ -46,6 +48,7 @@ export const FriendsLists: FC<IFriendsListProps> = ({ user, refetch }) => {
           {user &&
             user?.friends?.map((el: IFriendsRequests) => (
               <li className={styles.list_item}>
+                <img className={styles.avatar} src={el.avatar} />
                 {el.name}
                 <button
                   onClick={() => handleDeleteFriend(el._id)}

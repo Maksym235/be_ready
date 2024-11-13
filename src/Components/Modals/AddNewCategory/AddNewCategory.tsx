@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useMutation } from '@tanstack/react-query';
 import { addNewCategory } from '../../../Pages/Lists/api';
 interface IProps {
-  toggleModal: (key: string) => void;
+  toggleModal: () => void;
   isOpen: boolean;
   refetch: any;
   listId: string;
@@ -20,7 +20,7 @@ export const AddNewCategory: FC<IProps> = ({
     mutationFn: addNewCategory,
     onSuccess: () => {
       refetch();
-      toggleModal('newCategory');
+      toggleModal();
     },
   });
   // const validate = (values: { name: string; category: string }) => {
@@ -52,7 +52,7 @@ export const AddNewCategory: FC<IProps> = ({
   });
   return (
     <ModalContainer
-      toggleModal={() => toggleModal('newCategory')}
+      toggleModal={() => toggleModal()}
       isOpen={isOpen}
       title='New category'
     >
@@ -110,7 +110,7 @@ export const AddNewCategory: FC<IProps> = ({
           </button>
           <button
             type='button'
-            onClick={() => toggleModal('NewCategory')}
+            onClick={() => toggleModal()}
             className={styles.cancel}
           >
             Cancel

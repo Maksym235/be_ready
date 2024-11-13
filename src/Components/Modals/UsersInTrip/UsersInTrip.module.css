@@ -1,0 +1,142 @@
+.container {
+  /* margin: 0 20px 168px 20px; */
+  margin-bottom: 168px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  color: var(--silver, #939393);
+  /* text-align: center; */
+
+  /* text 13 */
+  font-family: 'Neue Montreal';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list_item {
+  display: flex;
+  width: 320px;
+  padding: 8px 16px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--accent, #458ef7);
+  color: var(--black, #0d0d0d);
+
+  /* list item */
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.list_item_info_block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.invite_btn {
+  display: flex;
+  /* width: 100px;
+  height: 24px; */
+  padding: 8px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 40px;
+  background: var(--accent, #458ef7);
+  color: var(--white, #fff);
+  text-align: right;
+
+  /* text 13 */
+  font-family: 'Neue Montreal';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  text-transform: uppercase;
+}
+
+.user {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background-color: #e73a2e;
+  background-image: url('../../../assets/icon_close.svg');
+  background-position: center;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  border: none;
+  border-radius: 50%;
+}
+
+.owner {
+  display: flex;
+  width: 100px;
+  height: 24px;
+  padding: 8px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 40px;
+  background: var(--light-silver, #cecece);
+  text-transform: uppercase;
+  border: none;
+  color: var(--silver, #939393);
+  text-align: right;
+
+  /* text 13 */
+  font-family: 'Neue Montreal';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.current_user {
+  display: flex;
+  width: 100px;
+  height: 24px;
+  padding: 8px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 40px;
+  background: var(--light-silver, #cecece);
+  text-transform: uppercase;
+  border: none;
+  color: var(--silver, #939393);
+  text-align: right;
+
+  /* text 13 */
+  font-family: 'Neue Montreal';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

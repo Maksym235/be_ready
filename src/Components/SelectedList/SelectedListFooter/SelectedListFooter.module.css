@@ -4,11 +4,12 @@
   left: 0;
   display: flex;
   width: 100%;
+  padding: 10px 0px;
   /* padding-left: 26px;
 	padding-right: 26px; */
   gap: 46px;
   justify-content: space-around;
-  margin-bottom: 3px;
+  /* margin-bottom: 3px; */
   border-top: 1px solid var(--light-blue, #ecf4fe);
   background: var(--white, #fff);
   /* background-blur */

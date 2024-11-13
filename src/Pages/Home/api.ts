@@ -8,6 +8,8 @@ interface ILogin {
 export interface IRegisterGoogleAuth {
   name: string;
   email: string;
+  avatarURL: string;
+  avatarName: string;
   password: string;
 }
 
@@ -37,12 +39,16 @@ export const loginAsync = async ({ email, password }: ILogin) => {
 export const googleAuth = async ({
   name,
   email,
+  avatarName,
+  avatarURL,
   password,
 }: IRegisterGoogleAuth) => {
   try {
     const resp = await axios.post('/auth/googleAuth', {
       name,
       email,
+      avatarName,
+      avatarURL,
       password,
     });
     window.localStorage.setItem('token', resp.data.token);
@@ -58,6 +64,30 @@ export const googleAuth = async ({
     console.log(error);
   }
 };
+
+export const userLogout = async () => {
+  try {
+    const resp = await axios.post(
+      `/auth/logout`,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
+    if (resp.status === 200) {
+      toast.success('До зустрічі!');
+      localStorage.setItem('isLoggedIn', JSON.stringify(false));
+      window.localStorage.removeItem('user');
+      window.localStorage.removeItem('token');
+      window.localStorage.removeItem('googleUser');
+    }
+    return resp.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const getCurrent = async () => {
   try {
     const resp = await axios.get('/auth/current', {
@@ -67,9 +97,12 @@ export const getCurrent = async () => {
     });
     localStorage.setItem('token', resp.data.token);
     localStorage.setItem('isLoggedIn', JSON.stringify(true));
-
+    localStorage.setItem('user', JSON.stringify(resp.data.user));
     return resp.data;
   } catch (error: any) {
+    window.localStorage.removeItem('user');
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('googleUser');
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');
     console.log(error);
   }

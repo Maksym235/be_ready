@@ -5,20 +5,31 @@ import { editFriendRequest, getUserRequests } from '../../../Pages/Home/api';
 import accept_icon from '../../../assets/SelectedList/icon_dobble_check.svg';
 import cross_delete from '../../../assets/icon_close.svg';
 import toast from 'react-hot-toast';
+import { Spinner } from '../../Spinner/Spinner';
 export interface IFriendsRequests {
   id: string;
   name: string;
+  avatar: string;
 }
 
 export interface IFriendRequestsList {
   refetch: any;
+  requests: {
+    friends: any[];
+    trips: any[];
+  };
+  refetchRequest: any;
 }
-export const FriendsRequesList: FC<IFriendRequestsList> = ({ refetch }) => {
+export const FriendsRequesList: FC<IFriendRequestsList> = ({
+  refetch,
+  refetchRequest,
+}) => {
   const { mutate, isPending } = useMutation({
     mutationFn: editFriendRequest,
     onSuccess: () => {
       refetch();
       refetchReq();
+      refetchRequest();
       // toggleModal();
       toast.success('accepted');
     },
@@ -42,10 +53,10 @@ export const FriendsRequesList: FC<IFriendRequestsList> = ({ refetch }) => {
   };
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   if (isError) {
     return <div>Error...</div>;
@@ -57,6 +68,7 @@ export const FriendsRequesList: FC<IFriendRequestsList> = ({ refetch }) => {
         {data &&
           data.requests.friends.map((el: IFriendsRequests) => (
             <li className={styles.list_item}>
+              <img className={styles.avatar} src={el.avatar} />
               {el.name}
               <div className={styles.btn_wrapper}>
                 <button

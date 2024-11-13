@@ -13,25 +13,39 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { getToursById, updateList } from '../../Pages/Lists/api';
-import { getUsersById } from '../../Pages/Home/api';
+// import { getUsersById } from '../../Pages/Home/api';
 import { CategoryTitle } from './CategoryTitle/CategoryTitle';
 import { CategoryItem } from './CategoryItem/CategoryItem';
 import { AddNewItemToCategory } from '../Modals/AddNewItemToCategory/AddNewItemToCategory';
+import { RenameTrip } from '../Modals/RenameTrip/RenameTrip';
+import { ChangeTripDuration } from '../Modals/ChangeTripDuration/ChangeTripDuration';
+import { DeleteTrip } from '../Modals/DeleteTrip/DeleteTrip';
+import { AddUsersToTrip } from '../Modals/AddUsersToTrip/AddUsersToTrip';
+import { SelectNewUserFromFriends } from '../Modals/SelectNewUserFromFriends/SelectNewUserFromFriends';
+import { UsersInTrip } from '../Modals/UsersInTrip/UsersInTrip';
+import { Spinner } from '../Spinner/Spinner';
+export interface IPersons {
+  _id: string;
+  name: string;
+  count: number;
+}
 export interface ICategoryItem {
   _id: string;
   name: string;
   description: string;
   category: string;
-  persons: string[];
+  persons: IPersons[];
 }
 export const SelectedList: FC = () => {
   const [opensCategories, setOpensCategories] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [infoItem, setInfoItem] = useState<any>(null);
   const [isOpenAddModals, setIsOpenAddModals] = useState(false);
-  const [itemPersons, setItemPersons] = useState(null);
+  // const [itemPersons, setItemPersons] = useState<IPersons[] | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [timerId, setTimerId] = useState<any>(null);
+  const [isOpenEditMenu, setIsOpenEditMenu] = useState(false);
   const [currentModal, setCurrentModal] = useState('newCategory');
   const [currentCategory, setCurrentCategory] = useState('');
   const listId = useParams();
@@ -39,7 +53,7 @@ export const SelectedList: FC = () => {
   const location = useLocation();
   const queryClient = useQueryClient();
   const user = JSON.parse(localStorage.getItem('user')!);
-  const { isPending, isError, data, refetch } = useQuery({
+  const { isLoading, isError, data, refetch } = useQuery({
     queryKey: ['tours'],
     queryFn: () => getToursById(tripId ? tripId : ''),
   });
@@ -50,33 +64,41 @@ export const SelectedList: FC = () => {
       queryClient.invalidateQueries({ queryKey: ['tours'] });
     },
   });
-  if (isPending) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return <Spinner />;
   }
   if (isError) {
     return <div>Error</div>;
   }
 
   const toggleIsOpen = () => {
-    setItemPersons(null);
+    // setItemPersons(null);
     setIsOpen((state) => !state);
   };
   const handleShowInfo = (item: ICategoryItem) => {
     setInfoItem(item);
     if (item.persons.length > 0) {
-      getUsersById(item.persons.join(', ')).then((users) =>
-        setItemPersons(users.resp)
-      );
+      // getUsersById(item.persons.map((p: IPersons) => p._id).join(', ')).then(
+      //   (users) => setItemPersons(users.resp)
+      // );
       toggleIsOpen();
       return;
     }
     toggleIsOpen();
   };
-  const toggleIsOpenAddModal = (key: string) => {
-    setCurrentModal(key);
+
+  const toggleIsOpenAddModal = () => {
     setIsOpenAddModals((state) => !state);
   };
-
+  const toggleIsEditMenu = () => {
+    setIsOpenEditMenu((state) => !state);
+  };
+  const handleSetCurrentModal = (key: string) => {
+    setCurrentModal(key);
+  };
+  const toogleIsHidden = () => {
+    setIsHidden((state) => !state);
+  };
   const toggleOpenCategory = (id: string) => {
     if (opensCategories.includes(id)) {
       setOpensCategories(opensCategories.filter((el) => el !== id));
@@ -94,8 +116,10 @@ export const SelectedList: FC = () => {
     }
     setEditedItem((state) => [...state, item]);
     const list = data.trip.equipList;
-    if (item.persons.includes(user.id)) {
-      const userIndex = item.persons.findIndex((p: string) => p === user.id);
+    if (item.persons.find((p: IPersons) => p._id === user.id)) {
+      const userIndex = item.persons.findIndex(
+        (p: IPersons) => p._id === user.id
+      );
       const updatedItem = {
         ...item,
         persons: item.persons.slice(1, userIndex),
@@ -109,7 +133,7 @@ export const SelectedList: FC = () => {
     } else {
       const updatedItem = {
         ...item,
-        persons: [...item.persons, user.id],
+        persons: [...item.persons, { _id: user.id, name: user.name, count: 1 }],
       };
       const updatedCategory = list[item.category];
       const catIndex = updatedCategory.findIndex(
@@ -135,6 +159,7 @@ export const SelectedList: FC = () => {
     }, 5000);
     setTimerId(timer);
   };
+  // console.log(data.trip.id);
   const modals: Record<string, ReactNode> = {
     newCategory: (
       <AddNewCategory
@@ -153,6 +178,55 @@ export const SelectedList: FC = () => {
         refetch={refetch}
       />
     ),
+    renameTrip: (
+      <RenameTrip
+        tripId={data.trip && data.trip.id}
+        tripName={data.trip && data.trip.name}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+        refetch={refetch}
+      />
+    ),
+    changeDuration: (
+      <ChangeTripDuration
+        tripId={data.trip && data.trip.id}
+        tripDuraition={data.trip && data.trip.duration}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+        refetch={refetch}
+      />
+    ),
+    deleteTrip: (
+      <DeleteTrip
+        tripId={data.trip && data.trip.id}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+      />
+    ),
+    shareTrip: (
+      <AddUsersToTrip
+        listId={data?.trip?.equipListId ? data?.trip?.equipListId : '-'}
+        tripName={data?.trip?.name ? data?.trip?.name : '-'}
+        friends={user && user.friends}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+        setModal={handleSetCurrentModal}
+      />
+    ),
+    shareTripSelectFromFriends: (
+      <SelectNewUserFromFriends
+        tripId={data.trip && data.trip.id}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+      />
+    ),
+    usersInTrip: (
+      <UsersInTrip
+        tripId={data.trip && data.trip.id}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+      />
+    ),
   };
   return (
     <>
@@ -160,7 +234,11 @@ export const SelectedList: FC = () => {
         location={location}
         listId={data.trip ? data.trip.name : ''}
         listOwner={data.trip ? data.trip.owner : ''}
+        isOpen={isOpenEditMenu}
+        toggleIsOpen={toggleIsEditMenu}
         isEditing={isEditing}
+        setCurrentModal={handleSetCurrentModal}
+        toggleOpen={toggleIsOpenAddModal}
       />
       <div className={styles.container}>
         <div className={styles.categories_wrapper}>
@@ -170,36 +248,67 @@ export const SelectedList: FC = () => {
               .map((category) => (
                 <div key={category} className={styles.category}>
                   <CategoryTitle
+                    isEditing={isEditing}
+                    refetch={refetch}
                     opensCategories={opensCategories}
                     toggleOpenCategory={toggleOpenCategory}
                     category={category}
+                    listId={data.trip && data.trip.equipListId}
                     equipList={data && data.trip.equipList}
                   />
                   {opensCategories.includes(category) && (
                     <>
-                      {data.trip.equipList[category]
-                        .sort((a: any, b: any) =>
-                          a.name.localeCompare(b.name, 'uk')
-                        )
-                        .map((categoryItem: any) => (
-                          <div key={categoryItem._id}>
-                            <CategoryItem
-                              handleCheckedItem={onUpdateItem}
-                              handleShowInfo={handleShowInfo}
-                              isEditing={isEditing}
-                              item={categoryItem}
-                              user={user}
-                            />
-                          </div>
-                        ))}
+                      {!isHidden
+                        ? data.trip.equipList[category]
+                            .sort((a: any, b: any) =>
+                              a.name.localeCompare(b.name, 'uk')
+                            )
+                            .map((categoryItem: any) => (
+                              <div key={categoryItem._id}>
+                                <CategoryItem
+                                  handleCheckedItem={onUpdateItem}
+                                  handleShowInfo={handleShowInfo}
+                                  isEditing={isEditing}
+                                  category={category}
+                                  item={categoryItem}
+                                  user={user}
+                                  refetch={refetch}
+                                  listId={data.trip && data.trip.equipListId}
+                                />
+                              </div>
+                            ))
+                        : data.trip.equipList[category]
+                            .sort((a: any, b: any) =>
+                              a.name.localeCompare(b.name, 'uk')
+                            )
+                            .filter(
+                              (el: any) =>
+                                !el.persons.find(
+                                  (p: IPersons) => p._id === user.id
+                                )
+                            )
+                            .map((categoryItem: any) => (
+                              <div key={categoryItem._id}>
+                                <CategoryItem
+                                  handleCheckedItem={onUpdateItem}
+                                  handleShowInfo={handleShowInfo}
+                                  isEditing={isEditing}
+                                  item={categoryItem}
+                                  category={category}
+                                  user={user}
+                                  refetch={refetch}
+                                  listId={data.trip && data.trip.equipListId}
+                                />
+                              </div>
+                            ))}
                     </>
                   )}
                   {isEditing && opensCategories.includes(category) && (
                     <button
                       onClick={() => {
-                        console.log(category);
                         setCurrentCategory(category);
-                        toggleIsOpenAddModal('newItem');
+                        handleSetCurrentModal('newItem');
+                        toggleIsOpenAddModal();
                       }}
                       className={styles.add_category_item}
                     >
@@ -210,21 +319,32 @@ export const SelectedList: FC = () => {
                 </div>
               ))}
           <button
-            onClick={() => toggleIsOpenAddModal('newCategory')}
+            onClick={() => {
+              handleSetCurrentModal('newCategory');
+              toggleIsOpenAddModal();
+            }}
             className={styles.add_category}
           >
             Add category
             <img width={24} height={24} src={plus_icon} />
           </button>
         </div>
-        <SelectedListFooter toggleIsEditing={toggleIsEditing} />
+        <SelectedListFooter
+          isHidden={isHidden}
+          toggleIsHidden={toogleIsHidden}
+          toggleIsEditMenu={setIsOpenEditMenu}
+          toggleIsEditing={toggleIsEditing}
+          setModal={handleSetCurrentModal}
+          toggleModal={toggleIsOpenAddModal}
+        />
       </div>
       <ShowInfoCategoryItem
-        tripName={listId.id ? listId.id : '-'}
+        listId={data?.trip?.equipListId ? data?.trip?.equipListId : '-'}
+        tripName={data?.trip?.name ? data?.trip?.name : '-'}
         item={infoItem}
-        usersInfo={itemPersons}
         isOpen={isOpen}
         toggleModal={toggleIsOpen}
+        refetch={refetch}
       />
       {modals[currentModal]}
     </>

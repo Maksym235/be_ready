@@ -5,7 +5,7 @@ import styles from './Header.module.css';
 import { BurgerMenu } from '../Modals/Burger/BurgerMenu';
 import { Link, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getCurrent } from '../../Pages/Home/api';
+import { getCurrent, getUserRequests } from '../../Pages/Home/api';
 export interface IUser {
   email: string;
   id: string;
@@ -24,14 +24,15 @@ export const Header: FC = () => {
   const location = useLocation();
 
   const [isOpenBurger, setIsOpenBurger] = useState(false);
-  const { data, isLoading, isError } = useQuery({
+  const { data, isError } = useQuery({
     queryKey: ['user'],
     queryFn: getCurrent,
   });
+  const { data: requestData } = useQuery({
+    queryKey: ['userRequests'],
+    queryFn: getUserRequests,
+  });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
   if (isError) {
     console.log('error');
   }
@@ -53,7 +54,7 @@ export const Header: FC = () => {
           </Link>
           {location.pathname === '/lists' ? (
             <div className={styles.user_icon_wrapper}>
-              <Link to='/profile'>
+              <Link className={styles.link} to='/profile'>
                 <img
                   className={styles.user_icon}
                   width={40}
@@ -61,6 +62,11 @@ export const Header: FC = () => {
                   src={data && data.user.avatarURL}
                   alt='user icon'
                 />
+                {requestData && requestData.requests.friends.length > 0 && (
+                  <div className={styles.requests_count}>
+                    {requestData.requests.friends.length}
+                  </div>
+                )}
               </Link>
               <button onClick={handleToggleModal} className={styles.burger}>
                 <img src={Burger} />

@@ -1,10 +1,13 @@
 import { FC } from 'react';
 import styles from './BurgerMenu.module.css';
 import { createPortal } from 'react-dom';
-import Logo from '../../../assets/⛰ beReady 🏕️.svg';
-import BurgerCross from '../../../assets/burger_cross.svg';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import BurgerCross from '../../../assets/burger_cross.svg';
+import Logo from '../../../assets/⛰ beReady 🏕️.svg';
+import logout from '../../../assets/logout.svg';
+import { useMutation } from '@tanstack/react-query';
+import { userLogout } from '../../../Pages/Home/api';
 // import { useAuth } from "../../../Pages/Home/store";
 interface IProps {
   toggleBurger: () => void;
@@ -16,6 +19,13 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
   const featuresEl = document.querySelector('#features')!;
   const aboutUsEl = document.querySelector('#aboutUs')!;
   const contactUsEl = document.querySelector('#contactUs')!;
+  const mutation = useMutation({
+    mutationFn: userLogout,
+    onSuccess: () => {
+      toggleBurger();
+      navigate('/');
+    },
+  });
   // const { token } = useAuth((store: any) => ({
   // 	token: store.token,
   // }));
@@ -109,12 +119,25 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
         >
           Contact us
         </li>
-        <li
-          onClick={() => navigateToElement('profile')}
-          className={`${styles.nav_list_item} ${styles.profile_item}`}
-        >
-          Profile
-        </li>
+        <div className={styles.bottom_list_item_wrapper}>
+          <li
+            onClick={() => navigateToElement('profile')}
+            className={`${styles.nav_list_item} ${styles.profile_item}`}
+          >
+            Profile
+          </li>
+          <li
+            onClick={() => mutation.mutate()}
+            className={`${styles.nav_list_item} ${styles.logout}`}
+          >
+            Logout
+            <img
+              className={styles.logout_icon}
+              src={logout}
+              alt='logout icon'
+            />
+          </li>
+        </div>
       </ul>
     </div>,
     root
