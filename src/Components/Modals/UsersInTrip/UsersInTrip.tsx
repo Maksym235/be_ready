@@ -4,12 +4,13 @@ import { ModalContainer } from '../ModalContainer/ModalContainer';
 import { useQuery } from '@tanstack/react-query';
 import { getUsersInTrips } from '../../../Pages/Lists/api';
 import { Spinner } from '../../Spinner/Spinner';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  tripId: string;
-}
-export const UsersInTrip: FC<IProps> = ({ toggleModal, isOpen, tripId }) => {
+import { IUsersInTripProps } from '../../../Types/Components/Modals';
+
+export const UsersInTrip: FC<IUsersInTripProps> = ({
+  toggleModal,
+  isOpen,
+  tripId,
+}) => {
   const { data, isError, isLoading } = useQuery({
     queryKey: ['usersInTripInfo'],
     queryFn: () => getUsersInTrips(tripId),
@@ -32,7 +33,6 @@ export const UsersInTrip: FC<IProps> = ({ toggleModal, isOpen, tripId }) => {
       title='Users in shared list'
     >
       <div className={styles.container}>
-        {/* <p className={styles.title}>Friends List</p> */}
         <ul className={styles.list}>
           {data &&
             data.users.map(
@@ -53,7 +53,6 @@ export const UsersInTrip: FC<IProps> = ({ toggleModal, isOpen, tripId }) => {
                       friend.permision === 'owner' ||
                       friend.permision === 'current_user'
                     }
-                    // onClick={() => handleSubmitUser(false, friend._id)}
                     className={styles[`${friend.permision}`]}
                   >
                     {permisionsText[friend.permision]}

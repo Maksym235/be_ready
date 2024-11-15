@@ -1,35 +1,50 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import {
+  IAddNewCategoryType,
+  IAddNewItemToCategoryType,
+  IAddNewUserToTripType,
+  IChangeDurationType,
+  IDeleteCategoryType,
+  IDeleteListItemType,
+  IDeleteTripType,
+  IErrorAlertType,
+  INewTripType,
+  IRenameTripType,
+  IToggleEquipItemType,
+  IUpdateCountType,
+  IUpdateListType,
+} from '../../Types/api/lists';
 axios.defaults.baseURL = 'https://be-ready-api.vercel.app';
-export const getTours = async () => {
-  try {
-    const resp = await axios.get(`/tours`, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
-    return resp.data;
-  } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+
+export const ErrorAlert = ({ errorCode, message }: IErrorAlertType) => {
+  if (errorCode === 401) {
+    toast.error('Потрібно авторизуватися');
+  } else {
+    toast.error(message);
   }
 };
-interface IToggleEquipItemType {
-  tourId: string;
-  equipItemId: string;
-}
+export const getTours = async () => {
+  try {
+    const resp = await axios.get(`/tours`);
+    return resp.data;
+  } catch (error: any) {
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
+  }
+};
 
 export const getToursById = async (tripId: string) => {
   try {
-    const resp = await axios.get(`/tours/${tripId}`, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
+    const resp = await axios.get(`/tours/${tripId}`);
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
 export const toggleEquipItemCheck = async ({
@@ -37,340 +52,226 @@ export const toggleEquipItemCheck = async ({
   equipItemId,
 }: IToggleEquipItemType) => {
   try {
-    const resp = await axios.patch(
-      `/tours/${tourId}/updateItem`,
-      {
-        equipId: equipItemId,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const resp = await axios.patch(`/tours/${tourId}/updateItem`, {
+      equipId: equipItemId,
+    });
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
 
-export const renameTrip = async ({
-  newName,
-  tripId,
-}: {
-  newName: string;
-  tripId: string;
-}) => {
+export const renameTrip = async ({ newName, tripId }: IRenameTripType) => {
   try {
-    const reps = await axios.post(
-      `/tours/${tripId}/rename`,
-      {
-        name: newName,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const reps = await axios.post(`/tours/${tripId}/rename`, {
+      name: newName,
+    });
     return reps.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
 export const changeDuration = async ({
   duration,
   tripId,
-}: {
-  duration: number;
-  tripId: string;
-}) => {
+}: IChangeDurationType) => {
   try {
-    const resp = await axios.post(
-      `/tours/${tripId}/changeDuration`,
-      {
-        duration,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
-    return resp.data;
-  } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
-  }
-};
-
-export const deleteTrip = async ({ tripId }: { tripId: string }) => {
-  try {
-    const resp = await axios.delete(`/tours/${tripId}/delete`, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
+    const resp = await axios.post(`/tours/${tripId}/changeDuration`, {
+      duration,
     });
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
-interface INewTripData {
-  name: string;
-  listType: number;
-  duration: number;
-  customData: string;
-}
-export const createNewTour = async (newTripData: INewTripData) => {
+
+export const deleteTrip = async ({ tripId }: IDeleteTripType) => {
   try {
-    const resp = await axios.post(
-      `http://localhost:8080/tours/newAdd`,
-      newTripData,
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const resp = await axios.delete(`/tours/${tripId}/delete`);
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
-interface IAddNewUserToTrip {
-  tripId: string;
-  userId: string;
-  invite: boolean;
-}
+
+export const createNewTour = async (newTripData: INewTripType) => {
+  try {
+    const resp = await axios.post(`/tours/newAdd`, newTripData);
+    return resp.data;
+  } catch (error: any) {
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
+  }
+};
+
 export const addUserToTrip = async ({
   tripId,
   userId,
   invite,
-}: IAddNewUserToTrip) => {
+}: IAddNewUserToTripType) => {
   try {
-    const resp = await axios.post(
-      `/tours/${tripId}/addUser?invite=${invite}`,
-      {
-        usersId: userId,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const resp = await axios.post(`/tours/${tripId}/addUser?invite=${invite}`, {
+      usersId: userId,
+    });
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
-
-export interface IAddNewCategory {
-  listId: string;
-  categoryName: string;
-}
 
 export const addNewCategory = async ({
   listId,
   categoryName,
-}: IAddNewCategory) => {
+}: IAddNewCategoryType) => {
   try {
-    const resp = await axios.post(
-      `/equipList/${listId}/addNewCategory`,
-      {
-        name: categoryName,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const resp = await axios.post(`/equipList/${listId}/addNewCategory`, {
+      name: categoryName,
+    });
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
-
-export interface IAddNewItemToCategory {
-  listId: string;
-  itemData: {
-    category: string;
-    name: string;
-    description: string;
-  };
-}
 
 export const addNewItemToCategory = async ({
   listId,
   itemData,
-}: IAddNewItemToCategory) => {
+}: IAddNewItemToCategoryType) => {
   try {
-    const resp = await axios.post(`/equipList/${listId}/addNewItem`, itemData, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
+    const resp = await axios.post(`/equipList/${listId}/addNewItem`, itemData);
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
 
-interface IUpdateList {
-  equipId: string;
-  newList: any;
-}
-
-export const updateList = async (data: IUpdateList) => {
+export const updateList = async (data: IUpdateListType) => {
   try {
     const resp = await axios.post(
       `/equipList/${data.equipId}/update`,
-      data.newList,
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
+      data.newList
     );
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
 
 export const getFriendsTripRequests = async (tripId: string) => {
   try {
-    const resp = await axios.get(`/auth/friendsTripRequests/${tripId}`, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
+    const resp = await axios.get(`/auth/friendsTripRequests/${tripId}`);
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
 
 export const getUsersInTrips = async (tripId: string) => {
   try {
-    const resp = await axios.get(`/tours/${tripId}/usersInfo`, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
+    const resp = await axios.get(`/tours/${tripId}/usersInfo`);
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
-export interface IDeleteCategoryProps {
-  listId: string;
-  categoryName: string;
-}
+
 export const deleteCategory = async ({
   listId,
   categoryName,
-}: IDeleteCategoryProps) => {
+}: IDeleteCategoryType) => {
   try {
-    const resp = await axios.post(
-      `equipList/${listId}/deleteCategory`,
-      {
-        name: categoryName,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const resp = await axios.post(`equipList/${listId}/deleteCategory`, {
+      name: categoryName,
+    });
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
-export interface IDeleteListItemProps {
-  listId: string;
-  itemId: string;
-  category: string;
-}
+
 export const deleteListItem = async ({
   listId,
   itemId,
   category,
-}: IDeleteListItemProps) => {
+}: IDeleteListItemType) => {
   try {
-    const resp = await axios.post(
-      `equipList/${listId}/deleteItem`,
-      {
-        itemid: itemId,
-        category: category,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const resp = await axios.post(`equipList/${listId}/deleteItem`, {
+      itemid: itemId,
+      category: category,
+    });
     return resp.data;
   } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
-export interface IUpdateCountProps {
-  listId: string;
-  count: number;
-  category: string;
-  equipId: string;
-}
+
 export const updateCount = async ({
   listId,
   count,
   category,
   equipId,
-}: IUpdateCountProps) => {
+}: IUpdateCountType) => {
   try {
-    const resp = await axios.post(
-      `equipList/${listId}/updateCount`,
-      {
-        count: count,
-        category: category,
-        equipId: equipId,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const resp = await axios.post(`equipList/${listId}/updateCount`, {
+      count: count,
+      category: category,
+      equipId: equipId,
+    });
     return resp.data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };
 
 export const downloadList = async (listId: string) => {
   try {
-    const resp = await axios.get(`/equipList/${listId}/downloadList`, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
+    const resp = await axios.get(`/equipList/${listId}/downloadList`);
     return resp.data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    ErrorAlert({
+      errorCode: error.response.status,
+      message: error.response.message,
+    });
   }
 };

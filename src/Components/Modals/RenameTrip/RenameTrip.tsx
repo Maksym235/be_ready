@@ -4,14 +4,9 @@ import { useFormik } from 'formik';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import { useMutation } from '@tanstack/react-query';
 import { renameTrip } from '../../../Pages/Lists/api';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  refetch: any;
-  tripId: string;
-  tripName: string;
-}
-export const RenameTrip: FC<IProps> = ({
+import { IRenameTripProps } from '../../../Types/Components/Modals';
+
+export const RenameTrip: FC<IRenameTripProps> = ({
   toggleModal,
   isOpen,
   refetch,
@@ -31,7 +26,6 @@ export const RenameTrip: FC<IProps> = ({
     },
     // validate,
     onSubmit: (values) => {
-      console.log(values);
       mutation.mutate({
         newName: values.name,
         tripId,
@@ -65,11 +59,7 @@ export const RenameTrip: FC<IProps> = ({
         <div className={styles.btn_wrapper}>
           <button
             type='submit'
-            // onClick={handleAddNewItem}
-            disabled={
-              formik.values.name.length === 0
-              // formik.values.category.length === 0
-            }
+            disabled={formik.values.name.length === 0}
             className={styles.create}
           >
             rename
@@ -77,7 +67,6 @@ export const RenameTrip: FC<IProps> = ({
           <button
             type='button'
             onClick={() => {
-              //   toggleModal('newItem');
               formik.resetForm();
             }}
             className={styles.cancel}

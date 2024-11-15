@@ -16,9 +16,6 @@ const Lists: FC = () => {
   const [tripDuration, setTripDuration] = useState('');
   const [_, setTripType] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [lists, setLists] = useState<any>([]);
-  // const userLists = useTrips((state: any) => state.trips);
-  // const createList = useTrips((state: any) => state.createTrip);
   const queryClient = useQueryClient();
   const { isPending, isError, data, error, refetch } = useQuery({
     queryKey: ['tours'],
@@ -42,10 +39,6 @@ const Lists: FC = () => {
     return <div>{error.message}</div>;
   }
 
-  // const { createList, trips } = useTrips((store: any) => ({
-  // 	createList: store.createTrip,
-  // 	trips: store.trips,
-  // }));
   const handleToggleModal = () => {
     if (isModalOpen) {
       document.body.style.overflow = 'unset';
@@ -73,23 +66,6 @@ const Lists: FC = () => {
       customData: data ? JSON.stringify(data) : JSON.stringify([]),
     };
     mutate(newTrip);
-
-    // name: resp.name,
-    // 		users: resp.users,
-    // 		owner: resp.owner,
-    // 		duration: resp.duration,
-    // 		equipList: filteredByCategory
-    // if (!IsPenMutation) {
-    // 	setIsModalOpen(false);
-    // 	refetch();
-    // }
-    // createList({
-    // 	name: tripName,
-    // 	duration: Number(tripDuration),
-    // 	listType: recOrEmpty === "rec" ? 1 : 0,
-    // });
-    // console.log(createList);
-    // setLists((state: any) => [...state, newTrip]);
   };
   const Modals: Record<string, ReactNode> = {
     setTripName: (

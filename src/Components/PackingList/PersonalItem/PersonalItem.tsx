@@ -1,9 +1,7 @@
 import { FC } from 'react';
 import styles from './PersonalItem.module.css';
+import { IPersonalItemProps } from '../../../Types/Components/Profile';
 
-export interface IPersonalItemProps {
-  name: string;
-}
 export const PersonalItem: FC<IPersonalItemProps> = ({ name }) => {
   return (
     <div className={styles.container}>

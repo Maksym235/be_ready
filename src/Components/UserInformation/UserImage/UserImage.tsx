@@ -3,20 +3,8 @@ import styles from './UserImage.module.css';
 import { useMutation } from '@tanstack/react-query';
 import { changeAvatar, resetToDefaultAvatar } from '../../../Pages/Home/api';
 import { Spinner } from '../../Spinner/Spinner';
-export interface IUser {
-  email: string;
-  id: string;
-  language: string;
-  password: string;
-  name: string;
-  theme: string;
-  avatarURL: string;
-  avatarName: string;
-}
-export interface IUserImageProps {
-  refetch: any;
-  user: IUser;
-}
+import { IUserImageProps } from '../../../Types/Components/Profile';
+
 export const UserImage: FC<IUserImageProps> = ({ refetch, user }) => {
   const inputFileRef: any = useRef();
   const { mutate, isPending } = useMutation({
@@ -31,15 +19,8 @@ export const UserImage: FC<IUserImageProps> = ({ refetch, user }) => {
       refetch();
     },
   });
-  // const [image, setImage] = useState<any>(null);
   const onImageSelect = () => {
     inputFileRef.current.click();
-    // if (e.target.files && e.target.files[0]) {
-    // 	let img = e.target.files[0];
-    // 	const formData = new FormData();
-    // 	formData.append("avatar", img);
-    // 	console.log(formData);
-    // }
   };
 
   const onImageChange = () => {
@@ -48,7 +29,6 @@ export const UserImage: FC<IUserImageProps> = ({ refetch, user }) => {
     const formData = new FormData();
 
     formData.append('avatar', file);
-    // setImage(formData);
     mutate(formData);
   };
   const resetToDefault = () => {

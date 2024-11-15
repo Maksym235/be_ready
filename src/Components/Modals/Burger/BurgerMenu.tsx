@@ -8,12 +8,9 @@ import Logo from '../../../assets/⛰ beReady 🏕️.svg';
 import logout from '../../../assets/logout.svg';
 import { useMutation } from '@tanstack/react-query';
 import { userLogout } from '../../../Pages/Home/api';
-// import { useAuth } from "../../../Pages/Home/store";
-interface IProps {
-  toggleBurger: () => void;
-  isOpen: boolean;
-}
-export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
+import { IBurgerMenuProps } from '../../../Types/Components/Modals';
+
+export const BurgerMenu: FC<IBurgerMenuProps> = ({ toggleBurger, isOpen }) => {
   const navigate = useNavigate();
   const root = document.querySelector('#modal-root')!;
   const featuresEl = document.querySelector('#features')!;
@@ -26,9 +23,7 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
       navigate('/');
     },
   });
-  // const { token } = useAuth((store: any) => ({
-  // 	token: store.token,
-  // }));
+
   const isLoggedIn = JSON.parse(window.localStorage.getItem('isLoggedIn')!);
   const navigateToLists = () => {
     if (!isLoggedIn) {
@@ -36,7 +31,6 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
       return;
     }
     toggleBurger();
-    // getAllTrips();
     navigate('/lists');
   };
   const navigateToElement = (key: string) => {
@@ -97,9 +91,7 @@ export const BurgerMenu: FC<IProps> = ({ toggleBurger, isOpen }) => {
       </div>
       <ul className={styles.nav_list}>
         <li onClick={navigateToLists} className={styles.nav_list_item}>
-          {/* <Link className={styles.link} to="/lists"> */}
           Create list
-          {/* </Link> */}
         </li>
         <li
           className={styles.nav_list_item}

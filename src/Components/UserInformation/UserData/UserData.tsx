@@ -2,21 +2,9 @@ import { useFormik } from 'formik';
 import styles from './UserData.module.css';
 import edit from '../../../assets/SelectedList/Footer/icon_edit.svg';
 import { FC } from 'react';
-export interface IUser {
-  email: string;
-  id: string;
-  language: string;
-  password: string;
-  name: string;
-  theme: string;
-}
-export interface IUserDataProps {
-  openModal: (key: string) => void;
-  user: IUser;
-}
+import { IUserDataProps } from '../../../Types/Components/Profile';
 
 export const UserData: FC<IUserDataProps> = ({ user, openModal }) => {
-  // const [editsField, setEditField] = useState("");
   const formik = useFormik({
     initialValues: {
       name: user.name,

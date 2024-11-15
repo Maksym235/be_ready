@@ -1,13 +1,9 @@
 import { FC } from 'react';
 import { ModalContainer } from '../../ModalContainer/ModalContainer';
 import styles from './NotFoundEmail.module.css';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  setCurrentModal: (key: string) => void;
-}
+import { IAuthModalProps } from '../../../../Types/Components/Modals';
 
-export const NotFoundEmail: FC<IProps> = ({
+export const NotFoundEmail: FC<IAuthModalProps> = ({
   isOpen,
   toggleModal,
   setCurrentModal,

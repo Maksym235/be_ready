@@ -1,15 +1,10 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './ModalContainerCreateList.module.css';
 import cross from '../../../assets/cross.svg';
-interface IProps {
-  isOpen: boolean;
-  children: ReactNode;
-  currentStep: string;
-  toggleModal: () => void;
-  title: string;
-}
-export const ModalContainerCreateList: FC<IProps> = ({
+import { IModalContainerCreateListProps } from '../../../Types/Components/Modals';
+
+export const ModalContainerCreateList: FC<IModalContainerCreateListProps> = ({
   isOpen,
   children,
   toggleModal,

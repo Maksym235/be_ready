@@ -2,14 +2,13 @@ import { useFormik } from 'formik';
 import { FC } from 'react';
 import styles from './EditUserEmail.module.css';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
-import { IUserDataToUpdate } from '../../UserInformation/UserInformation';
+import { IEditUserEmailProps } from '../../../Types/Components/Modals';
 
-export interface IProps {
-  isOpen: boolean;
-  toggleModal: () => void;
-  submit: (data: IUserDataToUpdate) => void;
-}
-export const EditUserEmail: FC<IProps> = ({ isOpen, toggleModal, submit }) => {
+export const EditUserEmail: FC<IEditUserEmailProps> = ({
+  isOpen,
+  toggleModal,
+  submit,
+}) => {
   const validate = (values: { email: string }) => {
     const errors: Record<string, undefined | string> = {
       email: undefined,
@@ -28,9 +27,7 @@ export const EditUserEmail: FC<IProps> = ({ isOpen, toggleModal, submit }) => {
       email: '',
     },
     validate,
-    // validationSchema: SignupSchema,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       submit({
         name: '',
         email: values.email,

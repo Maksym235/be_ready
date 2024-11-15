@@ -4,51 +4,30 @@ import google from '../../../../assets/google.svg';
 import { ModalContainer } from '../../ModalContainer/ModalContainer';
 // import { useAuth } from "../../../../Pages/Home/store";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  IRegisterGoogleAuth,
-  googleAuth,
-  loginAsync,
-} from '../../../../Pages/Home/api';
+import { googleAuth, loginAsync } from '../../../../Pages/Home/api';
 import { getAuth, signInWithPopup } from 'firebase/auth';
 import { googleAuthProvider } from '../../../../firebase';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  setCurrentModal: (key: string) => void;
-}
-export const LoginModal: FC<IProps> = ({
+import { IRegisterGoogleAuth } from '../../../../Types/api/home';
+import { IAuthModalProps } from '../../../../Types/Components/Modals';
+
+export const LoginModal: FC<IAuthModalProps> = ({
   toggleModal,
   isOpen,
   setCurrentModal,
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const login = useAuth((state: any) => state.login);
-  // const stateEmail = useAuth((state: any) => state.user);
   const queryClient = useQueryClient();
-
-  // Queries
-  // const query = useQuery({
-  // 	queryKey: ["user"],
-  // 	queryFn: () => loginAsync({ email, password }),
-  // });
-  // const { login, stateEmail, isLoading } = useAuth((store: any) => ({
-  // 	login: store.login,
-  // 	stateEmail: store.stateEmail,
-  // 	isLoading: store.isLoading,
-  // }));
 
   const { mutate, isPending } = useMutation({
     mutationFn: () => loginAsync({ email, password }),
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
   const { mutate: mutateG, isPending: isPendingG } = useMutation({
     mutationFn: googleAuth,
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
@@ -69,7 +48,6 @@ export const LoginModal: FC<IProps> = ({
     const userCred = await signInWithPopup(auth, googleAuthProvider);
     localStorage.setItem('googleUser', JSON.stringify(userCred));
     // alert(`name: ${userCred.user.displayName}`);
-    console.log(userCred);
     const googleUser: IRegisterGoogleAuth = {
       name: userCred.user.displayName!,
       email: userCred.user.email!,
@@ -81,12 +59,7 @@ export const LoginModal: FC<IProps> = ({
     if (!isPendingG) {
       toggleModal();
     }
-    // .then((creditinals) =>
-    // 	localStorage.setItem("googleUser", JSON.stringify(creditinals)),
-    // )
-    // .catch((error) => alert(error.message));
   };
-  // console.log(auth.currentUser);
 
   return (
     <ModalContainer

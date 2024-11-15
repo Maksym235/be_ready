@@ -8,13 +8,9 @@ import {
 } from '../../../Pages/Lists/api';
 import toast from 'react-hot-toast';
 import { Spinner } from '../../Spinner/Spinner';
+import { ISelectNewUserFromFriendsProps } from '../../../Types/Components/Modals';
 
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  tripId: string;
-}
-export const SelectNewUserFromFriends: FC<IProps> = ({
+export const SelectNewUserFromFriends: FC<ISelectNewUserFromFriendsProps> = ({
   toggleModal,
   isOpen,
   tripId,
@@ -26,8 +22,6 @@ export const SelectNewUserFromFriends: FC<IProps> = ({
   } = useMutation({
     mutationFn: addUserToTrip,
     onSuccess: () => {
-      // Invalidate and refetch
-      // queryClient.invalidateQueries({ queryKey: ['user'] });
       toast.success('request sent');
       refetch();
     },
@@ -52,7 +46,6 @@ export const SelectNewUserFromFriends: FC<IProps> = ({
   }
   const handleSubmitUser = (invite: boolean, userId: string) => {
     mutate({ tripId: tripId ? tripId : '', userId, invite });
-    // data.resp.find((f:) => f._id === userId).invite = true;
   };
   return (
     <ModalContainer

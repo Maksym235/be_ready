@@ -1,13 +1,9 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { ModalContainerCreateList } from '../ModalContainerCreateList/ModalContainerCreateList';
 import styles from './CreateList.module.css';
-interface IProps {
-  isOpen: boolean;
-  toggleModal: () => void;
-  setCurrentModal: (key: string) => void;
-  changeTripName: (name: string) => void;
-}
-export const CreateList: FC<IProps> = ({
+import { ICreateListProps } from '../../../Types/Components/Modals';
+
+export const CreateList: FC<ICreateListProps> = ({
   isOpen,
   toggleModal,
   setCurrentModal,

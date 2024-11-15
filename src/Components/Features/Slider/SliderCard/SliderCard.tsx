@@ -1,10 +1,7 @@
 import { FC } from 'react';
 import styles from './SliderCard.module.css';
-interface IProps {
-  title: string;
-  content: string;
-}
-export const SliderCard: FC<IProps> = ({ title, content }) => {
+import { ISliderCardProps } from '../../../../Types/Components/Home';
+export const SliderCard: FC<ISliderCardProps> = ({ title, content }) => {
   return (
     <div className={styles.container}>
       <p className={styles.title}>{title}</p>

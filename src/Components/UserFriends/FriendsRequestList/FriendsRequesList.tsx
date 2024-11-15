@@ -6,21 +6,10 @@ import accept_icon from '../../../assets/SelectedList/icon_dobble_check.svg';
 import cross_delete from '../../../assets/icon_close.svg';
 import toast from 'react-hot-toast';
 import { Spinner } from '../../Spinner/Spinner';
-export interface IFriendsRequests {
-  id: string;
-  name: string;
-  avatar: string;
-}
+import { IFriendRequestsListProps } from '../../../Types/Components/Profile';
+import { IFriendsRequests } from '../../../Types/Components/Home';
 
-export interface IFriendRequestsList {
-  refetch: any;
-  requests: {
-    friends: any[];
-    trips: any[];
-  };
-  refetchRequest: any;
-}
-export const FriendsRequesList: FC<IFriendRequestsList> = ({
+export const FriendsRequesList: FC<IFriendRequestsListProps> = ({
   refetch,
   refetchRequest,
 }) => {
@@ -72,13 +61,13 @@ export const FriendsRequesList: FC<IFriendRequestsList> = ({
               {el.name}
               <div className={styles.btn_wrapper}>
                 <button
-                  onClick={() => handleEditRequest(el.id, true)}
+                  onClick={() => handleEditRequest(el._id, true)}
                   className={styles.accept_btn}
                 >
                   <img src={accept_icon} alt='accept' />
                 </button>
                 <button
-                  onClick={() => handleEditRequest(el.id, false)}
+                  onClick={() => handleEditRequest(el._id, false)}
                   className={styles.delete_btn}
                 >
                   <img src={cross_delete} alt='delete' />

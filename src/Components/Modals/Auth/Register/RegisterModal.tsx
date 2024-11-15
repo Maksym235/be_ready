@@ -4,12 +4,9 @@ import google from '../../../../assets/google.svg';
 import { ModalContainer } from '../../ModalContainer/ModalContainer';
 import { getAuth, signInWithPopup } from 'firebase/auth';
 import { googleAuthProvider } from '../../../../firebase';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  setCurrentModal: (key: string) => void;
-}
-export const RegisterModal: FC<IProps> = ({
+import { IAuthModalProps } from '../../../../Types/Components/Modals';
+
+export const RegisterModal: FC<IAuthModalProps> = ({
   toggleModal,
   isOpen,
   setCurrentModal,
@@ -18,12 +15,6 @@ export const RegisterModal: FC<IProps> = ({
   const handleAuthWithGoogle = async () => {
     const userCred = await signInWithPopup(auth, googleAuthProvider);
     localStorage.setItem('googleUser', JSON.stringify(userCred));
-    // alert(`name: ${userCred.user.displayName}`);
-    console.log(userCred);
-    // .then((creditinals) =>
-    // 	localStorage.setItem("googleUser", JSON.stringify(creditinals)),
-    // )
-    // .catch((error) => alert(error.message));
   };
   const title = 'Create new account';
   return (

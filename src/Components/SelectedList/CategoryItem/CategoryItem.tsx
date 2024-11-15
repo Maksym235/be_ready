@@ -6,17 +6,8 @@ import checkbox_ch from '../../../assets/SelectedList/checkbox_ch.svg';
 import trash from '../../../assets/SelectedList/icon_trash.svg';
 import { useMutation } from '@tanstack/react-query';
 import { deleteListItem } from '../../../Pages/Lists/api';
-import { IPersons } from '../SelectedList';
-export interface ICategoryItemProps {
-  user: any;
-  item: any;
-  handleCheckedItem: (item: any) => void;
-  handleShowInfo: (item: any) => void;
-  isEditing: boolean;
-  listId: string;
-  refetch: any;
-  category: string;
-}
+import { ICategoryItemProps } from '../../../Types/Components/SelectedLists';
+
 export const CategoryItem: FC<ICategoryItemProps> = ({
   item,
   user,
@@ -31,7 +22,6 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
     mutationFn: deleteListItem,
     onSuccess: () => {
       refetch();
-      // queryClient.invalidateQueries({ queryKey: ['tours'] });
     },
   });
   const handleDeleteListItem = () => {
@@ -56,12 +46,14 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
               onChange={() => handleCheckedItem(item)}
               className={styles.checkbox_input}
               type='checkbox'
-              checked={item.persons.find((p: IPersons) => p._id === user.id)}
+              checked={
+                item.persons.find((p) => p._id === user.id) ? true : false
+              }
             />
             <img
               className={styles.checkbox_icon}
               src={
-                item.persons.find((p: IPersons) => p._id === user.id)
+                item.persons.find((p) => p._id === user.id)
                   ? checkbox_ch
                   : checkbox
               }
@@ -70,7 +62,7 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
           </div>
           <p
             className={
-              item.persons.find((p: IPersons) => p._id === user.id)
+              item.persons.find((p) => p._id === user.id)
                 ? `${styles.item_name} ${styles.item_name_checked}`
                 : styles.item_name
             }

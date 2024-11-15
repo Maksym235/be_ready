@@ -24,18 +24,8 @@ import { AddUsersToTrip } from '../Modals/AddUsersToTrip/AddUsersToTrip';
 import { SelectNewUserFromFriends } from '../Modals/SelectNewUserFromFriends/SelectNewUserFromFriends';
 import { UsersInTrip } from '../Modals/UsersInTrip/UsersInTrip';
 import { Spinner } from '../Spinner/Spinner';
-export interface IPersons {
-  _id: string;
-  name: string;
-  count: number;
-}
-export interface ICategoryItem {
-  _id: string;
-  name: string;
-  description: string;
-  category: string;
-  persons: IPersons[];
-}
+import { ICategoryItem, IPersons } from '../../Types/Components/SelectedLists';
+
 export const SelectedList: FC = () => {
   const [opensCategories, setOpensCategories] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -78,9 +68,6 @@ export const SelectedList: FC = () => {
   const handleShowInfo = (item: ICategoryItem) => {
     setInfoItem(item);
     if (item.persons.length > 0) {
-      // getUsersById(item.persons.map((p: IPersons) => p._id).join(', ')).then(
-      //   (users) => setItemPersons(users.resp)
-      // );
       toggleIsOpen();
       return;
     }
@@ -110,16 +97,14 @@ export const SelectedList: FC = () => {
   const toggleIsEditing = () => {
     setIsEditing((state) => !state);
   };
-  const handleCheckedItem = (item: Record<string, any>) => {
+  const handleCheckedItem = (item: ICategoryItem) => {
     if (editedItem.includes(item)) {
       return;
     }
     setEditedItem((state) => [...state, item]);
     const list = data.trip.equipList;
-    if (item.persons.find((p: IPersons) => p._id === user.id)) {
-      const userIndex = item.persons.findIndex(
-        (p: IPersons) => p._id === user.id
-      );
+    if (item.persons.find((p) => p._id === user.id)) {
+      const userIndex = item.persons.findIndex((p) => p._id === user.id);
       const updatedItem = {
         ...item,
         persons: item.persons.slice(1, userIndex),
@@ -144,7 +129,7 @@ export const SelectedList: FC = () => {
     }
   };
 
-  const onUpdateItem = (item: Record<string, any>) => {
+  const onUpdateItem = (item: ICategoryItem) => {
     if (timerId !== null) {
       clearTimeout(timerId);
     }
@@ -159,7 +144,6 @@ export const SelectedList: FC = () => {
     }, 5000);
     setTimerId(timer);
   };
-  // console.log(data.trip.id);
   const modals: Record<string, ReactNode> = {
     newCategory: (
       <AddNewCategory

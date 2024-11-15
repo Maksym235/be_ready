@@ -1,13 +1,9 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { ModalContainerCreateList } from '../ModalContainerCreateList/ModalContainerCreateList';
 import styles from './SetTripDuration.module.css';
-interface IProps {
-  isOpen: boolean;
-  toggleModal: () => void;
-  setCurrentModal: (key: string) => void;
-  changeTripDuration: (duration: string) => void;
-}
-export const SetTripDuration: FC<IProps> = ({
+import { ISetTripDurationProps } from '../../../Types/Components/Modals';
+
+export const SetTripDuration: FC<ISetTripDurationProps> = ({
   isOpen,
   toggleModal,
   setCurrentModal,

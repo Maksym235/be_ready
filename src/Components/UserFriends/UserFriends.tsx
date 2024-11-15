@@ -10,14 +10,9 @@ import { useQuery } from '@tanstack/react-query';
 import { getCurrent } from '../../Pages/Home/api';
 import { FriendsRequesList } from './FriendsRequestList/FriendsRequesList';
 import { Spinner } from '../Spinner/Spinner';
+import { IUserFriendsProps } from '../../Types/Components/Profile';
 // import copy from "../../assets/icon_copy.svg";
-export interface IUserFriendsProps {
-  refetchRequest: any;
-  requests: {
-    friends: any[];
-    trips: any[];
-  };
-}
+
 export const UserFriends: FC<IUserFriendsProps> = ({
   refetchRequest,
   requests,
