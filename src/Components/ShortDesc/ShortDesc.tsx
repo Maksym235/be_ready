@@ -1,10 +1,9 @@
 import { FC } from 'react';
 import styles from './ShortDesc.module.css';
 import { useNavigate } from 'react-router-dom';
-interface IProps {
-  toggleModal: () => void;
-}
-export const ShortDesc: FC<IProps> = ({ toggleModal }) => {
+import { IShortDescProps } from '../../Types/Components/Lists';
+
+export const ShortDesc: FC<IShortDescProps> = ({ toggleModal }) => {
   const navigate = useNavigate();
   const handleGetStarted = () => {
     if (JSON.parse(localStorage.getItem('isLoggedIn')!)) {

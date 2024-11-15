@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, Location } from 'react-router-dom';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './SelectedListHeader.module.css';
 import details_icon from '../../../assets/SelectedList/icon_details.svg';
 import arrow_back from '../../../assets/SelectedList/icon_back.svg';
@@ -7,17 +7,9 @@ import pencil from '../../../assets/SelectedList/icon_editpen.svg';
 import calendar from '../../../assets/SelectedList/icon_calendar.svg';
 import trash from '../../../assets/SelectedList/icon_trash.svg';
 import group from '../../../assets/SelectedList/Group.svg';
-interface ISelectedListHeaderProps {
-  location: Location;
-  listId: string;
-  isEditing: boolean;
-  listOwner: string;
-  isOpen: boolean;
-  toggleIsOpen: () => void;
-  setCurrentModal: (key: string) => void;
-  toggleOpen: () => void;
-}
-export const SelectedListHeader: React.FC<ISelectedListHeaderProps> = ({
+import { ISelectedListHeaderProps } from '../../../Types/Components/SelectedLists';
+
+export const SelectedListHeader: FC<ISelectedListHeaderProps> = ({
   location,
   listId,
   isEditing,

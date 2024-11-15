@@ -4,14 +4,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useFormik } from 'formik';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import { addNewItemToCategory } from '../../../Pages/Lists/api';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  refetch: any;
-  category: string;
-  listId: string;
-}
-export const AddNewItemToCategory: FC<IProps> = ({
+import { IAddNewItemToCategoryProps } from '../../../Types/Components/Modals';
+export const AddNewItemToCategory: FC<IAddNewItemToCategoryProps> = ({
   toggleModal,
   isOpen,
   refetch,
@@ -25,19 +19,6 @@ export const AddNewItemToCategory: FC<IProps> = ({
       toggleModal();
     },
   });
-  // const validate = (values: { name: string; category: string }) => {
-  //   const errors: Record<string, undefined | string> = {
-  //     name: undefined,
-  //     category: undefined,
-  //   };
-  //   if (!values.name) {
-  //     errors.name = 'Required';
-  //   }
-  //   if (!values.category) {
-  //     errors.category = 'Required';
-  //   }
-  //   return errors;
-  // };
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -110,11 +91,7 @@ export const AddNewItemToCategory: FC<IProps> = ({
         <div className={styles.btn_wrapper}>
           <button
             type='submit'
-            // onClick={handleAddNewItem}
-            disabled={
-              formik.values.name.length === 0
-              // formik.values.category.length === 0
-            }
+            disabled={formik.values.name.length === 0}
             className={styles.create}
           >
             Create

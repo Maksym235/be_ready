@@ -1,12 +1,9 @@
 import { FC } from 'react';
 import styles from './IncorectDataModal.module.css';
 import { ModalContainer } from '../../ModalContainer/ModalContainer';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  setCurrentModal: (key: string) => void;
-}
-export const IncorectDataModal: FC<IProps> = ({
+import { IAuthModalProps } from '../../../../Types/Components/Modals';
+
+export const IncorectDataModal: FC<IAuthModalProps> = ({
   toggleModal,
   isOpen,
   setCurrentModal,

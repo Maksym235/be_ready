@@ -1,13 +1,9 @@
 import { FC } from 'react';
 import { ModalContainer } from '../../ModalContainer/ModalContainer';
 import styles from './EnterEmail.module.css';
+import { IAuthModalProps } from '../../../../Types/Components/Modals';
 
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  setCurrentModal: (key: string) => void;
-}
-export const EnterEmail: FC<IProps> = ({
+export const EnterEmail: FC<IAuthModalProps> = ({
   isOpen,
   toggleModal,
   setCurrentModal,

@@ -4,12 +4,9 @@ import google from '../../../../assets/google.svg';
 import { ModalContainer } from '../../ModalContainer/ModalContainer';
 import { getAuth, signInWithPopup } from 'firebase/auth';
 import { googleAuthProvider } from '../../../../firebase';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  setCurrentModal: (key: string) => void;
-}
-export const RegisterModal: FC<IProps> = ({
+import { IAuthModalProps } from '../../../../Types/Components/Modals';
+
+export const RegisterModal: FC<IAuthModalProps> = ({
   toggleModal,
   isOpen,
   setCurrentModal,

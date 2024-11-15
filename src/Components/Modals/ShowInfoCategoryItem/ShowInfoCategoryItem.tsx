@@ -4,19 +4,11 @@ import styles from './ShowInfoCategoryItem.module.css';
 import edit_icon from '../../../assets/SelectedList/Footer/icon_edit.svg';
 import icon_plus from '../../../assets/Modals/icon_plus.svg';
 import icon_minus from '../../../assets/Modals/icon_minus.svg';
-import { ICategoryItem } from '../../SelectedList/SelectedList';
 import { useMutation } from '@tanstack/react-query';
 import { updateCount } from '../../../Pages/Lists/api';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  tripName: string;
-  listId: string;
-  item: ICategoryItem;
-  refetch: any;
-}
+import { IShowInfoCategoryItemProps } from '../../../Types/Components/Modals';
 
-export const ShowInfoCategoryItem: FC<IProps> = ({
+export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
   toggleModal,
   isOpen,
   listId,
@@ -27,7 +19,6 @@ export const ShowInfoCategoryItem: FC<IProps> = ({
     mutationFn: updateCount,
     onSuccess: () => {
       refetch();
-      // queryClient.invalidateQueries({ queryKey: ['tours'] });
     },
   });
   const [count, setCount] = useState(1);
@@ -96,33 +87,6 @@ export const ShowInfoCategoryItem: FC<IProps> = ({
                   <p className={styles.person_counter}>{count}</p>
                 </div>
               ))}
-            {/* <div className={styles.person_block}>
-							<p
-								className={`${styles.person_icon} ${styles.person_icon_disabled}`}
-							>
-								K
-							</p>
-							<p
-								className={`${styles.person_name} ${styles.person_name_disabled}`}
-							>
-								Kolya
-							</p>
-							<p
-								className={`${styles.person_counter} ${styles.person_counter_disabled}`}
-							>
-								0
-							</p>
-						</div>
-						<div className={styles.person_block}>
-							<p className={styles.person_icon}>M</p>
-							<p className={styles.person_name}>Maksym</p>
-							<p className={styles.person_counter}>1</p>
-						</div>
-						<div className={styles.person_block}>
-							<p className={styles.person_icon}>D</p>
-							<p className={styles.person_name}>Dasha</p>
-							<p className={styles.person_counter}>2</p>
-						</div> */}
           </div>
         </div>
         <div className={styles.btn_wrapper}>

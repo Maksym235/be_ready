@@ -4,14 +4,9 @@ import { useFormik } from 'formik';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import { useMutation } from '@tanstack/react-query';
 import { changeDuration } from '../../../Pages/Lists/api';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  refetch: any;
-  tripId: string;
-  tripDuraition: number;
-}
-export const ChangeTripDuration: FC<IProps> = ({
+import { IChangeTripDurationProps } from '../../../Types/Components/Modals';
+
+export const ChangeTripDuration: FC<IChangeTripDurationProps> = ({
   toggleModal,
   isOpen,
   refetch,
@@ -29,7 +24,6 @@ export const ChangeTripDuration: FC<IProps> = ({
     initialValues: {
       duration: tripDuraition,
     },
-    // validate,
     onSubmit: (values) => {
       console.log(values);
       mutation.mutate({
@@ -67,11 +61,7 @@ export const ChangeTripDuration: FC<IProps> = ({
         <div className={styles.btn_wrapper}>
           <button
             type='submit'
-            // onClick={handleAddNewItem}
-            disabled={
-              formik.values.duration === tripDuraition
-              // formik.values.category.length === 0
-            }
+            disabled={formik.values.duration === tripDuraition}
             className={styles.create}
           >
             rename
@@ -79,7 +69,6 @@ export const ChangeTripDuration: FC<IProps> = ({
           <button
             type='button'
             onClick={() => {
-              //   toggleModal('newItem');
               formik.resetForm();
             }}
             className={styles.cancel}

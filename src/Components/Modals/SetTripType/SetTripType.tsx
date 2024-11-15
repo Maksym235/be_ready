@@ -5,13 +5,9 @@ import hiking_active from '../../../assets/hiking_active.svg';
 import hiking_disabled from '../../../assets/hiking_disabled.svg';
 import bagage_active from '../../../assets/bagage_active.svg';
 import bagage_disabled from '../../../assets/bagage_disabled.svg';
-interface IProps {
-  isOpen: boolean;
-  toggleModal: () => void;
-  setCurrentModal: (key: string) => void;
-  changeTripType: (type: string) => void;
-}
-export const SetTripType: FC<IProps> = ({
+import { ISetTripTypeProps } from '../../../Types/Components/Modals';
+
+export const SetTripType: FC<ISetTripTypeProps> = ({
   isOpen,
   toggleModal,
   setCurrentModal,

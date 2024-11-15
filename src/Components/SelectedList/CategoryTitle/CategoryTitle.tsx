@@ -4,18 +4,12 @@ import arrow_bottom from '../../../assets/SelectedList/arrow_bottom.svg';
 import arrow_up from '../../../assets/SelectedList/arrow_up.svg';
 import trash from '../../../assets/SelectedList/icon_trash.svg';
 import { FC } from 'react';
-import { ICategoryItem } from '../SelectedList';
 import { useMutation } from '@tanstack/react-query';
 import { deleteCategory } from '../../../Pages/Lists/api';
-export interface ICategoryTitleProps {
-  category: string;
-  equipList: any;
-  opensCategories: string[];
-  toggleOpenCategory: (category: string) => void;
-  isEditing: boolean;
-  refetch: any;
-  listId: string;
-}
+import {
+  ICategoryItem,
+  ICategoryTitleProps,
+} from '../../../Types/Components/SelectedLists';
 
 export const CategoryTitle: FC<ICategoryTitleProps> = ({
   category,

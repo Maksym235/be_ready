@@ -6,31 +6,16 @@ import toast from 'react-hot-toast';
 import cross_delete from '../../../assets/icon_close.svg';
 import { deleteFriend } from '../../../Pages/Home/api';
 import { Spinner } from '../../Spinner/Spinner';
+import {
+  IFriendsListProps,
+  IFriendsRequests,
+} from '../../../Types/Components/Home';
 
-export interface IFriendsRequests {
-  _id: string;
-  name: string;
-  avatar: string;
-}
-export interface IUser {
-  email: string;
-  id: string;
-  language: string;
-  password: string;
-  name: string;
-  theme: string;
-  friends: IFriendsRequests[];
-}
-export interface IFriendsListProps {
-  user: IUser;
-  refetch: any;
-}
 export const FriendsLists: FC<IFriendsListProps> = ({ user, refetch }) => {
   const { mutate, isPending } = useMutation({
     mutationFn: deleteFriend,
     onSuccess: () => {
       refetch();
-      // toggleModal();
       toast.success('accepted');
     },
   });

@@ -8,12 +8,8 @@ import { EditUserName } from '../Modals/EditUserName/EditUserName';
 import { EditUserEmail } from '../Modals/EditUserEmail/EditUserEmail';
 import { EditUserPassword } from '../Modals/EditUserPassoword/EditUserPassword';
 import { Spinner } from '../Spinner/Spinner';
-export interface IUserDataToUpdate {
-  name: string;
-  email: string;
-  curPassword: string;
-  password: string;
-}
+import { IUserInformationProps } from '../../Types/Components/Profile';
+
 export const UserInformation = () => {
   const [currentModal, setCurrentModal] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,7 +17,6 @@ export const UserInformation = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: updateUserData,
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
@@ -37,7 +32,7 @@ export const UserInformation = () => {
     return <div>Something went wrong.</div>;
   }
 
-  const handleSubmit = (data: IUserDataToUpdate) => {
+  const handleSubmit = (data: IUserInformationProps) => {
     mutate(data);
     if (!isPending) {
       refetch();

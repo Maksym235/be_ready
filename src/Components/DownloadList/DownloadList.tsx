@@ -4,10 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Spinner } from '../Spinner/Spinner';
 import { downloadList } from '../../Pages/Lists/api';
 import { FC } from 'react';
-export interface IDownloadListProps {
-  listId: string;
-  tripName: string;
-}
+import { IDownloadListProps } from '../../Types/Components/Lists';
 
 const download = (json: string, name: string) => {
   // Конвертуємо об'єкт у JSON-строку

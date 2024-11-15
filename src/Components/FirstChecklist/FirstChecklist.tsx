@@ -1,9 +1,8 @@
 import { FC } from 'react';
 import styles from './FirstChecklist.module.css';
-interface IProps {
-  toggleModal: () => void;
-}
-export const FirstChecklist: FC<IProps> = ({ toggleModal }) => {
+import { IFirstChecklistProps } from '../../Types/Components/Lists';
+
+export const FirstChecklist: FC<IFirstChecklistProps> = ({ toggleModal }) => {
   return (
     <div className={styles.background}>
       <div className={styles.container}>

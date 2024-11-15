@@ -1,20 +1,21 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
-interface ILogin {
-  email: string;
-  password: string;
-}
-
-export interface IRegisterGoogleAuth {
-  name: string;
-  email: string;
-  avatarURL: string;
-  avatarName: string;
-  password: string;
-}
+import {
+  IEditRequest,
+  IEditRequestData,
+  ILogin,
+  IRegisterGoogleAuth,
+  IUserDataToUpdate,
+} from '../../Types/api/home';
 
 axios.defaults.baseURL = 'https://be-ready-api.vercel.app';
+const setAuthHeader = (token: string) => {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
 
+const unSetAuthHeader = () => {
+  axios.defaults.headers.common.Authorization = '';
+};
 export const loginAsync = async ({ email, password }: ILogin) => {
   try {
     const resp = await axios.get('/auth/login', {
@@ -23,6 +24,7 @@ export const loginAsync = async ({ email, password }: ILogin) => {
         password: password,
       },
     });
+    setAuthHeader(resp.data.token);
     window.localStorage.setItem('token', resp.data.token);
     window.localStorage.setItem('user', JSON.stringify(resp.data.user));
     window.localStorage.setItem('theme', resp.data.user.theme);
@@ -51,6 +53,7 @@ export const googleAuth = async ({
       avatarURL,
       password,
     });
+    setAuthHeader(resp.data.token);
     window.localStorage.setItem('token', resp.data.token);
     window.localStorage.setItem('user', JSON.stringify(resp.data.user));
     window.localStorage.setItem('theme', resp.data.user.theme);
@@ -67,16 +70,9 @@ export const googleAuth = async ({
 
 export const userLogout = async () => {
   try {
-    const resp = await axios.post(
-      `/auth/logout`,
-      {},
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const resp = await axios.post(`/auth/logout`, {});
     if (resp.status === 200) {
+      unSetAuthHeader();
       toast.success('До зустрічі!');
       localStorage.setItem('isLoggedIn', JSON.stringify(false));
       window.localStorage.removeItem('user');
@@ -90,11 +86,7 @@ export const userLogout = async () => {
 };
 export const getCurrent = async () => {
   try {
-    const resp = await axios.get('/auth/current', {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
+    const resp = await axios.get('/auth/current');
     localStorage.setItem('token', resp.data.token);
     localStorage.setItem('isLoggedIn', JSON.stringify(true));
     localStorage.setItem('user', JSON.stringify(resp.data.user));
@@ -110,30 +102,18 @@ export const getCurrent = async () => {
 
 export const getUserRequests = async () => {
   try {
-    const resp = await axios.get(`/auth/getRequests`, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
+    const resp = await axios.get(`/auth/getRequests`);
     return resp.data;
   } catch (error: any) {
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');
     console.log(error);
   }
 };
-interface IEditRequest {
-  tripId: string;
-  accept: boolean;
-}
+
 export const editRequest = async ({ tripId, accept }: IEditRequest) => {
   try {
     const resp = await axios.get(
-      `/auth/editRequest/${tripId}/?accept=${accept}`,
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
+      `/auth/editRequest/${tripId}/?accept=${accept}`
     );
     return resp.data;
   } catch (error: any) {
@@ -144,36 +124,19 @@ export const editRequest = async ({ tripId, accept }: IEditRequest) => {
 
 export const getUsersById = async (usersIds: string) => {
   try {
-    const resp = await axios.post(
-      `/auth/getById`,
-      {
-        ids: usersIds,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const resp = await axios.post(`/auth/getById`, {
+      ids: usersIds,
+    });
     return resp.data;
   } catch (error: any) {
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');
     console.log(error);
   }
 };
-interface IUserDataToUpdate {
-  name: string;
-  email: string;
-  curPassword: string;
-  password: string;
-}
+
 export const updateUserData = async (data: IUserDataToUpdate) => {
   try {
-    const resp = await axios.post(`/auth/update`, data, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
+    const resp = await axios.post(`/auth/update`, data);
     return resp.data;
   } catch (error: any) {
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');
@@ -183,39 +146,23 @@ export const updateUserData = async (data: IUserDataToUpdate) => {
 
 export const sendFriendRequest = async (userId: string) => {
   try {
-    const resp = await axios.post(
-      '/auth/frreq',
-      {
-        userid: userId,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
-    );
+    const resp = await axios.post('/auth/frreq', {
+      userid: userId,
+    });
     return resp.data;
   } catch (error: any) {
     console.log(error);
     toast.error(error.message);
   }
 };
-export interface IEditRequestData {
-  reqId: string;
-  isAccept: boolean;
-}
+
 export const editFriendRequest = async ({
   reqId,
   isAccept,
 }: IEditRequestData) => {
   try {
     const resp = await axios.get(
-      `/auth/editFrRequest/${reqId}?accept=${isAccept}`,
-      {
-        headers: {
-          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        },
-      }
+      `/auth/editFrRequest/${reqId}?accept=${isAccept}`
     );
     return resp.data;
   } catch (error: any) {
@@ -226,11 +173,7 @@ export const editFriendRequest = async ({
 
 export const deleteFriend = async (friendId: string) => {
   try {
-    const resp = await axios.get(`/auth/deleteFriend/${friendId}`, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-      },
-    });
+    const resp = await axios.get(`/auth/deleteFriend/${friendId}`);
     return resp.data;
   } catch (error: any) {
     console.log(error);
@@ -240,12 +183,7 @@ export const deleteFriend = async (friendId: string) => {
 
 export const changeAvatar = async (data: any) => {
   try {
-    const resp = await axios.patch('/auth/avatars', data, {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const resp = await axios.patch('/auth/avatars', data);
     return resp.data;
   } catch (error: any) {
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');
@@ -256,12 +194,7 @@ export const changeAvatar = async (data: any) => {
 
 export const resetToDefaultAvatar = async () => {
   try {
-    const resp = await axios.get('/auth/resetAvatars', {
-      headers: {
-        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const resp = await axios.get('/auth/resetAvatars');
     return resp.data;
   } catch (error: any) {
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');

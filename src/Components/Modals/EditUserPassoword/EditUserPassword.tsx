@@ -2,13 +2,9 @@ import { FC } from 'react';
 import styles from './EditUserPassword.module.css';
 import { useFormik } from 'formik';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
-import { IUserDataToUpdate } from '../../UserInformation/UserInformation';
-export interface IProps {
-  isOpen: boolean;
-  toggleModal: () => void;
-  submit: (data: IUserDataToUpdate) => void;
-}
-export const EditUserPassword: FC<IProps> = ({
+import { IEditUserPasswordProps } from '../../../Types/Components/Modals';
+
+export const EditUserPassword: FC<IEditUserPasswordProps> = ({
   isOpen,
   toggleModal,
   submit,
@@ -26,11 +22,6 @@ export const EditUserPassword: FC<IProps> = ({
     if (!values.curPass) {
       errors.curPass = 'Required';
     }
-    //  else if (
-    // 	!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.curPass)
-    // ) {
-    // 	errors.curPass = "Invalid email address";
-    // }
     if (!values.newPass) {
       errors.newPass = 'Required';
     }
@@ -48,9 +39,7 @@ export const EditUserPassword: FC<IProps> = ({
       сonfPass: '',
     },
     validate,
-    // validationSchema: SignupSchema,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       submit({
         name: '',
         email: '',
@@ -109,9 +98,6 @@ export const EditUserPassword: FC<IProps> = ({
       <div className={styles.btn_wrapper}>
         <button
           className={styles.btn_save}
-          // disabled={
-          // 	formik.errors.email !== undefined && formik.errors.email.length > 0
-          // }
           type='submit'
           onClick={() => formik.handleSubmit()}
         >

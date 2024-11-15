@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import styles from './ProfileToggler.module.css';
-// import { useQuery } from '@tanstack/react-query';
-// import { getUserRequests } from '../../Pages/Home/api';
 export const ProfileToggler = ({ toggle, requests }: any) => {
   const [currentList, setCurrentList] = useState('info');
   const toggleCurrentList = (key: string) => {

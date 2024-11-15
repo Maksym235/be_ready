@@ -1,10 +1,9 @@
 import { FC } from 'react';
 import styles from './EmptyLists.module.css';
 import copy from '../../assets/icon_copy.svg';
-interface IProps {
-  list: string;
-}
-export const EmptyLists: FC<IProps> = ({ list }) => {
+import { IEmptyListsProps } from '../../Types/Components/Lists';
+
+export const EmptyLists: FC<IEmptyListsProps> = ({ list }) => {
   return (
     <>
       {list === 'personal' ? (

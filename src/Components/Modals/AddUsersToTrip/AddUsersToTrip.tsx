@@ -6,21 +6,9 @@ import { addUserToTrip } from '../../../Pages/Lists/api';
 import { useParams } from 'react-router-dom';
 import { Spinner } from '../../Spinner/Spinner';
 import { DownloadList } from '../../DownloadList/DownloadList';
-interface IFriend {
-  _id: string;
-  avatar: string;
-  name: string;
-}
+import { IAddUsersToTripProps } from '../../../Types/Components/Modals';
 
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  setModal: (key: string) => void;
-  friends: IFriend[];
-  listId: string;
-  tripName: string;
-}
-export const AddUsersToTrip: FC<IProps> = ({
+export const AddUsersToTrip: FC<IAddUsersToTripProps> = ({
   toggleModal,
   isOpen,
   setModal,
@@ -35,9 +23,7 @@ export const AddUsersToTrip: FC<IProps> = ({
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: addUserToTrip,
     onSuccess: () => {
-      // Invalidate and refetch
       toggleModal();
-      // queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
 
@@ -82,19 +68,6 @@ export const AddUsersToTrip: FC<IProps> = ({
           value={userId}
           placeholder='Enter new user id...*'
         />
-        {/* <select
-          className={styles.select}
-          onChange={handleSelectFriend}
-          name='friends'
-          id=''
-        >
-          <option value=''>select friend</option>
-          {data.user.friends.map((friend: { name: string; _id: string }) => (
-            <option className={styles.select_option} value={friend._id}>
-              {friend.name}
-            </option>
-          ))}
-        </select> */}
         <div className={styles.btn_wrapper}>
           <button
             onClick={handleSubmitUser}

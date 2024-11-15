@@ -6,20 +6,7 @@ import { BurgerMenu } from '../Modals/Burger/BurgerMenu';
 import { Link, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getCurrent, getUserRequests } from '../../Pages/Home/api';
-export interface IUser {
-  email: string;
-  id: string;
-  language: string;
-  password: string;
-  name: string;
-  theme: string;
-  avatarURL: string;
-  avatarName: string;
-}
 
-export interface IHeaderProps {
-  user: IUser;
-}
 export const Header: FC = () => {
   const location = useLocation();
 

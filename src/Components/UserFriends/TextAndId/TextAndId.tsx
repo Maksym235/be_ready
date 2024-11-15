@@ -2,20 +2,10 @@
 import styles from './TextAndId.module.css';
 import copy from '../../../assets/icon_copy.svg';
 import toast from 'react-hot-toast';
-export interface IFriendsRequests {
-  _id: string;
-  name: string;
-}
-export interface IUser {
-  email: string;
-  id: string;
-  language: string;
-  password: string;
-  name: string;
-  theme: string;
-  friends: IFriendsRequests[];
-}
-export const TextAndId = ({ user }: { user: IUser }) => {
+import { FC } from 'react';
+import { ITextAndIdProps } from '../../../Types/Components/Profile';
+
+export const TextAndId: FC<ITextAndIdProps> = ({ user }) => {
   const textData = {
     hanvtFr: "You don't have any friends added yet.",
     listFr: 'The list of your friends is presented below.',

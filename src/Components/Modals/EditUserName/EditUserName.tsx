@@ -2,20 +2,18 @@ import { FC } from 'react';
 import { useFormik } from 'formik';
 import styles from './EditUserName.module.css';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
-import { IUserDataToUpdate } from '../../UserInformation/UserInformation';
-export interface IProps {
-  isOpen: boolean;
-  toggleModal: () => void;
-  submit: (data: IUserDataToUpdate) => void;
-}
-export const EditUserName: FC<IProps> = ({ isOpen, submit, toggleModal }) => {
+import { IEditUserNameProps } from '../../../Types/Components/Modals';
+
+export const EditUserName: FC<IEditUserNameProps> = ({
+  isOpen,
+  submit,
+  toggleModal,
+}) => {
   const formik = useFormik({
     initialValues: {
       name: '',
     },
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
-      // setNewName();
       submit({
         name: values.name,
         email: '',

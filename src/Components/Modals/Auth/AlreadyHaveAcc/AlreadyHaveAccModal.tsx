@@ -1,12 +1,9 @@
 import { FC } from 'react';
 import { ModalContainer } from '../../ModalContainer/ModalContainer';
 import styles from './AlreadyHaveAccModal.module.css';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  setCurrentModal: (key: string) => void;
-}
-export const AlreadyHaveAccModal: FC<IProps> = ({
+import { IAuthModalProps } from '../../../../Types/Components/Modals';
+
+export const AlreadyHaveAccModal: FC<IAuthModalProps> = ({
   toggleModal,
   isOpen,
   setCurrentModal,

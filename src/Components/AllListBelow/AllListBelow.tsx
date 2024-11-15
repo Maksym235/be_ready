@@ -2,11 +2,9 @@ import { FC } from 'react';
 import styles from './AllListBelow.module.css';
 import copy from '../../assets/icon_copy.svg';
 import toast from 'react-hot-toast';
-interface IProps {
-  list: string;
-  id: string;
-}
-export const AllListBelow: FC<IProps> = ({ list, id }) => {
+import { IAllListBelowProps } from '../../Types/Components/Lists';
+
+export const AllListBelow: FC<IAllListBelowProps> = ({ list, id }) => {
   const handdleCopy = (id: string) => {
     toast.success('Скопійовано');
     navigator.clipboard.writeText(id);

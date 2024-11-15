@@ -6,23 +6,12 @@ import show_marked from '../../../assets/SelectedList/Footer/icon_marked.svg';
 import styles from './SelectedListFooter.module.css';
 import cross from '../../../assets/SelectedList/icon_close.svg';
 import dobble_check from '../../../assets/SelectedList/icon_dobble_check.svg';
-interface IFootersContentProps {
-  changeFooterState: (state: string) => void;
-}
-interface IDefaultFooterProps extends IFootersContentProps {
-  isHidden: boolean;
-  toggleIsHidden: () => void;
-  setModal: (key: string) => void;
-  toggleModal: () => void;
-}
-interface ISelectedListFooter {
-  toggleIsEditing: () => void;
-  toggleIsEditMenu: any;
-  isHidden: boolean;
-  toggleIsHidden: () => void;
-  setModal: (key: string) => void;
-  toggleModal: () => void;
-}
+import {
+  IDefaultFooterProps,
+  IFootersContentProps,
+  ISelectedListFooter,
+} from '../../../Types/Components/SelectedLists';
+
 const DefaultFooterContent: FC<IDefaultFooterProps> = ({
   changeFooterState,
   isHidden,

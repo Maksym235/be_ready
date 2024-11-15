@@ -4,12 +4,13 @@ import { ModalContainer } from '../ModalContainer/ModalContainer';
 import { useMutation } from '@tanstack/react-query';
 import { deleteTrip } from '../../../Pages/Lists/api';
 import { useNavigate } from 'react-router-dom';
-interface IProps {
-  toggleModal: () => void;
-  isOpen: boolean;
-  tripId: string;
-}
-export const DeleteTrip: FC<IProps> = ({ toggleModal, isOpen, tripId }) => {
+import { IDeleteTripProps } from '../../../Types/Components/Modals';
+
+export const DeleteTrip: FC<IDeleteTripProps> = ({
+  toggleModal,
+  isOpen,
+  tripId,
+}) => {
   const navigation = useNavigate();
   const mutation = useMutation({
     mutationFn: deleteTrip,
@@ -37,13 +38,7 @@ export const DeleteTrip: FC<IProps> = ({ toggleModal, isOpen, tripId }) => {
         <button type='submit' onClick={handleDelete} className={styles.create}>
           Delete
         </button>
-        <button
-          type='button'
-          onClick={() => {
-            //   toggleModal('newItem');
-          }}
-          className={styles.cancel}
-        >
+        <button type='button' className={styles.cancel}>
           Cancel
         </button>
       </div>
