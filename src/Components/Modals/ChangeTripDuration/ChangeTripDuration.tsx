@@ -25,7 +25,6 @@ export const ChangeTripDuration: FC<IChangeTripDurationProps> = ({
       duration: tripDuraition,
     },
     onSubmit: (values) => {
-      console.log(values);
       mutation.mutate({
         tripId,
         duration: values.duration,

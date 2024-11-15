@@ -26,7 +26,6 @@ export const RenameTrip: FC<IRenameTripProps> = ({
     },
     // validate,
     onSubmit: (values) => {
-      console.log(values);
       mutation.mutate({
         newName: values.name,
         tripId,

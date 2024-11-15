@@ -15,12 +15,6 @@ export const RegisterModal: FC<IAuthModalProps> = ({
   const handleAuthWithGoogle = async () => {
     const userCred = await signInWithPopup(auth, googleAuthProvider);
     localStorage.setItem('googleUser', JSON.stringify(userCred));
-    // alert(`name: ${userCred.user.displayName}`);
-    console.log(userCred);
-    // .then((creditinals) =>
-    // 	localStorage.setItem("googleUser", JSON.stringify(creditinals)),
-    // )
-    // .catch((error) => alert(error.message));
   };
   const title = 'Create new account';
   return (

@@ -27,7 +27,6 @@ export const AddNewItemToCategory: FC<IAddNewItemToCategoryProps> = ({
     },
     // validate,
     onSubmit: (values) => {
-      console.log(values);
       mutation.mutate({
         listId,
         itemData: {

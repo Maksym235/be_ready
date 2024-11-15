@@ -7,18 +7,14 @@ import { FC } from 'react';
 import { IDownloadListProps } from '../../Types/Components/Lists';
 
 const download = (json: string, name: string) => {
-  // Конвертуємо об'єкт у JSON-строку
   const jsonString = JSON.stringify(json);
 
-  // Створюємо Blob з JSON-даними
   const blob = new Blob([jsonString], { type: 'application/json' });
 
-  // Створюємо посилання для завантаження
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = `${name}-list.json`;
 
-  // Додаємо посилання до DOM, клікаємо на нього і видаляємо
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

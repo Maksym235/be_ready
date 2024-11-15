@@ -68,9 +68,6 @@ export const SelectedList: FC = () => {
   const handleShowInfo = (item: ICategoryItem) => {
     setInfoItem(item);
     if (item.persons.length > 0) {
-      // getUsersById(item.persons.map((p: IPersons) => p._id).join(', ')).then(
-      //   (users) => setItemPersons(users.resp)
-      // );
       toggleIsOpen();
       return;
     }
@@ -147,7 +144,6 @@ export const SelectedList: FC = () => {
     }, 5000);
     setTimerId(timer);
   };
-  // console.log(data.trip.id);
   const modals: Record<string, ReactNode> = {
     newCategory: (
       <AddNewCategory

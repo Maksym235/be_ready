@@ -24,7 +24,6 @@ export const AddNewCategory: FC<IAddNewCategoryProps> = ({
       name: '',
     },
     onSubmit: (values) => {
-      console.log(values);
       mutation.mutate({
         listId,
         categoryName: values.name,

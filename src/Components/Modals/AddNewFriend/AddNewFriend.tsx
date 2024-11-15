@@ -28,7 +28,6 @@ export const AddNewFriend: FC<IAddNewFriendProps> = ({
     },
     // validate,
     onSubmit: (values) => {
-      console.log(values);
       mutate(values.userid);
     },
   });

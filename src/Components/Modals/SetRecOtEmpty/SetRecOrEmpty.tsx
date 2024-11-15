@@ -15,12 +15,6 @@ export const SetRecOrEmpty: FC<ISetRecOrEmptyProps> = ({
   };
   const onImageSelect = () => {
     inputFileRef.current.click();
-    // if (e.target.files && e.target.files[0]) {
-    // 	let img = e.target.files[0];
-    // 	const formData = new FormData();
-    // 	formData.append("avatar", img);
-    // 	console.log(formData);
-    // }
   };
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];
@@ -29,7 +23,6 @@ export const SetRecOrEmpty: FC<ISetRecOrEmptyProps> = ({
       try {
         //@ts-ignore
         const content = JSON.parse(e.target.result);
-        console.log('File content:', content);
         handleNextPage('custom', content);
       } catch (error) {
         console.error('Invalid JSON file', error);

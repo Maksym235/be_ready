@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { IUserDataToUpdate } from '../api/home';
-import { ICategoryItem } from '../../Components/SelectedList/SelectedList';
+import { ICategoryItem } from './SelectedLists';
+
 interface IModalMainProps {
   toggleModal: () => void;
   isOpen: boolean;
@@ -36,7 +37,10 @@ export interface IAddUsersToTripProps extends IModalMainProps {
   tripName: string;
 }
 
-export interface IBurgerMenuProps {}
+export interface IBurgerMenuProps {
+  toggleBurger: () => void;
+  isOpen: boolean;
+}
 
 export interface IChangeTripDurationProps extends IModalMainProps {
   refetch: any;
