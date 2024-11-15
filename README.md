@@ -1,30 +1,66 @@
-# React + TypeScript + Vite
+# Be Ready
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Be Ready** is a web application designed to help users prepare for various scenarios by providing curated lists of items and resources. The application allows users to browse through pre-defined lists, view item details, and get recommendations.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Check out the live version here: [Be Ready](https://be-ready-nine.vercel.app/)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Curated Lists**: Explore a variety of lists tailored to specific needs.
+- **Responsive Design**: Fully responsive interface for optimal viewing on any device.
+- **User-Friendly Interface**: Simple and intuitive navigation.
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+- **Frontend**: React with TypeScript
+- **Bundler**: Vite
+- **Styling**: CSS
+- **Deployment**: Vercel
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Getting Started
+
+Follow these steps to set up the project locally.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js (v16 or later)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Maksym235/be_ready.git
+   cd be_ready
+npm install
+# or
+yarn install
+
+npm run dev
+# or
+yarn dev
+
+http://localhost:5174
+
+Scripts
+`npm run dev`: Start the development server.
+`npm run build`: Build the project for production.
+`npm run preview`: Preview the production build locally.
+
+
+Contributing
+Contributions are welcome! To contribute:
+
+1. Fork the repository.
+2. Create a new branch: git checkout -b feature-name.
+3. Commit your changes: git commit -m 'Add feature name'.
+4. Push the branch: git push origin feature-name.
+5. Open a pull request.
+
+Author
+Developed by Maksym235.
