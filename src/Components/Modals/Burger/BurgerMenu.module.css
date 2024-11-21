@@ -9,6 +9,14 @@
   transition: right 0.3s ease;
 }
 
+@media (min-width: 430px) {
+  .container {
+    max-width: 430px;
+    right: 50%;
+    transform: translateX(50%);
+    overflow: hidden;
+  }
+}
 .active {
   right: -100%;
 }

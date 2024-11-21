@@ -10,3 +10,10 @@
   bottom: 24px;
   right: 20px;
 }
+
+@media (min-width: 430px) {
+  .plus_btn {
+    left: 50%;
+    transform: translateX(200%);
+  }
+}
