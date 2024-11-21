@@ -9,13 +9,13 @@ import {
 } from '../../Types/api/home';
 
 axios.defaults.baseURL = 'https://be-ready-api.vercel.app';
-const setAuthHeader = (token: string) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
+// const setAuthHeader = (token: string) => {
+//   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+// };
 
-const unSetAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = '';
-};
+// const unSetAuthHeader = () => {
+//   axios.defaults.headers.common.Authorization = '';
+// };
 export const loginAsync = async ({ email, password }: ILogin) => {
   try {
     const resp = await axios.get('/auth/login', {
@@ -24,7 +24,6 @@ export const loginAsync = async ({ email, password }: ILogin) => {
         password: password,
       },
     });
-    setAuthHeader(resp.data.token);
     window.localStorage.setItem('token', resp.data.token);
     window.localStorage.setItem('user', JSON.stringify(resp.data.user));
     window.localStorage.setItem('theme', resp.data.user.theme);
@@ -32,11 +31,7 @@ export const loginAsync = async ({ email, password }: ILogin) => {
     window.localStorage.setItem('isLoggedIn', JSON.stringify(true));
     if (resp.status === 200) toast.success('Вітаю в системі!');
     return resp.data;
-  } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    toast.error(error.message);
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 export const googleAuth = async ({
   name,
@@ -53,7 +48,6 @@ export const googleAuth = async ({
       avatarURL,
       password,
     });
-    setAuthHeader(resp.data.token);
     window.localStorage.setItem('token', resp.data.token);
     window.localStorage.setItem('user', JSON.stringify(resp.data.user));
     window.localStorage.setItem('theme', resp.data.user.theme);
@@ -61,18 +55,21 @@ export const googleAuth = async ({
     window.localStorage.setItem('isLoggedIn', JSON.stringify(true));
     if (resp.status === 200) toast.success('Вітаю в системі!');
     return resp.data;
-  } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    toast.error(error.message);
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const userLogout = async () => {
   try {
-    const resp = await axios.post(`/auth/logout`, {});
+    const resp = await axios.post(
+      `/auth/logout`,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     if (resp.status === 200) {
-      unSetAuthHeader();
       toast.success('До зустрічі!');
       localStorage.setItem('isLoggedIn', JSON.stringify(false));
       window.localStorage.removeItem('user');
@@ -86,7 +83,11 @@ export const userLogout = async () => {
 };
 export const getCurrent = async () => {
   try {
-    const resp = await axios.get('/auth/current');
+    const resp = await axios.get('/auth/current', {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     localStorage.setItem('token', resp.data.token);
     localStorage.setItem('isLoggedIn', JSON.stringify(true));
     localStorage.setItem('user', JSON.stringify(resp.data.user));
@@ -95,60 +96,75 @@ export const getCurrent = async () => {
     window.localStorage.removeItem('user');
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('googleUser');
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
   }
 };
 
 export const getUserRequests = async () => {
   try {
-    const resp = await axios.get(`/auth/getRequests`);
+    const resp = await axios.get(`/auth/getRequests`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
-  } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const editRequest = async ({ tripId, accept }: IEditRequest) => {
   try {
     const resp = await axios.get(
-      `/auth/editRequest/${tripId}/?accept=${accept}`
+      `/auth/editRequest/${tripId}/?accept=${accept}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
     );
     return resp.data;
-  } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const getUsersById = async (usersIds: string) => {
   try {
-    const resp = await axios.post(`/auth/getById`, {
-      ids: usersIds,
-    });
+    const resp = await axios.post(
+      `/auth/getById`,
+      {
+        ids: usersIds,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
-  } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const updateUserData = async (data: IUserDataToUpdate) => {
   try {
-    const resp = await axios.post(`/auth/update`, data);
+    const resp = await axios.post(`/auth/update`, data, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
-  } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const sendFriendRequest = async (userId: string) => {
   try {
-    const resp = await axios.post('/auth/frreq', {
-      userid: userId,
-    });
+    const resp = await axios.post(
+      '/auth/frreq',
+      {
+        userid: userId,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: any) {
     console.log(error);
@@ -162,7 +178,12 @@ export const editFriendRequest = async ({
 }: IEditRequestData) => {
   try {
     const resp = await axios.get(
-      `/auth/editFrRequest/${reqId}?accept=${isAccept}`
+      `/auth/editFrRequest/${reqId}?accept=${isAccept}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
     );
     return resp.data;
   } catch (error: any) {
@@ -173,7 +194,11 @@ export const editFriendRequest = async ({
 
 export const deleteFriend = async (friendId: string) => {
   try {
-    const resp = await axios.get(`/auth/deleteFriend/${friendId}`);
+    const resp = await axios.get(`/auth/deleteFriend/${friendId}`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     console.log(error);
@@ -183,7 +208,11 @@ export const deleteFriend = async (friendId: string) => {
 
 export const changeAvatar = async (data: any) => {
   try {
-    const resp = await axios.patch('/auth/avatars', data);
+    const resp = await axios.patch('/auth/avatars', data, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');
@@ -194,7 +223,11 @@ export const changeAvatar = async (data: any) => {
 
 export const resetToDefaultAvatar = async () => {
   try {
-    const resp = await axios.get('/auth/resetAvatars');
+    const resp = await axios.get('/auth/resetAvatars', {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     if (error.response.status === 401) toast.error('Потрібно авторизуватися');

@@ -12,6 +12,14 @@
   transition: opacity 0.3s ease;
 }
 
+@media (min-width: 430px) {
+  .backdrop {
+    max-width: 430px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
 .hidden {
   opacity: 0;
   visibility: hidden;

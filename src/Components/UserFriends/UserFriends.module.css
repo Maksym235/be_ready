@@ -9,6 +9,14 @@
   border: 2px solid #fff;
   border-radius: 50%;
 }
+
+@media (min-width: 430px) {
+  .plus_btn {
+    left: 50%;
+    transform: translateX(200%);
+  }
+}
+
 .friends_container {
   display: flex;
   flex-direction: column;

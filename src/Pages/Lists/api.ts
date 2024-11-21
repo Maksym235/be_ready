@@ -18,6 +18,7 @@ import {
 axios.defaults.baseURL = 'https://be-ready-api.vercel.app';
 
 export const ErrorAlert = ({ errorCode, message }: IErrorAlertType) => {
+  return;
   if (errorCode === 401) {
     toast.error('Потрібно авторизуватися');
   } else {
@@ -26,7 +27,11 @@ export const ErrorAlert = ({ errorCode, message }: IErrorAlertType) => {
 };
 export const getTours = async () => {
   try {
-    const resp = await axios.get(`/tours`);
+    const resp = await axios.get(`/tours`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -38,7 +43,11 @@ export const getTours = async () => {
 
 export const getToursById = async (tripId: string) => {
   try {
-    const resp = await axios.get(`/tours/${tripId}`);
+    const resp = await axios.get(`/tours/${tripId}`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -52,9 +61,17 @@ export const toggleEquipItemCheck = async ({
   equipItemId,
 }: IToggleEquipItemType) => {
   try {
-    const resp = await axios.patch(`/tours/${tourId}/updateItem`, {
-      equipId: equipItemId,
-    });
+    const resp = await axios.patch(
+      `/tours/${tourId}/updateItem`,
+      {
+        equipId: equipItemId,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -66,9 +83,17 @@ export const toggleEquipItemCheck = async ({
 
 export const renameTrip = async ({ newName, tripId }: IRenameTripType) => {
   try {
-    const reps = await axios.post(`/tours/${tripId}/rename`, {
-      name: newName,
-    });
+    const reps = await axios.post(
+      `/tours/${tripId}/rename`,
+      {
+        name: newName,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return reps.data;
   } catch (error: any) {
     ErrorAlert({
@@ -82,9 +107,17 @@ export const changeDuration = async ({
   tripId,
 }: IChangeDurationType) => {
   try {
-    const resp = await axios.post(`/tours/${tripId}/changeDuration`, {
-      duration,
-    });
+    const resp = await axios.post(
+      `/tours/${tripId}/changeDuration`,
+      {
+        duration,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -96,7 +129,11 @@ export const changeDuration = async ({
 
 export const deleteTrip = async ({ tripId }: IDeleteTripType) => {
   try {
-    const resp = await axios.delete(`/tours/${tripId}/delete`);
+    const resp = await axios.delete(`/tours/${tripId}/delete`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -108,7 +145,11 @@ export const deleteTrip = async ({ tripId }: IDeleteTripType) => {
 
 export const createNewTour = async (newTripData: INewTripType) => {
   try {
-    const resp = await axios.post(`/tours/newAdd`, newTripData);
+    const resp = await axios.post(`/tours/newAdd`, newTripData, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -124,9 +165,17 @@ export const addUserToTrip = async ({
   invite,
 }: IAddNewUserToTripType) => {
   try {
-    const resp = await axios.post(`/tours/${tripId}/addUser?invite=${invite}`, {
-      usersId: userId,
-    });
+    const resp = await axios.post(
+      `/tours/${tripId}/addUser?invite=${invite}`,
+      {
+        usersId: userId,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -141,9 +190,17 @@ export const addNewCategory = async ({
   categoryName,
 }: IAddNewCategoryType) => {
   try {
-    const resp = await axios.post(`/equipList/${listId}/addNewCategory`, {
-      name: categoryName,
-    });
+    const resp = await axios.post(
+      `/equipList/${listId}/addNewCategory`,
+      {
+        name: categoryName,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -158,7 +215,11 @@ export const addNewItemToCategory = async ({
   itemData,
 }: IAddNewItemToCategoryType) => {
   try {
-    const resp = await axios.post(`/equipList/${listId}/addNewItem`, itemData);
+    const resp = await axios.post(`/equipList/${listId}/addNewItem`, itemData, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -172,7 +233,12 @@ export const updateList = async (data: IUpdateListType) => {
   try {
     const resp = await axios.post(
       `/equipList/${data.equipId}/update`,
-      data.newList
+      data.newList,
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
     );
     return resp.data;
   } catch (error: any) {
@@ -185,7 +251,11 @@ export const updateList = async (data: IUpdateListType) => {
 
 export const getFriendsTripRequests = async (tripId: string) => {
   try {
-    const resp = await axios.get(`/auth/friendsTripRequests/${tripId}`);
+    const resp = await axios.get(`/auth/friendsTripRequests/${tripId}`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -197,7 +267,11 @@ export const getFriendsTripRequests = async (tripId: string) => {
 
 export const getUsersInTrips = async (tripId: string) => {
   try {
-    const resp = await axios.get(`/tours/${tripId}/usersInfo`);
+    const resp = await axios.get(`/tours/${tripId}/usersInfo`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -212,9 +286,17 @@ export const deleteCategory = async ({
   categoryName,
 }: IDeleteCategoryType) => {
   try {
-    const resp = await axios.post(`equipList/${listId}/deleteCategory`, {
-      name: categoryName,
-    });
+    const resp = await axios.post(
+      `equipList/${listId}/deleteCategory`,
+      {
+        name: categoryName,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -230,10 +312,18 @@ export const deleteListItem = async ({
   category,
 }: IDeleteListItemType) => {
   try {
-    const resp = await axios.post(`equipList/${listId}/deleteItem`, {
-      itemid: itemId,
-      category: category,
-    });
+    const resp = await axios.post(
+      `equipList/${listId}/deleteItem`,
+      {
+        itemid: itemId,
+        category: category,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -250,11 +340,19 @@ export const updateCount = async ({
   equipId,
 }: IUpdateCountType) => {
   try {
-    const resp = await axios.post(`equipList/${listId}/updateCount`, {
-      count: count,
-      category: category,
-      equipId: equipId,
-    });
+    const resp = await axios.post(
+      `equipList/${listId}/updateCount`,
+      {
+        count: count,
+        category: category,
+        equipId: equipId,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
@@ -266,7 +364,11 @@ export const updateCount = async ({
 
 export const downloadList = async (listId: string) => {
   try {
-    const resp = await axios.get(`/equipList/${listId}/downloadList`);
+    const resp = await axios.get(`/equipList/${listId}/downloadList`, {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+    });
     return resp.data;
   } catch (error: any) {
     ErrorAlert({
