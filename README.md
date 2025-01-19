@@ -37,30 +37,36 @@ Make sure you have the following installed:
 ```bash
 git clone https://github.com/Maksym235/be_ready.git
 ```
+
 2.
+
 ```bash
 cd be_ready
 ```
+
 3.
+
 ```bash
 npm install
 or
 yarn install
 ```
+
 4.
+
 ```bash
 npm run dev
 or
 yarn dev
 ```
-5.
-http://localhost:5174
+
+5.  http://localhost:5174
 
 Scripts
+
 - `npm run dev`: Start the development server.
 - `npm run build`: Build the project for production.
 - `npm run preview`: Preview the production build locally.
-
 
 Contributing
 Contributions are welcome! To contribute:
