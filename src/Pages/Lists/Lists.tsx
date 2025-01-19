@@ -14,7 +14,7 @@ const Lists: FC = () => {
   const [currentModal, setCurrentModal] = useState<string>('setTripName');
   const [tripName, setTripName] = useState('');
   const [tripDuration, setTripDuration] = useState('');
-  const [_, setTripType] = useState('');
+  // const [_, setTripType] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const { isPending, isError, data, error, refetch } = useQuery({
@@ -57,7 +57,7 @@ const Lists: FC = () => {
     rec: 1,
     custom: 2,
   };
-  const handleSubmitNewTrip = (recOrEmpty: string, data: any) => {
+  const handleSubmitNewTrip = (recOrEmpty: string, data: unknown) => {
     const newTrip = {
       name: tripName,
       // type: tripType,
@@ -81,7 +81,7 @@ const Lists: FC = () => {
         setCurrentModal={toggleCurrentModal}
         isOpen={isModalOpen}
         toggleModal={handleToggleModal}
-        changeTripType={setTripType}
+        // changeTripType={setTripType}
       />
     ),
     setTripDuration: (

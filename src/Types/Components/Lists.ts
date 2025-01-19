@@ -1,3 +1,5 @@
+import { ListType } from './Profile';
+
 export interface IAllListBelowProps {
   list: string;
   id: string;
@@ -26,3 +28,14 @@ export interface ITogglerListsProps {
     trips: string[];
   };
 }
+
+export type SharedListPropsType = {
+  list: ListType[];
+  requests: {
+    friends: string[];
+    trips: {
+      id: string;
+      name: string;
+    }[];
+  };
+};

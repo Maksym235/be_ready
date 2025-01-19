@@ -11,12 +11,12 @@ export const SetTripType: FC<ISetTripTypeProps> = ({
   isOpen,
   toggleModal,
   setCurrentModal,
-  changeTripType,
+  // changeTripType,
 }) => {
   const [selectedType, setSelectedType] = useState('');
   const handleNextPage = () => {
     setCurrentModal('setTripDuration');
-    changeTripType(selectedType);
+    // changeTripType(selectedType);
   };
   return (
     <ModalContainerCreateList

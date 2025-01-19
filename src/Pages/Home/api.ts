@@ -31,7 +31,13 @@ export const loginAsync = async ({ email, password }: ILogin) => {
     window.localStorage.setItem('isLoggedIn', JSON.stringify(true));
     if (resp.status === 200) toast.success('Вітаю в системі!');
     return resp.data;
-  } catch (error: any) {}
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
+  }
 };
 export const googleAuth = async ({
   name,
@@ -55,7 +61,13 @@ export const googleAuth = async ({
     window.localStorage.setItem('isLoggedIn', JSON.stringify(true));
     if (resp.status === 200) toast.success('Вітаю в системі!');
     return resp.data;
-  } catch (error: any) {}
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
+  }
 };
 
 export const userLogout = async () => {
@@ -77,8 +89,12 @@ export const userLogout = async () => {
       window.localStorage.removeItem('googleUser');
     }
     return resp.data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
   }
 };
 export const getCurrent = async () => {
@@ -92,10 +108,15 @@ export const getCurrent = async () => {
     localStorage.setItem('isLoggedIn', JSON.stringify(true));
     localStorage.setItem('user', JSON.stringify(resp.data.user));
     return resp.data;
-  } catch (error: any) {
-    window.localStorage.removeItem('user');
-    window.localStorage.removeItem('token');
-    window.localStorage.removeItem('googleUser');
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      window.localStorage.removeItem('user');
+      window.localStorage.removeItem('token');
+      window.localStorage.removeItem('googleUser');
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -107,7 +128,13 @@ export const getUserRequests = async () => {
       },
     });
     return resp.data;
-  } catch (error: any) {}
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
+  }
 };
 
 export const editRequest = async ({ tripId, accept }: IEditRequest) => {
@@ -121,7 +148,13 @@ export const editRequest = async ({ tripId, accept }: IEditRequest) => {
       }
     );
     return resp.data;
-  } catch (error: any) {}
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
+  }
 };
 
 export const getUsersById = async (usersIds: string) => {
@@ -138,7 +171,13 @@ export const getUsersById = async (usersIds: string) => {
       }
     );
     return resp.data;
-  } catch (error: any) {}
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
+  }
 };
 
 export const updateUserData = async (data: IUserDataToUpdate) => {
@@ -149,7 +188,13 @@ export const updateUserData = async (data: IUserDataToUpdate) => {
       },
     });
     return resp.data;
-  } catch (error: any) {}
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
+  }
 };
 
 export const sendFriendRequest = async (userId: string) => {
@@ -166,9 +211,13 @@ export const sendFriendRequest = async (userId: string) => {
       }
     );
     return resp.data;
-  } catch (error: any) {
-    console.log(error);
-    toast.error(error.message);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+      toast.error(error.message);
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -186,9 +235,13 @@ export const editFriendRequest = async ({
       }
     );
     return resp.data;
-  } catch (error: any) {
-    console.log(error);
-    toast.error(error.message);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+      toast.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -200,13 +253,17 @@ export const deleteFriend = async (friendId: string) => {
       },
     });
     return resp.data;
-  } catch (error: any) {
-    console.log(error);
-    toast.error(error.message);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+      toast.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
   }
 };
 
-export const changeAvatar = async (data: any) => {
+export const changeAvatar = async (data: unknown) => {
   try {
     const resp = await axios.patch('/auth/avatars', data, {
       headers: {
@@ -214,10 +271,13 @@ export const changeAvatar = async (data: any) => {
       },
     });
     return resp.data;
-  } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
-    toast.error(error.message);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+      toast.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -229,9 +289,12 @@ export const resetToDefaultAvatar = async () => {
       },
     });
     return resp.data;
-  } catch (error: any) {
-    if (error.response.status === 401) toast.error('Потрібно авторизуватися');
-    console.log(error);
-    toast.error(error.message);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(error.response?.data);
+      toast.error(error.response?.data);
+    } else {
+      console.error(error);
+    }
   }
 };

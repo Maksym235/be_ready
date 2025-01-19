@@ -18,7 +18,6 @@ import {
 axios.defaults.baseURL = 'https://be-ready-api.vercel.app';
 
 export const ErrorAlert = ({ errorCode, message }: IErrorAlertType) => {
-  return;
   if (errorCode === 401) {
     toast.error('Потрібно авторизуватися');
   } else {
@@ -33,11 +32,15 @@ export const getTours = async () => {
       },
     });
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -49,11 +52,15 @@ export const getToursById = async (tripId: string) => {
       },
     });
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 export const toggleEquipItemCheck = async ({
@@ -73,11 +80,15 @@ export const toggleEquipItemCheck = async ({
       }
     );
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -95,11 +106,15 @@ export const renameTrip = async ({ newName, tripId }: IRenameTripType) => {
       }
     );
     return reps.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 export const changeDuration = async ({
@@ -119,11 +134,15 @@ export const changeDuration = async ({
       }
     );
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -135,11 +154,15 @@ export const deleteTrip = async ({ tripId }: IDeleteTripType) => {
       },
     });
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -151,11 +174,15 @@ export const createNewTour = async (newTripData: INewTripType) => {
       },
     });
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -177,11 +204,15 @@ export const addUserToTrip = async ({
       }
     );
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -202,11 +233,15 @@ export const addNewCategory = async ({
       }
     );
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -221,11 +256,15 @@ export const addNewItemToCategory = async ({
       },
     });
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -241,11 +280,15 @@ export const updateList = async (data: IUpdateListType) => {
       }
     );
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -257,11 +300,15 @@ export const getFriendsTripRequests = async (tripId: string) => {
       },
     });
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -273,11 +320,15 @@ export const getUsersInTrips = async (tripId: string) => {
       },
     });
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -298,11 +349,15 @@ export const deleteCategory = async ({
       }
     );
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -325,11 +380,15 @@ export const deleteListItem = async ({
       }
     );
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -354,11 +413,15 @@ export const updateCount = async ({
       }
     );
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
@@ -370,10 +433,14 @@ export const downloadList = async (listId: string) => {
       },
     });
     return resp.data;
-  } catch (error: any) {
-    ErrorAlert({
-      errorCode: error.response.status,
-      message: error.response.message,
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };

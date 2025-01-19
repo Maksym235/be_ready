@@ -1,5 +1,5 @@
 export interface IErrorAlertType {
-  errorCode: number;
+  errorCode: number | undefined;
   message: string;
 }
 
@@ -51,7 +51,7 @@ export interface IAddNewItemToCategoryType {
 
 export interface IUpdateListType {
   equipId: string;
-  newList: any;
+  newList: unknown;
 }
 
 export interface IDeleteCategoryType {

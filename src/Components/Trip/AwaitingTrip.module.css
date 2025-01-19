@@ -1,0 +1,57 @@
+.awaitAccept {
+  margin-top: 24px;
+  color: var(--silver, #939393);
+  /* text-align: center; */
+  font-family: 'Neue Montreal';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-left: 16px;
+  margin-bottom: 8px;
+}
+
+.awaitItem {
+  display: flex;
+  /* width: 350px; */
+  padding: 8px 16px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--silver, #939393);
+  color: var(--black, #0d0d0d);
+
+  /* list item */
+  font-family: 'Neue Montreal';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.btn_container {
+  display: flex;
+  gap: 8px;
+}
+
+.accept {
+  width: 32px;
+  height: 32px;
+  background-color: #458ef7;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.disaccept {
+  width: 32px;
+  height: 32px;
+  background-color: #e73a2e;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,7 +1,19 @@
 import { IFriendsRequests, IUser } from './Home';
 
+export type ListType = {
+  _id: string;
+  name: string;
+  users: string[];
+  owner: string;
+  duration: number;
+  equipList: string;
+};
 export interface IPackingListProps {
-  lists: any;
+  lists: {
+    code: number;
+    personal: ListType[];
+    connected: ListType[];
+  };
 }
 
 export interface IPersonalItemProps {

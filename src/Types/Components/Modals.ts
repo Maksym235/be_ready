@@ -97,7 +97,7 @@ export interface ISetTripDurationProps extends IModalMainProps {
 
 export interface ISetTripTypeProps extends IModalMainProps {
   setCurrentModal: (key: string) => void;
-  changeTripType: (type: string) => void;
+  // changeTripType: (type: string) => void;
 }
 
 export interface IShowInfoCategoryItemProps extends IModalMainProps {
