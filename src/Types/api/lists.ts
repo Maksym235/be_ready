@@ -71,3 +71,10 @@ export interface IUpdateCountType {
   category: string;
   equipId: string;
 }
+
+export type UpdateNameType = {
+  listId: string;
+  name: string;
+  category: string;
+  equipId: string;
+};

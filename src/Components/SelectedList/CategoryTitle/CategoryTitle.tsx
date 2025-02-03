@@ -52,6 +52,7 @@ export const CategoryTitle: FC<ICategoryTitleProps> = ({
             /{equipList[category].length}
           </div>
           <img
+            style={{ cursor: 'pointer' }}
             src={opensCategories.includes(category) ? arrow_up : arrow_bottom}
             onClick={() => toggleOpenCategory(category)}
           />

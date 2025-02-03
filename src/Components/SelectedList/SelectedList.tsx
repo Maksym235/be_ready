@@ -329,6 +329,8 @@ export const SelectedList: FC = () => {
         isOpen={isOpen}
         toggleModal={toggleIsOpen}
         refetch={refetch}
+        user={user}
+        owner={data?.trip?.owner ? data?.trip?.owner : '-'}
       />
       {modals[currentModal]}
     </>

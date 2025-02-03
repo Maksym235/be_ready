@@ -70,7 +70,11 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
             {item.name}
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {item.persons.length > 0 &&
+            item.persons.filter((el) => el._id !== user.id).length > 0 && (
+              <div className={styles.another_person_take_block}></div>
+            )}
           {isEditing && (
             <img src={trash} onClick={handleDeleteListItem} alt='' />
           )}
