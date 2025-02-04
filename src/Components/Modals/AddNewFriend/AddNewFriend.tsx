@@ -19,9 +19,6 @@ export const AddNewFriend: FC<IAddNewFriendProps> = ({
       toast.success('Request sended');
     },
   });
-  if (isPending) {
-    return <Spinner />;
-  }
   const formik = useFormik({
     initialValues: {
       userid: '',
@@ -31,6 +28,9 @@ export const AddNewFriend: FC<IAddNewFriendProps> = ({
       mutate(values.userid);
     },
   });
+  if (isPending) {
+    return <Spinner />;
+  }
   return (
     <ModalContainer
       title='Add new friend'

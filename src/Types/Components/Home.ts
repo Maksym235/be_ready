@@ -1,4 +1,10 @@
 export interface IFriendsRequests {
+  id: string;
+  name: string;
+  avatar: string;
+}
+
+export interface IFriend {
   _id: string;
   name: string;
   avatar: string;

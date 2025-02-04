@@ -6,10 +6,7 @@ import toast from 'react-hot-toast';
 import cross_delete from '../../../assets/icon_close.svg';
 import { deleteFriend } from '../../../Pages/Home/api';
 import { Spinner } from '../../Spinner/Spinner';
-import {
-  IFriendsListProps,
-  IFriendsRequests,
-} from '../../../Types/Components/Home';
+import { IFriendsListProps } from '../../../Types/Components/Home';
 
 export const FriendsLists: FC<IFriendsListProps> = ({ user, refetch }) => {
   const { mutate, isPending } = useMutation({
@@ -31,12 +28,12 @@ export const FriendsLists: FC<IFriendsListProps> = ({ user, refetch }) => {
         <p className={styles.title}>My friends</p>
         <ul className={styles.list}>
           {user &&
-            user?.friends?.map((el: IFriendsRequests) => (
+            user?.friends?.map((el: any) => (
               <li className={styles.list_item}>
                 <img className={styles.avatar} src={el.avatar} />
                 {el.name}
                 <button
-                  onClick={() => handleDeleteFriend(el._id)}
+                  onClick={() => handleDeleteFriend(el.id)}
                   className={styles.delete_btn}
                 >
                   <img src={cross_delete} alt='delete' />

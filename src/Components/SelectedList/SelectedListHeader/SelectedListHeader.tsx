@@ -77,7 +77,7 @@ export const SelectedListHeader: FC<ISelectedListHeaderProps> = ({
               <p className={`${styles.cm_text} ${styles.cm_text_delete}`}>
                 Delete list
               </p>
-              <img src={trash} alt='icon' />
+              <img className={styles.trash_icon} src={trash} alt='icon' />
             </li>
           </ul>
         </div>
