@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { IUserDataToUpdate } from '../api/home';
 import { ICategoryItem } from './SelectedLists';
+import { IUser } from './Home';
 
 interface IModalMainProps {
   toggleModal: () => void;
@@ -105,6 +106,8 @@ export interface IShowInfoCategoryItemProps extends IModalMainProps {
   listId: string;
   item: ICategoryItem;
   refetch: any;
+  user: IUser;
+  owner: string;
 }
 export interface IUsersInTripProps extends IModalMainProps {
   tripId: string;

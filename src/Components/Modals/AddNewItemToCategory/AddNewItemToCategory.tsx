@@ -5,6 +5,8 @@ import { useFormik } from 'formik';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import { addNewItemToCategory } from '../../../Pages/Lists/api';
 import { IAddNewItemToCategoryProps } from '../../../Types/Components/Modals';
+import { SpinerInModal } from '../../Spinner/SpinerInModal';
+import toast from 'react-hot-toast';
 export const AddNewItemToCategory: FC<IAddNewItemToCategoryProps> = ({
   toggleModal,
   isOpen,
@@ -12,13 +14,6 @@ export const AddNewItemToCategory: FC<IAddNewItemToCategoryProps> = ({
   listId,
   category,
 }) => {
-  const mutation = useMutation({
-    mutationFn: addNewItemToCategory,
-    onSuccess: () => {
-      refetch();
-      toggleModal();
-    },
-  });
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -27,7 +22,7 @@ export const AddNewItemToCategory: FC<IAddNewItemToCategoryProps> = ({
     },
     // validate,
     onSubmit: (values) => {
-      mutation.mutate({
+      mutate({
         listId,
         itemData: {
           name: values.name,
@@ -37,6 +32,30 @@ export const AddNewItemToCategory: FC<IAddNewItemToCategoryProps> = ({
       });
     },
   });
+  const { mutate, isPending } = useMutation({
+    mutationFn: addNewItemToCategory,
+    onSuccess: () => {
+      refetch();
+      formik.values.name = '';
+      formik.values.description = '';
+      toast.success('Item added successfully');
+      // toggleModal();
+    },
+  });
+  if (isPending) {
+    return (
+      <ModalContainer
+        toggleModal={() => {
+          toggleModal();
+          formik.resetForm();
+        }}
+        isOpen={isOpen}
+        title='Add new item'
+      >
+        <SpinerInModal />
+      </ModalContainer>
+    );
+  }
   return (
     <ModalContainer
       toggleModal={() => {

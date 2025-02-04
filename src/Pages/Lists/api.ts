@@ -14,6 +14,7 @@ import {
   IToggleEquipItemType,
   IUpdateCountType,
   IUpdateListType,
+  UpdateNameType,
 } from '../../Types/api/lists';
 axios.defaults.baseURL = 'https://be-ready-api.vercel.app';
 
@@ -432,6 +433,39 @@ export const downloadList = async (listId: string) => {
         Authorization: 'Bearer ' + window.localStorage.getItem('token'),
       },
     });
+    return resp.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      ErrorAlert({
+        errorCode: error?.response?.status,
+        message: error?.response?.data,
+      });
+    } else {
+      console.error(error);
+    }
+  }
+};
+
+export const updateName = async ({
+  listId,
+  name,
+  category,
+  equipId,
+}: UpdateNameType) => {
+  try {
+    const resp = await axios.post(
+      `equipList/${listId}/updateName`,
+      {
+        equipId,
+        name,
+        category,
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+        },
+      }
+    );
     return resp.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

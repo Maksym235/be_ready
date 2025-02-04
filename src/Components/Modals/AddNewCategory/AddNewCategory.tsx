@@ -5,6 +5,8 @@ import { useFormik } from 'formik';
 import { useMutation } from '@tanstack/react-query';
 import { addNewCategory } from '../../../Pages/Lists/api';
 import { IAddNewCategoryProps } from '../../../Types/Components/Modals';
+import toast from 'react-hot-toast';
+import { SpinerInModal } from '../../Spinner/SpinerInModal';
 
 export const AddNewCategory: FC<IAddNewCategoryProps> = ({
   toggleModal,
@@ -12,24 +14,38 @@ export const AddNewCategory: FC<IAddNewCategoryProps> = ({
   refetch,
   listId,
 }) => {
-  const mutation = useMutation({
-    mutationFn: addNewCategory,
-    onSuccess: () => {
-      refetch();
-      toggleModal();
-    },
-  });
   const formik = useFormik({
     initialValues: {
       name: '',
     },
     onSubmit: (values) => {
-      mutation.mutate({
+      mutate({
         listId,
         categoryName: values.name,
       });
     },
   });
+  const { mutate, isPending } = useMutation({
+    mutationFn: addNewCategory,
+    onSuccess: () => {
+      refetch();
+      formik.values.name = '';
+      toast.success('Category added successfully');
+      // toggleModal();
+    },
+  });
+
+  if (isPending) {
+    return (
+      <ModalContainer
+        toggleModal={() => toggleModal()}
+        isOpen={isOpen}
+        title='New category'
+      >
+        <SpinerInModal />
+      </ModalContainer>
+    );
+  }
   return (
     <ModalContainer
       toggleModal={() => toggleModal()}

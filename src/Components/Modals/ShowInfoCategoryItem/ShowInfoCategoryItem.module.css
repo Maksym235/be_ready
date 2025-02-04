@@ -38,6 +38,11 @@
   background: var(--light-blue, #ecf4fe);
 }
 
+.disabled {
+  background: #e8e8e8;
+  color: #878787;
+}
+
 .label {
   color: var(--black, #0d0d0d);
   font-family: 'Neue Montreal';

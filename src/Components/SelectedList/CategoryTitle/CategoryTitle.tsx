@@ -10,6 +10,7 @@ import {
   ICategoryItem,
   ICategoryTitleProps,
 } from '../../../Types/Components/SelectedLists';
+import { SpinerInModal } from '../../Spinner/SpinerInModal';
 
 export const CategoryTitle: FC<ICategoryTitleProps> = ({
   category,
@@ -21,7 +22,7 @@ export const CategoryTitle: FC<ICategoryTitleProps> = ({
   listId,
 }) => {
   const user = JSON.parse(localStorage.getItem('user')!);
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: deleteCategory,
     onSuccess: () => {
       refetch();
@@ -29,19 +30,28 @@ export const CategoryTitle: FC<ICategoryTitleProps> = ({
     },
   });
   const handleDeleteCategory = () => {
-    mutation.mutate({
+    mutate({
       listId: listId,
       categoryName: category,
     });
   };
+  if (isPending) {
+    return <SpinerInModal />;
+  }
   return (
     <div className={styles.title_content}>
       <div className={styles.title_img}>
         <img src={camp} alt='camp icon' />
         <h4 className={styles.title}>{category}</h4>
       </div>
-      <div style={{ display: 'flex', gap: '10px' }}>
-        {isEditing && <img src={trash} onClick={handleDeleteCategory} />}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        {isEditing && (
+          <img
+            className={styles.trash_icon}
+            src={trash}
+            onClick={handleDeleteCategory}
+          />
+        )}
         <div className={styles.cout_arrow}>
           <div className={styles.counter}>
             {
@@ -52,6 +62,7 @@ export const CategoryTitle: FC<ICategoryTitleProps> = ({
             /{equipList[category].length}
           </div>
           <img
+            style={{ cursor: 'pointer' }}
             src={opensCategories.includes(category) ? arrow_up : arrow_bottom}
             onClick={() => toggleOpenCategory(category)}
           />
