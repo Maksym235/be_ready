@@ -16,7 +16,7 @@ export const Trip = ({
       return <PersonalTrip name={name} />;
     case 1:
       return <SharedTrip name={name} />;
-    case 3:
+    case 2:
       return <AwaitingTrip name={name} id={id ? id : ''} />;
     default:
       return <PersonalTrip name={name} />;

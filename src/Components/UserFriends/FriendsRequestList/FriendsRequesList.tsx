@@ -20,7 +20,7 @@ export const FriendsRequesList: FC<IFriendRequestsListProps> = ({
       refetchReq();
       refetchRequest();
       // toggleModal();
-      toast.success('accepted');
+      toast.success('success');
     },
   });
 
@@ -56,18 +56,18 @@ export const FriendsRequesList: FC<IFriendRequestsListProps> = ({
       <ul className={styles.list}>
         {data &&
           data.requests.friends.map((el: IFriendsRequests) => (
-            <li className={styles.list_item}>
+            <li className={styles.list_item} key={el.id}>
               <img className={styles.avatar} src={el.avatar} />
               {el.name}
               <div className={styles.btn_wrapper}>
                 <button
-                  onClick={() => handleEditRequest(el._id, true)}
+                  onClick={() => handleEditRequest(el.id, true)}
                   className={styles.accept_btn}
                 >
                   <img src={accept_icon} alt='accept' />
                 </button>
                 <button
-                  onClick={() => handleEditRequest(el._id, false)}
+                  onClick={() => handleEditRequest(el.id, false)}
                   className={styles.delete_btn}
                 >
                   <img src={cross_delete} alt='delete' />

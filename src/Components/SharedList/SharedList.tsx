@@ -19,7 +19,7 @@ export const SharedList: FC<SharedListPropsType> = ({ list, requests }) => {
           list.length > 0 &&
           list.map((el, index: number) => (
             <li key={index}>
-              <Link state={{ from: location }} to={`/lists/${el}`}>
+              <Link state={{ from: location }} to={`/selectedList/${el._id}`}>
                 <Trip type={1} name={el.name} />
               </Link>
             </li>
