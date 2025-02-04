@@ -95,3 +95,8 @@
   font-weight: 500;
   line-height: normal;
 }
+
+.trash_icon {
+  width: 20px;
+  height: 20px;
+}

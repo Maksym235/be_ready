@@ -7,6 +7,7 @@ import trash from '../../../assets/SelectedList/icon_trash.svg';
 import { useMutation } from '@tanstack/react-query';
 import { deleteListItem } from '../../../Pages/Lists/api';
 import { ICategoryItemProps } from '../../../Types/Components/SelectedLists';
+import { Spinner } from '../../Spinner/Spinner';
 
 export const CategoryItem: FC<ICategoryItemProps> = ({
   item,
@@ -18,19 +19,23 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
   isEditing,
   category,
 }) => {
-  const mutation = useMutation({
+  const { isPending, mutate } = useMutation({
     mutationFn: deleteListItem,
     onSuccess: () => {
       refetch();
     },
   });
   const handleDeleteListItem = () => {
-    mutation.mutate({
+    mutate({
       listId: listId,
       itemId: item._id,
       category: category,
     });
   };
+
+  if (isPending) {
+    return <Spinner />;
+  }
   return (
     <div key={item._id}>
       <div className={styles.category_item}>
@@ -76,7 +81,12 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
               <div className={styles.another_person_take_block}></div>
             )}
           {isEditing && (
-            <img src={trash} onClick={handleDeleteListItem} alt='' />
+            <img
+              className={styles.trash_icon}
+              src={trash}
+              onClick={handleDeleteListItem}
+              alt=''
+            />
           )}
           <img
             onClick={() => handleShowInfo(item)}

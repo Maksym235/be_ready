@@ -4,6 +4,8 @@ import styles from './ShowInfoCategoryItem.module.css';
 import edit_icon from '../../../assets/SelectedList/Footer/icon_edit.svg';
 import icon_plus from '../../../assets/Modals/icon_plus.svg';
 import icon_minus from '../../../assets/Modals/icon_minus.svg';
+import icon_plus_dis from '../../../assets/Modals/icon_plus_disable.svg';
+import icon_minus_dis from '../../../assets/Modals/icon_minus_disabled.svg';
 import { useMutation } from '@tanstack/react-query';
 import { updateCount, updateName } from '../../../Pages/Lists/api';
 import { IShowInfoCategoryItemProps } from '../../../Types/Components/Modals';
@@ -60,6 +62,7 @@ export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
       equipId: item._id,
     });
   };
+  const isDisabledCount = !item?.persons?.find((el) => el._id === user?.id);
   return (
     <ModalContainer
       toggleModal={toggleModal}
@@ -88,19 +91,33 @@ export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
         </div>
         <div>
           <p className={styles.label}>Count</p>
-          <div className={styles.count_wrapper}>
+          <div
+            className={
+              isDisabledCount
+                ? `${styles.count_wrapper} ${styles.disabled}`
+                : styles.count_wrapper
+            }
+          >
             <button
+              disabled={isDisabledCount}
               onClick={() => handleUpdateCount('minus')}
               className={styles.edit_btn}
             >
-              <img src={icon_minus} alt='count minus' />
+              <img
+                src={isDisabledCount ? icon_minus_dis : icon_minus}
+                alt='count minus'
+              />
             </button>
             <p>{count}</p>
             <button
+              disabled={isDisabledCount}
               onClick={() => handleUpdateCount('plus')}
               className={styles.edit_btn}
             >
-              <img src={icon_plus} alt='count plus' />
+              <img
+                src={isDisabledCount ? icon_plus_dis : icon_plus}
+                alt='count plus'
+              />
             </button>
           </div>
         </div>
