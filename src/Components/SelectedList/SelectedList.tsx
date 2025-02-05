@@ -83,6 +83,9 @@ export const SelectedList: FC = () => {
   const handleSetCurrentModal = (key: string) => {
     setCurrentModal(key);
   };
+  const cleanCategory = () => {
+    setCurrentCategory('');
+  };
   const toogleIsHidden = () => {
     setIsHidden((state) => !state);
   };
@@ -160,6 +163,7 @@ export const SelectedList: FC = () => {
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
         refetch={refetch}
+        cleanCategory={cleanCategory}
       />
     ),
     renameTrip: (

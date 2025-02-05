@@ -13,11 +13,11 @@ export const AddNewItemToCategory: FC<IAddNewItemToCategoryProps> = ({
   refetch,
   listId,
   category,
+  cleanCategory,
 }) => {
   const formik = useFormik({
     initialValues: {
       name: '',
-      category: category,
       description: '',
     },
     // validate,
@@ -26,7 +26,7 @@ export const AddNewItemToCategory: FC<IAddNewItemToCategoryProps> = ({
         listId,
         itemData: {
           name: values.name,
-          category: values.category,
+          category: category,
           description: values.description,
         },
       });
@@ -83,21 +83,6 @@ export const AddNewItemToCategory: FC<IAddNewItemToCategoryProps> = ({
         <label className={styles.label}>
           <input
             className={styles.input}
-            id='category'
-            name='category'
-            type='text'
-            disabled
-            onChange={formik.handleChange}
-            value={formik.values.category}
-            placeholder='Enter category category...*'
-          />
-          {formik.errors.category ? (
-            <p className={styles.error_msg}>{formik.errors.category}</p>
-          ) : null}
-        </label>
-        <label className={styles.label}>
-          <input
-            className={styles.input}
             id='description'
             name='description'
             type='text'
@@ -117,6 +102,7 @@ export const AddNewItemToCategory: FC<IAddNewItemToCategoryProps> = ({
           <button
             type='button'
             onClick={() => {
+              cleanCategory();
               toggleModal();
               formik.resetForm();
             }}

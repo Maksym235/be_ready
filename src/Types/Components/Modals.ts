@@ -23,6 +23,7 @@ export interface IAddNewItemToCategoryProps extends IModalMainProps {
   refetch: any;
   category: string;
   listId: string;
+  cleanCategory: () => void;
 }
 
 interface IFriend extends IModalMainProps {
