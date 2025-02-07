@@ -1,5 +1,27 @@
-import { Location } from 'react-router-dom';
 import { IUser } from './Home';
+export type EquipListItemType = {
+  _id: string;
+  name: string;
+  description: string;
+  category: string;
+  persons: string[];
+};
+
+export type EquipListCategoryType = Record<string, EquipListItemType[]>;
+
+export type TripType = {
+  id: string;
+  name: string;
+  users: string[];
+  owner: string;
+  duration: number;
+  equipListId: string;
+  equipList: EquipListCategoryType;
+};
+export type QueryDataType = {
+  code: number;
+  trip: TripType;
+};
 
 export interface IPersons {
   _id: string;
@@ -21,7 +43,6 @@ export interface ICategoryItemProps {
   handleShowInfo: (item: ICategoryItem) => void;
   isEditing: boolean;
   listId: string;
-  refetch: any;
   category: string;
 }
 
@@ -31,7 +52,6 @@ export interface ICategoryTitleProps {
   opensCategories: string[];
   toggleOpenCategory: (category: string) => void;
   isEditing: boolean;
-  refetch: any;
   listId: string;
 }
 
@@ -54,10 +74,7 @@ export interface ISelectedListFooter {
 }
 
 export interface ISelectedListHeaderProps {
-  location: Location;
-  listId: string;
   isEditing: boolean;
-  listOwner: string;
   isOpen: boolean;
   toggleIsOpen: () => void;
   setCurrentModal: (key: string) => void;

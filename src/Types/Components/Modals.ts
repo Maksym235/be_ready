@@ -13,14 +13,12 @@ export interface IModalContainerProps extends IModalMainProps {
 }
 
 export interface IAddNewCategoryProps extends IModalMainProps {
-  refetch: any;
   listId: string;
 }
 
 export interface IAddNewFriendProps extends IModalMainProps {}
 
 export interface IAddNewItemToCategoryProps extends IModalMainProps {
-  refetch: any;
   category: string;
   listId: string;
   cleanCategory: () => void;
@@ -45,7 +43,6 @@ export interface IBurgerMenuProps {
 }
 
 export interface IChangeTripDurationProps extends IModalMainProps {
-  refetch: any;
   tripId: string;
   tripDuraition: number;
 }
@@ -78,7 +75,6 @@ export interface IModalContainerCreateListProps extends IModalMainProps {
 }
 
 export interface IRenameTripProps extends IModalMainProps {
-  refetch: any;
   tripId: string;
   tripName: string;
 }
@@ -89,7 +85,7 @@ export interface ISelectNewUserFromFriendsProps extends IModalMainProps {
 
 export interface ISetRecOrEmptyProps extends IModalMainProps {
   setCurrentModal: (key: string) => void;
-  submit: (type: string, data: any) => void;
+  submit: (type: string, data: unknown) => void;
 }
 
 export interface ISetTripDurationProps extends IModalMainProps {
@@ -106,7 +102,6 @@ export interface IShowInfoCategoryItemProps extends IModalMainProps {
   tripName: string;
   listId: string;
   item: ICategoryItem;
-  refetch: any;
   user: IUser;
   owner: string;
 }

@@ -40,10 +40,9 @@ export const SelectedList: FC = () => {
   const [currentCategory, setCurrentCategory] = useState('');
   const listId = useParams();
   const tripId = listId.id;
-  const location = useLocation();
   const queryClient = useQueryClient();
   const user = JSON.parse(localStorage.getItem('user')!);
-  const { isLoading, isError, data, refetch } = useQuery({
+  const { isLoading, isError, data } = useQuery({
     queryKey: ['tours'],
     queryFn: () => getToursById(tripId ? tripId : ''),
   });
@@ -105,14 +104,14 @@ export const SelectedList: FC = () => {
       return;
     }
     setEditedItem((state) => [...state, item]);
-    const list = data.trip.equipList;
+    const list = data?.trip.equipList ?? [];
     if (item.persons.find((p) => p._id === user.id)) {
       const userIndex = item.persons.findIndex((p) => p._id === user.id);
       const updatedItem = {
         ...item,
         persons: item.persons.slice(1, userIndex),
       };
-      const catIndex = list[item.category].findIndex(
+      const catIndex = list[item.category]?.findIndex(
         (catItem: any) => catItem._id === item._id
       );
       const updatedCategory = list[item.category];
@@ -141,8 +140,8 @@ export const SelectedList: FC = () => {
 
     const timer = setTimeout(() => {
       mutation.mutate({
-        equipId: data.trip.equipListId,
-        newList: data.trip.equipList,
+        equipId: data ? data?.trip.equipListId : '',
+        newList: data?.trip.equipList,
       });
     }, 5000);
     setTimerId(timer);
@@ -150,19 +149,17 @@ export const SelectedList: FC = () => {
   const modals: Record<string, ReactNode> = {
     newCategory: (
       <AddNewCategory
-        listId={data.trip && data.trip.equipListId}
+        listId={data?.trip.equipListId ?? ''}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
-        refetch={refetch}
       />
     ),
     newItem: (
       <AddNewItemToCategory
         category={currentCategory}
-        listId={data.trip && data.trip.equipListId}
+        listId={data?.trip.equipListId ?? ''}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
-        refetch={refetch}
         cleanCategory={cleanCategory}
       />
     ),
@@ -172,7 +169,6 @@ export const SelectedList: FC = () => {
         tripName={data.trip && data.trip.name}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
-        refetch={refetch}
       />
     ),
     changeDuration: (
@@ -181,7 +177,6 @@ export const SelectedList: FC = () => {
         tripDuraition={data.trip && data.trip.duration}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
-        refetch={refetch}
       />
     ),
     deleteTrip: (
@@ -219,9 +214,6 @@ export const SelectedList: FC = () => {
   return (
     <>
       <SelectedListHeader
-        location={location}
-        listId={data.trip ? data.trip.name : ''}
-        listOwner={data.trip ? data.trip.owner : ''}
         isOpen={isOpenEditMenu}
         toggleIsOpen={toggleIsEditMenu}
         isEditing={isEditing}
@@ -250,7 +242,6 @@ export const SelectedList: FC = () => {
                 >
                   <CategoryTitle
                     isEditing={isEditing}
-                    refetch={refetch}
                     opensCategories={opensCategories}
                     toggleOpenCategory={toggleOpenCategory}
                     category={category}
@@ -273,7 +264,6 @@ export const SelectedList: FC = () => {
                                   category={category}
                                   item={categoryItem}
                                   user={user}
-                                  refetch={refetch}
                                   listId={data.trip && data.trip.equipListId}
                                 />
                               </div>
@@ -297,7 +287,6 @@ export const SelectedList: FC = () => {
                                   item={categoryItem}
                                   category={category}
                                   user={user}
-                                  refetch={refetch}
                                   listId={data.trip && data.trip.equipListId}
                                 />
                               </div>
@@ -345,7 +334,6 @@ export const SelectedList: FC = () => {
         item={infoItem}
         isOpen={isOpen}
         toggleModal={toggleIsOpen}
-        refetch={refetch}
         user={user}
         owner={data?.trip?.owner ? data?.trip?.owner : '-'}
       />

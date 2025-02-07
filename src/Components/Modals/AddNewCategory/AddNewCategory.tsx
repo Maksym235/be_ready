@@ -5,20 +5,24 @@ import { useFormik } from 'formik';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addNewCategory } from '../../../Pages/Lists/api';
 import { IAddNewCategoryProps } from '../../../Types/Components/Modals';
+import { QueryDataType } from '../../../Types/Components/SelectedLists';
 
 export const AddNewCategory: FC<IAddNewCategoryProps> = ({
   toggleModal,
   isOpen,
-  listId,
+  // listId,
 }) => {
   const queryClient = useQueryClient();
+  const data = queryClient.getQueryData(['tours']) as QueryDataType;
+  console.log(data);
+  // data.trip && data.trip.equipListId
   const formik = useFormik({
     initialValues: {
       name: '',
     },
     onSubmit: (values) => {
       mutate({
-        listId,
+        listId: data?.trip?.equipListId,
         categoryName: values.name,
       });
     },

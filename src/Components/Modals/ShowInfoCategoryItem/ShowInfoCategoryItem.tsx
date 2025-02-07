@@ -6,7 +6,7 @@ import icon_plus from '../../../assets/Modals/icon_plus.svg';
 import icon_minus from '../../../assets/Modals/icon_minus.svg';
 import icon_plus_dis from '../../../assets/Modals/icon_plus_disable.svg';
 import icon_minus_dis from '../../../assets/Modals/icon_minus_disabled.svg';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateCount, updateName } from '../../../Pages/Lists/api';
 import { IShowInfoCategoryItemProps } from '../../../Types/Components/Modals';
 
@@ -15,20 +15,20 @@ export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
   isOpen,
   listId,
   item,
-  refetch,
   user,
   owner,
 }) => {
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: updateCount,
     onSuccess: () => {
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ['tours'] });
     },
   });
   const { mutate } = useMutation({
     mutationFn: updateName,
     onSuccess: () => {
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ['tours'] });
       toggleModal();
     },
   });
@@ -125,7 +125,7 @@ export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
           <p className={styles.label}>Who takes the item</p>
           <div className={styles.persons_wrapper}>
             {item?.persons &&
-              item?.persons.map((el: any) => (
+              item?.persons.map((el) => (
                 <div className={styles.person_block}>
                   <p className={styles.person_icon}>{el?.name?.slice(0, 1)}</p>
                   <p className={styles.person_name}>{el?.name}</p>

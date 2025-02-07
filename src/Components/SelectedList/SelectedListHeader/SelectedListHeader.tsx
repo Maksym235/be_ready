@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './SelectedListHeader.module.css';
 import details_icon from '../../../assets/SelectedList/icon_details.svg';
 import arrow_back from '../../../assets/SelectedList/icon_back.svg';
@@ -7,17 +7,23 @@ import pencil from '../../../assets/SelectedList/icon_editpen.svg';
 import calendar from '../../../assets/SelectedList/icon_calendar.svg';
 import trash from '../../../assets/SelectedList/icon_trash.svg';
 import group from '../../../assets/SelectedList/Group.svg';
-import { ISelectedListHeaderProps } from '../../../Types/Components/SelectedLists';
+import {
+  ISelectedListHeaderProps,
+  QueryDataType,
+} from '../../../Types/Components/SelectedLists';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const SelectedListHeader: FC<ISelectedListHeaderProps> = ({
-  location,
-  listId,
   isEditing,
   isOpen,
   toggleIsOpen,
   setCurrentModal,
   toggleOpen,
 }) => {
+  const location = useLocation();
+  const queryQlient = useQueryClient();
+  const data = queryQlient.getQueryData(['tours']) as QueryDataType;
+  console.log(data);
   const handleTogleModal = (key: string) => {
     setCurrentModal(key);
     toggleOpen();
@@ -32,7 +38,7 @@ export const SelectedListHeader: FC<ISelectedListHeaderProps> = ({
             alt='arrow back'
           />
         </Link>
-        <p className={styles.header_title}>{listId}</p>
+        <p className={styles.header_title}>{data?.trip && data?.trip?.name}</p>
         {isEditing ? (
           <img
             className={styles.header_icon_details}

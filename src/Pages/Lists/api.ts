@@ -16,6 +16,7 @@ import {
   IUpdateListType,
   UpdateNameType,
 } from '../../Types/api/lists';
+import { QueryDataType } from '../../Types/Components/SelectedLists';
 axios.defaults.baseURL = 'https://be-ready-api.vercel.app';
 
 export const ErrorAlert = ({ errorCode, message }: IErrorAlertType) => {
@@ -52,7 +53,8 @@ export const getToursById = async (tripId: string) => {
         Authorization: 'Bearer ' + window.localStorage.getItem('token'),
       },
     });
-    return resp.data;
+
+    return resp.data as QueryDataType;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       ErrorAlert({
@@ -380,6 +382,7 @@ export const deleteListItem = async ({
   category,
 }: IDeleteListItemType) => {
   try {
+    const toastId = toast.loading('Deleting item...');
     const resp = await axios.post(
       `equipList/${listId}/deleteItem`,
       {
@@ -392,6 +395,7 @@ export const deleteListItem = async ({
         },
       }
     );
+    toast.success('Deleted', { id: toastId });
     return resp.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -465,6 +469,7 @@ export const updateName = async ({
   equipId,
 }: UpdateNameType) => {
   try {
+    const toastId = toast.loading('Updating item...');
     const resp = await axios.post(
       `equipList/${listId}/updateName`,
       {
@@ -478,6 +483,7 @@ export const updateName = async ({
         },
       }
     );
+    toast.success('Updated success!', { id: toastId });
     return resp.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

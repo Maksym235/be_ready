@@ -8,7 +8,7 @@ import trash from '../../../assets/SelectedList/icon_trash.svg';
 import { deleteListItem } from '../../../Pages/Lists/api';
 import { ICategoryItemProps } from '../../../Types/Components/SelectedLists';
 // import { Spinner } from '../../Spinner/Spinner';
-import toast from 'react-hot-toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const CategoryItem: FC<ICategoryItemProps> = ({
   item,
@@ -16,41 +16,23 @@ export const CategoryItem: FC<ICategoryItemProps> = ({
   handleCheckedItem,
   handleShowInfo,
   listId,
-  refetch,
   isEditing,
   category,
 }) => {
-  // const { isPending, mutate } = useMutation({
-  //   mutationFn: deleteListItem,
-  //   onSuccess: () => {
-  //     toast.success('Item deleted successfully');
-  //     refetch();
-  //   },
-  // });
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: deleteListItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tours'] });
+    },
+  });
   const handleDeleteListItem = () => {
-    toast.promise(
-      deleteListItem({
-        listId: listId,
-        itemId: item._id,
-        category: category,
-      }).then(() => refetch()),
-      {
-        loading: 'deleting item ...',
-        success: 'Item deleted successfully',
-        error: 'Error when fetching',
-      }
-    );
-    // mutate({
-    //   listId: listId,
-    //   itemId: item._id,
-    //   category: category,
-    // });
+    mutate({
+      listId: listId,
+      itemId: item._id,
+      category: category,
+    });
   };
-
-  // if (isPending) {
-  //   const toastId = toast.loading('Deleting item...');
-  //   setId(toastId);
-  // }
   return (
     <div key={item._id}>
       <div className={styles.category_item}>
