@@ -40,16 +40,16 @@ export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
       mutation.mutate({
         listId: listId,
         count: count + 1,
-        category: item.category,
-        equipId: item._id,
+        category: item?.category ?? '',
+        equipId: item?._id ?? '',
       });
       setCount((state) => state + 1);
     } else {
       mutation.mutate({
         listId: listId,
         count: count > 1 ? count - 1 : 1,
-        category: item.category,
-        equipId: item._id,
+        category: item?.category ?? '',
+        equipId: item?._id ?? '',
       });
       count > 1 ? setCount((state) => state - 1) : null;
     }
@@ -57,9 +57,9 @@ export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
   const handleSaveChanges = () => {
     mutate({
       listId: listId,
-      name: newName ? newName : item.name,
-      category: item.category,
-      equipId: item._id,
+      name: newName ? newName : (item?.name ?? ''),
+      category: item?.category ?? '',
+      equipId: item?._id ?? '',
     });
   };
   const isDisabledCount = !item?.persons?.find((el) => el._id === user?.id);

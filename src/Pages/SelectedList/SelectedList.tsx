@@ -1,40 +1,46 @@
 import { FC, ReactNode, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from './SelectedList.module.css';
-import plus_icon from '../../assets/Modals/icon_plus.svg';
-import { ShowInfoCategoryItem } from '../Modals/ShowInfoCategoryItem/ShowInfoCategoryItem';
-import { AddNewCategory } from '../Modals/AddNewCategory/AddNewCategory';
-import { SelectedListFooter } from './SelectedListFooter/SelectedListFooter';
-import { SelectedListHeader } from './SelectedListHeader/SelectedListHeader';
+import {
+  EquipListItemType,
+  ICategoryItem,
+  IPersons,
+} from '../../Types/Components/SelectedLists';
 import {
   // QueryClient,
   useMutation,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { getToursById, updateList } from '../../Pages/Lists/api';
+import { getToursById, updateList } from '../Lists/api';
+//=====MODALS================================
+import { ShowInfoCategoryItem } from '../../Components/Modals/ShowInfoCategoryItem/ShowInfoCategoryItem';
+import { AddNewCategory } from '../../Components/Modals/AddNewCategory/AddNewCategory';
+import { AddNewItemToCategory } from '../../Components/Modals/AddNewItemToCategory/AddNewItemToCategory';
+import { RenameTrip } from '../../Components/Modals/RenameTrip/RenameTrip';
+import { ChangeTripDuration } from '../../Components/Modals/ChangeTripDuration/ChangeTripDuration';
+import { DeleteTrip } from '../../Components/Modals/DeleteTrip/DeleteTrip';
+import { AddUsersToTrip } from '../../Components/Modals/AddUsersToTrip/AddUsersToTrip';
+import { SelectNewUserFromFriends } from '../../Components/Modals/SelectNewUserFromFriends/SelectNewUserFromFriends';
+import { UsersInTrip } from '../../Components/Modals/UsersInTrip/UsersInTrip';
+//=====COMPONENTS================================
+import { SelectedListFooter } from '../../Components/SelectedList/SelectedListFooter/SelectedListFooter';
+import { SelectedListHeader } from '../../Components/SelectedList/SelectedListHeader/SelectedListHeader';
+import { CategoryTitle } from '../../Components/SelectedList/CategoryTitle/CategoryTitle';
+import { CategoryItem } from '../../Components/SelectedList/CategoryItem/CategoryItem';
+import { Spinner } from '../../Components/Spinner/Spinner';
+//=====ICONS================================
+import plus_icon from '../../assets/Modals/icon_plus.svg';
 // import { getUsersById } from '../../Pages/Home/api';
-import { CategoryTitle } from './CategoryTitle/CategoryTitle';
-import { CategoryItem } from './CategoryItem/CategoryItem';
-import { AddNewItemToCategory } from '../Modals/AddNewItemToCategory/AddNewItemToCategory';
-import { RenameTrip } from '../Modals/RenameTrip/RenameTrip';
-import { ChangeTripDuration } from '../Modals/ChangeTripDuration/ChangeTripDuration';
-import { DeleteTrip } from '../Modals/DeleteTrip/DeleteTrip';
-import { AddUsersToTrip } from '../Modals/AddUsersToTrip/AddUsersToTrip';
-import { SelectNewUserFromFriends } from '../Modals/SelectNewUserFromFriends/SelectNewUserFromFriends';
-import { UsersInTrip } from '../Modals/UsersInTrip/UsersInTrip';
-import { Spinner } from '../Spinner/Spinner';
-import { ICategoryItem, IPersons } from '../../Types/Components/SelectedLists';
 
 export const SelectedList: FC = () => {
   const [opensCategories, setOpensCategories] = useState<string[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [infoItem, setInfoItem] = useState<any>(null);
+  const [infoItem, setInfoItem] = useState<EquipListItemType | null>(null);
   const [isOpenAddModals, setIsOpenAddModals] = useState(false);
   // const [itemPersons, setItemPersons] = useState<IPersons[] | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
-  const [timerId, setTimerId] = useState<any>(null);
+  const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
   const [isOpenEditMenu, setIsOpenEditMenu] = useState(false);
   const [currentModal, setCurrentModal] = useState('newCategory');
   const [currentCategory, setCurrentCategory] = useState('');
@@ -46,7 +52,7 @@ export const SelectedList: FC = () => {
     queryKey: ['tours'],
     queryFn: () => getToursById(tripId ? tripId : ''),
   });
-  const [editedItem, setEditedItem] = useState<Record<string, any>[]>([]);
+  const [editedItem, setEditedItem] = useState<EquipListItemType[]>([]);
   const mutation = useMutation({
     mutationFn: updateList,
     onSuccess: () => {
@@ -60,17 +66,10 @@ export const SelectedList: FC = () => {
     return <div>Error</div>;
   }
 
-  const toggleIsOpen = () => {
-    // setItemPersons(null);
-    setIsOpen((state) => !state);
-  };
-  const handleShowInfo = (item: ICategoryItem) => {
+  const handleShowInfo = (item: EquipListItemType) => {
     setInfoItem(item);
-    if (item.persons.length > 0) {
-      toggleIsOpen();
-      return;
-    }
-    toggleIsOpen();
+    handleSetCurrentModal('ShowInfoCategoryItem');
+    setIsOpenAddModals((state) => !state);
   };
 
   const toggleIsOpenAddModal = () => {
@@ -99,12 +98,15 @@ export const SelectedList: FC = () => {
   const toggleIsEditing = () => {
     setIsEditing((state) => !state);
   };
-  const handleCheckedItem = (item: ICategoryItem) => {
+  const handleCheckedItem = (item: EquipListItemType) => {
     if (editedItem.includes(item)) {
       return;
     }
     setEditedItem((state) => [...state, item]);
-    const list = data?.trip.equipList ?? [];
+    const list = data?.trip?.equipList;
+    if (!list) {
+      return;
+    }
     if (item.persons.find((p) => p._id === user.id)) {
       const userIndex = item.persons.findIndex((p) => p._id === user.id);
       const updatedItem = {
@@ -112,7 +114,7 @@ export const SelectedList: FC = () => {
         persons: item.persons.slice(1, userIndex),
       };
       const catIndex = list[item.category]?.findIndex(
-        (catItem: any) => catItem._id === item._id
+        (catItem) => catItem._id === item._id
       );
       const updatedCategory = list[item.category];
       updatedCategory.splice(catIndex, 1, updatedItem);
@@ -124,7 +126,7 @@ export const SelectedList: FC = () => {
       };
       const updatedCategory = list[item.category];
       const catIndex = updatedCategory.findIndex(
-        (catItem: any) => catItem._id === item._id
+        (catItem) => catItem._id === item._id
       );
       updatedCategory.splice(catIndex, 1, updatedItem);
       list[item.category] = updatedCategory;
@@ -149,7 +151,7 @@ export const SelectedList: FC = () => {
   const modals: Record<string, ReactNode> = {
     newCategory: (
       <AddNewCategory
-        listId={data?.trip.equipListId ?? ''}
+        listId={data?.trip?.equipListId ?? ''}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
       />
@@ -157,7 +159,7 @@ export const SelectedList: FC = () => {
     newItem: (
       <AddNewItemToCategory
         category={currentCategory}
-        listId={data?.trip.equipListId ?? ''}
+        listId={data?.trip?.equipListId ?? ''}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
         cleanCategory={cleanCategory}
@@ -165,31 +167,31 @@ export const SelectedList: FC = () => {
     ),
     renameTrip: (
       <RenameTrip
-        tripId={data.trip && data.trip.id}
-        tripName={data.trip && data.trip.name}
+        tripId={data?.trip?.id ?? ''}
+        tripName={data?.trip?.name ?? ''}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
       />
     ),
     changeDuration: (
       <ChangeTripDuration
-        tripId={data.trip && data.trip.id}
-        tripDuraition={data.trip && data.trip.duration}
+        tripId={data?.trip?.id ?? ''}
+        tripDuraition={data?.trip?.duration ?? 0}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
       />
     ),
     deleteTrip: (
       <DeleteTrip
-        tripId={data.trip && data.trip.id}
+        tripId={data?.trip?.id ?? ''}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
       />
     ),
     shareTrip: (
       <AddUsersToTrip
-        listId={data?.trip?.equipListId ? data?.trip?.equipListId : '-'}
-        tripName={data?.trip?.name ? data?.trip?.name : '-'}
+        listId={data?.trip?.equipListId ?? '-'}
+        tripName={data?.trip?.name ?? '-'}
         friends={user && user.friends}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
@@ -198,16 +200,27 @@ export const SelectedList: FC = () => {
     ),
     shareTripSelectFromFriends: (
       <SelectNewUserFromFriends
-        tripId={data.trip && data.trip.id}
+        tripId={data?.trip?.id ?? ''}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
       />
     ),
     usersInTrip: (
       <UsersInTrip
-        tripId={data.trip && data.trip.id}
+        tripId={data?.trip?.id ?? ''}
         isOpen={isOpenAddModals}
         toggleModal={toggleIsOpenAddModal}
+      />
+    ),
+    ShowInfoCategoryItem: (
+      <ShowInfoCategoryItem
+        listId={data?.trip?.equipListId ?? '-'}
+        tripName={data?.trip?.name ?? '-'}
+        item={infoItem}
+        isOpen={isOpenAddModals}
+        toggleModal={toggleIsOpenAddModal}
+        user={user}
+        owner={data?.trip?.owner ?? '-'}
       />
     ),
   };
@@ -222,16 +235,15 @@ export const SelectedList: FC = () => {
       />
       <div className={styles.container}>
         <div className={styles.categories_wrapper}>
-          {data.trip &&
+          {data?.trip &&
             Object.keys(data.trip.equipList)
-              .sort((a: any, b: any) => a.localeCompare(b, 'uk'))
+              .sort((a, b) => a.localeCompare(b, 'uk'))
               .map((category) => (
                 <div
                   style={{
                     borderColor:
-                      data.trip.equipList[category].filter(
-                        (el: ICategoryItem) =>
-                          el.persons.find((item) => item._id === user.id)
+                      data.trip.equipList[category].filter((el) =>
+                        el.persons.find((item) => item._id === user.id)
                       ).length === data.trip.equipList[category].length &&
                       data.trip.equipList[category].length > 0
                         ? '#32CD32'
@@ -252,10 +264,8 @@ export const SelectedList: FC = () => {
                     <>
                       {!isHidden
                         ? data.trip.equipList[category]
-                            .sort((a: any, b: any) =>
-                              a.name.localeCompare(b.name, 'uk')
-                            )
-                            .map((categoryItem: any) => (
+                            .sort((a, b) => a.name.localeCompare(b.name, 'uk'))
+                            .map((categoryItem) => (
                               <div key={categoryItem._id}>
                                 <CategoryItem
                                   handleCheckedItem={onUpdateItem}
@@ -269,16 +279,14 @@ export const SelectedList: FC = () => {
                               </div>
                             ))
                         : data.trip.equipList[category]
-                            .sort((a: any, b: any) =>
-                              a.name.localeCompare(b.name, 'uk')
-                            )
+                            .sort((a, b) => a.name.localeCompare(b.name, 'uk'))
                             .filter(
-                              (el: any) =>
+                              (el) =>
                                 !el.persons.find(
                                   (p: IPersons) => p._id === user.id
                                 )
                             )
-                            .map((categoryItem: any) => (
+                            .map((categoryItem) => (
                               <div key={categoryItem._id}>
                                 <CategoryItem
                                   handleCheckedItem={onUpdateItem}
@@ -328,15 +336,6 @@ export const SelectedList: FC = () => {
           toggleModal={toggleIsOpenAddModal}
         />
       </div>
-      <ShowInfoCategoryItem
-        listId={data?.trip?.equipListId ? data?.trip?.equipListId : '-'}
-        tripName={data?.trip?.name ? data?.trip?.name : '-'}
-        item={infoItem}
-        isOpen={isOpen}
-        toggleModal={toggleIsOpen}
-        user={user}
-        owner={data?.trip?.owner ? data?.trip?.owner : '-'}
-      />
       {modals[currentModal]}
     </>
   );

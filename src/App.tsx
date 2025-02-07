@@ -6,7 +6,7 @@ import { Layout } from './Components/Layout/Layout';
 import HomePage from './Pages/Home/Home';
 import ListsPage from './Pages/Lists/Lists';
 import Profile from './Pages/Profile/Profile';
-import { SelectedList } from './Components/SelectedList/SelectedList';
+import { SelectedList } from './Pages/SelectedList/SelectedList';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';

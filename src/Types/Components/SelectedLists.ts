@@ -1,10 +1,16 @@
 import { IUser } from './Home';
+export type PesonsType = {
+  _id: string;
+  name: string;
+  count: number;
+};
+
 export type EquipListItemType = {
   _id: string;
   name: string;
   description: string;
   category: string;
-  persons: string[];
+  persons: PesonsType[];
 };
 
 export type EquipListCategoryType = Record<string, EquipListItemType[]>;

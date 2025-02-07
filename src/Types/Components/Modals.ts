@@ -101,7 +101,7 @@ export interface ISetTripTypeProps extends IModalMainProps {
 export interface IShowInfoCategoryItemProps extends IModalMainProps {
   tripName: string;
   listId: string;
-  item: ICategoryItem;
+  item: ICategoryItem | null;
   user: IUser;
   owner: string;
 }
