@@ -234,7 +234,20 @@ export const SelectedList: FC = () => {
             Object.keys(data.trip.equipList)
               .sort((a: any, b: any) => a.localeCompare(b, 'uk'))
               .map((category) => (
-                <div key={category} className={styles.category}>
+                <div
+                  style={{
+                    borderColor:
+                      data.trip.equipList[category].filter(
+                        (el: ICategoryItem) =>
+                          el.persons.find((item) => item._id === user.id)
+                      ).length === data.trip.equipList[category].length &&
+                      data.trip.equipList[category].length > 0
+                        ? '#32CD32'
+                        : '#cecece',
+                  }}
+                  key={category}
+                  className={styles.category}
+                >
                   <CategoryTitle
                     isEditing={isEditing}
                     refetch={refetch}
