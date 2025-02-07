@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import Logo from '../../assets/⛰ beReady 🏕️.svg';
+import Logo from '../../assets/logo.webp';
 import Burger from '../../assets/burger.svg';
 import styles from './Header.module.css';
 import { BurgerMenu } from '../Modals/Burger/BurgerMenu';
@@ -37,7 +37,7 @@ export const Header: FC = () => {
       <div className={styles.header}>
         <div className={styles.content_cotainer}>
           <Link to='/'>
-            <img src={Logo} alt='logo' />
+            <img className={styles.logo} src={Logo} alt='logo' />
           </Link>
           {location.pathname === '/lists' ? (
             <div className={styles.user_icon_wrapper}>

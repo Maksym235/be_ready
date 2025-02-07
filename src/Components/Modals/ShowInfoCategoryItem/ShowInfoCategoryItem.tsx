@@ -89,7 +89,7 @@ export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
             <img src={edit_icon} alt='edit name trip icon' />
           </button>
         </div>
-        <div>
+        <div className={styles.wrapper}>
           <p className={styles.label}>Count</p>
           <div
             className={
@@ -121,7 +121,7 @@ export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
             </button>
           </div>
         </div>
-        <div>
+        <div className={styles.wrapper}>
           <p className={styles.label}>Who takes the item</p>
           <div className={styles.persons_wrapper}>
             {item?.persons &&

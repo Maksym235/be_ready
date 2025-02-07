@@ -3,10 +3,10 @@ import styles from './PackingList.module.css';
 import { TogglerLists } from '../TogglerLists/TogglerLists';
 import { useQuery } from '@tanstack/react-query';
 import { getUserRequests } from '../../Pages/Home/api';
-import { Spinner } from '../Spinner/Spinner';
 import { IPackingListProps, ListType } from '../../Types/Components/Profile';
 import { PersonalList } from '../PersonalList/PersonalList';
 import { SharedList } from '../SharedList/SharedList';
+import { SpinerInModal } from '../Spinner/SpinerInModal';
 
 export const PackingList: FC<IPackingListProps> = ({ lists }) => {
   const userLists: Record<string, ListType[]> = {
@@ -20,7 +20,7 @@ export const PackingList: FC<IPackingListProps> = ({ lists }) => {
   });
 
   if (isLoading) {
-    return <Spinner />;
+    return <SpinerInModal />;
   }
   if (isError) {
     return <div>Error...</div>;
