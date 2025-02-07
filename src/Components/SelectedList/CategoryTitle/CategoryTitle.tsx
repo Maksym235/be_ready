@@ -4,13 +4,12 @@ import arrow_bottom from '../../../assets/SelectedList/arrow_bottom.svg';
 import arrow_up from '../../../assets/SelectedList/arrow_up.svg';
 import trash from '../../../assets/SelectedList/icon_trash.svg';
 import { FC } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteCategory } from '../../../Pages/Lists/api';
 import {
   ICategoryItem,
   ICategoryTitleProps,
 } from '../../../Types/Components/SelectedLists';
-import { SpinerInModal } from '../../Spinner/SpinerInModal';
 
 export const CategoryTitle: FC<ICategoryTitleProps> = ({
   category,
@@ -18,14 +17,14 @@ export const CategoryTitle: FC<ICategoryTitleProps> = ({
   opensCategories,
   toggleOpenCategory,
   isEditing,
-  refetch,
   listId,
 }) => {
+  const queryClient = useQueryClient();
   const user = JSON.parse(localStorage.getItem('user')!);
-  const { mutate, isPending } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: deleteCategory,
     onSuccess: () => {
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ['tours'] });
       // queryClient.invalidateQueries({ queryKey: ['tours'] });
     },
   });
@@ -35,9 +34,6 @@ export const CategoryTitle: FC<ICategoryTitleProps> = ({
       categoryName: category,
     });
   };
-  if (isPending) {
-    return <SpinerInModal />;
-  }
   return (
     <div className={styles.title_content}>
       <div className={styles.title_img}>

@@ -2,18 +2,16 @@ import { FC } from 'react';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
 import styles from './AddNewCategory.module.css';
 import { useFormik } from 'formik';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addNewCategory } from '../../../Pages/Lists/api';
 import { IAddNewCategoryProps } from '../../../Types/Components/Modals';
-import toast from 'react-hot-toast';
-import { SpinerInModal } from '../../Spinner/SpinerInModal';
 
 export const AddNewCategory: FC<IAddNewCategoryProps> = ({
   toggleModal,
   isOpen,
-  refetch,
   listId,
 }) => {
+  const queryClient = useQueryClient();
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -25,27 +23,25 @@ export const AddNewCategory: FC<IAddNewCategoryProps> = ({
       });
     },
   });
-  const { mutate, isPending } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: addNewCategory,
     onSuccess: () => {
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ['tours'] });
       formik.values.name = '';
-      toast.success('Category added successfully');
-      // toggleModal();
     },
   });
 
-  if (isPending) {
-    return (
-      <ModalContainer
-        toggleModal={() => toggleModal()}
-        isOpen={isOpen}
-        title='New category'
-      >
-        <SpinerInModal />
-      </ModalContainer>
-    );
-  }
+  // if (isPending) {
+  //   return (
+  //     <ModalContainer
+  //       toggleModal={() => toggleModal()}
+  //       isOpen={isOpen}
+  //       title='New category'
+  //     >
+  //       <SpinerInModal />
+  //     </ModalContainer>
+  //   );
+  // }
   return (
     <ModalContainer
       toggleModal={() => toggleModal()}

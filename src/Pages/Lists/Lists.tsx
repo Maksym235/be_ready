@@ -17,16 +17,14 @@ const Lists: FC = () => {
   // const [_, setTripType] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const queryClient = useQueryClient();
-  const { isPending, isError, data, error, refetch } = useQuery({
+  const { isPending, isError, data, error } = useQuery({
     queryKey: ['tours'],
     queryFn: getTours,
   });
   const { mutate } = useMutation({
     mutationFn: createNewTour,
     onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ['tours'] });
       setIsModalOpen(false);
     },
   });

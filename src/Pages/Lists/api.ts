@@ -95,6 +95,7 @@ export const toggleEquipItemCheck = async ({
 
 export const renameTrip = async ({ newName, tripId }: IRenameTripType) => {
   try {
+    const toastId = toast.loading('Renaming...');
     const reps = await axios.post(
       `/tours/${tripId}/rename`,
       {
@@ -106,6 +107,7 @@ export const renameTrip = async ({ newName, tripId }: IRenameTripType) => {
         },
       }
     );
+    toast.success('Renamed!', { id: toastId });
     return reps.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -123,6 +125,7 @@ export const changeDuration = async ({
   tripId,
 }: IChangeDurationType) => {
   try {
+    const toastId = toast.loading('Changing...');
     const resp = await axios.post(
       `/tours/${tripId}/changeDuration`,
       {
@@ -134,6 +137,7 @@ export const changeDuration = async ({
         },
       }
     );
+    toast.success('Changed!', { id: toastId });
     return resp.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -169,11 +173,13 @@ export const deleteTrip = async ({ tripId }: IDeleteTripType) => {
 
 export const createNewTour = async (newTripData: INewTripType) => {
   try {
+    const toastId = toast.loading('Creating list...');
     const resp = await axios.post(`/tours/newAdd`, newTripData, {
       headers: {
         Authorization: 'Bearer ' + window.localStorage.getItem('token'),
       },
     });
+    toast.success('list created!', { id: toastId });
     return resp.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -222,6 +228,7 @@ export const addNewCategory = async ({
   categoryName,
 }: IAddNewCategoryType) => {
   try {
+    const toastId = toast.loading('Creating new category...');
     const resp = await axios.post(
       `/equipList/${listId}/addNewCategory`,
       {
@@ -233,6 +240,7 @@ export const addNewCategory = async ({
         },
       }
     );
+    toast.success('Category created', { id: toastId });
     return resp.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -251,11 +259,13 @@ export const addNewItemToCategory = async ({
   itemData,
 }: IAddNewItemToCategoryType) => {
   try {
+    const toastId = toast.loading('Adding new item...');
     const resp = await axios.post(`/equipList/${listId}/addNewItem`, itemData, {
       headers: {
         Authorization: 'Bearer ' + window.localStorage.getItem('token'),
       },
     });
+    toast.success('Item added', { id: toastId });
     return resp.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -338,6 +348,7 @@ export const deleteCategory = async ({
   categoryName,
 }: IDeleteCategoryType) => {
   try {
+    const toastId = toast.loading('Deleting category...');
     const resp = await axios.post(
       `equipList/${listId}/deleteCategory`,
       {
@@ -349,6 +360,7 @@ export const deleteCategory = async ({
         },
       }
     );
+    toast.success('Deleted', { id: toastId });
     return resp.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

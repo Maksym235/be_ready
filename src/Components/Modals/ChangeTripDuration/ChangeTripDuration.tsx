@@ -2,21 +2,21 @@ import { FC } from 'react';
 import styles from './ChangeTripDuration.module.css';
 import { useFormik } from 'formik';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { changeDuration } from '../../../Pages/Lists/api';
 import { IChangeTripDurationProps } from '../../../Types/Components/Modals';
 
 export const ChangeTripDuration: FC<IChangeTripDurationProps> = ({
   toggleModal,
   isOpen,
-  refetch,
   tripId,
   tripDuraition,
 }) => {
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: changeDuration,
     onSuccess: () => {
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ['tours'] });
       toggleModal();
     },
   });
@@ -63,7 +63,7 @@ export const ChangeTripDuration: FC<IChangeTripDurationProps> = ({
             disabled={formik.values.duration === tripDuraition}
             className={styles.create}
           >
-            rename
+            Change
           </button>
           <button
             type='button'

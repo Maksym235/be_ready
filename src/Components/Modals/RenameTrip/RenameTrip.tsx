@@ -2,21 +2,21 @@ import { FC } from 'react';
 import styles from './RenameTrip.module.css';
 import { useFormik } from 'formik';
 import { ModalContainer } from '../ModalContainer/ModalContainer';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { renameTrip } from '../../../Pages/Lists/api';
 import { IRenameTripProps } from '../../../Types/Components/Modals';
 
 export const RenameTrip: FC<IRenameTripProps> = ({
   toggleModal,
   isOpen,
-  refetch,
   tripId,
   tripName,
 }) => {
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: renameTrip,
     onSuccess: () => {
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ['tours'] });
       toggleModal();
     },
   });
