@@ -6,16 +6,18 @@ import { AboutUs } from '../../Components/AboutUs/AboutUs';
 import { FirstChecklist } from '../../Components/FirstChecklist/FirstChecklist';
 import { ContactUs } from '../../Components/ContactUs/ContactUs';
 import { Footer } from '../../Components/Footer/Footer';
-import { RegisterModal } from '../../Components/Modals/Auth/Register/RegisterModal';
-import { LoginModal } from '../../Components/Modals/Auth/Login/LoginModal';
-import { IncorectDataModal } from '../../Components/Modals/Auth/IncorectData/IncorectDataModal';
-import { AlreadyHaveAccModal } from '../../Components/Modals/Auth/AlreadyHaveAcc/AlreadyHaveAccModal';
-import { EnterEmail } from '../../Components/Modals/ResetPassword/EnterEmail/EnterEmail';
-import { WeSendEmail } from '../../Components/Modals/ResetPassword/WeSendEmail/WeSendEmail';
-import { NotFoundEmail } from '../../Components/Modals/ResetPassword/NotFoundEmail/NotFoundEmail';
 import { getCurrent } from './api';
 import { useQuery } from '@tanstack/react-query';
 import { Spinner } from '../../Components/Spinner/Spinner';
+import {
+  AlreadyHaveAccModal,
+  EnterEmail,
+  IncorectDataModal,
+  LoginModal,
+  NotFoundEmail,
+  RegisterModal,
+  WeSendEmail,
+} from '../../Components/Modals';
 const Home: FC = () => {
   const [currentModal, setCurrentModal] = useState<string>('login');
   const [isModalOpen, setIsModalOpen] = useState(false);

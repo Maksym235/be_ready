@@ -12,10 +12,10 @@ export const AddUsersToTrip: FC<IAddUsersToTripProps> = ({
   toggleModal,
   isOpen,
   setModal,
-  friends,
   listId,
   tripName,
 }) => {
+  const user = JSON.parse(localStorage.getItem('user')!);
   const params = useParams();
   const tripId = params.id;
   const [userId, setUserId] = useState('');
@@ -82,7 +82,7 @@ export const AddUsersToTrip: FC<IAddUsersToTripProps> = ({
         </div>
         <button
           onClick={handleSelectFriend}
-          disabled={friends.length < 1}
+          disabled={user?.friends.length < 1}
           className={styles.create}
         >
           SELECT FROM FRIENDS

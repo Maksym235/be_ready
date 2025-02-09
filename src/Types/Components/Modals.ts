@@ -24,15 +24,8 @@ export interface IAddNewItemToCategoryProps extends IModalMainProps {
   cleanCategory: () => void;
 }
 
-interface IFriend extends IModalMainProps {
-  _id: string;
-  avatar: string;
-  name: string;
-}
-
 export interface IAddUsersToTripProps extends IModalMainProps {
   setModal: (key: string) => void;
-  friends: IFriend[];
   listId: string;
   tripName: string;
 }

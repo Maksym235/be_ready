@@ -9,17 +9,17 @@ import { deleteCategory } from '../../../Pages/Lists/api';
 import {
   ICategoryItem,
   ICategoryTitleProps,
+  QueryDataType,
 } from '../../../Types/Components/SelectedLists';
 
 export const CategoryTitle: FC<ICategoryTitleProps> = ({
   category,
-  equipList,
   opensCategories,
   toggleOpenCategory,
   isEditing,
-  listId,
 }) => {
   const queryClient = useQueryClient();
+  const data = queryClient.getQueryData(['tours']) as QueryDataType;
   const user = JSON.parse(localStorage.getItem('user')!);
   const { mutate } = useMutation({
     mutationFn: deleteCategory,
@@ -30,7 +30,7 @@ export const CategoryTitle: FC<ICategoryTitleProps> = ({
   });
   const handleDeleteCategory = () => {
     mutate({
-      listId: listId,
+      listId: data?.trip?.equipListId,
       categoryName: category,
     });
   };
@@ -51,11 +51,11 @@ export const CategoryTitle: FC<ICategoryTitleProps> = ({
         <div className={styles.cout_arrow}>
           <div className={styles.counter}>
             {
-              equipList[category].filter((el: ICategoryItem) =>
+              data?.trip?.equipList[category].filter((el: ICategoryItem) =>
                 el.persons.find((item) => item._id === user.id)
               ).length
             }
-            /{equipList[category].length}
+            /{data?.trip?.equipList[category].length}
           </div>
           <img
             style={{ cursor: 'pointer' }}

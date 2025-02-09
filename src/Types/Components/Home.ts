@@ -26,6 +26,7 @@ export interface IUser {
   avatarName: string;
   friends: IFriendsRequests[];
 }
+
 export interface IFriendsListProps {
   user: IUser;
   refetch: any;

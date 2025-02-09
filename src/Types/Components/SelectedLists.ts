@@ -54,11 +54,9 @@ export interface ICategoryItemProps {
 
 export interface ICategoryTitleProps {
   category: string;
-  equipList: any;
   opensCategories: string[];
   toggleOpenCategory: (category: string) => void;
   isEditing: boolean;
-  listId: string;
 }
 
 export interface IFootersContentProps {
@@ -86,3 +84,14 @@ export interface ISelectedListHeaderProps {
   setCurrentModal: (key: string) => void;
   toggleOpen: () => void;
 }
+export type ISelectedListModalsPropsType = {
+  currentModal: string;
+  isOpen: boolean;
+  toggleModal: () => void;
+  data: QueryDataType | undefined;
+  user: IUser;
+  currentCategory: string;
+  cleanCategory: () => void;
+  handleSetCurrentModal: (key: string) => void;
+  infoItem: EquipListItemType | null;
+};

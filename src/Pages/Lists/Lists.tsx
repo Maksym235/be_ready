@@ -2,13 +2,15 @@ import { FC, ReactNode, useState } from 'react';
 import styles from './Lists.module.css';
 import { PackingList } from '../../Components/PackingList/PackingList';
 import plus from '../../assets/button plus.svg';
-import { CreateList } from '../../Components/Modals/CreateList/CreateList';
-import { SetTripType } from '../../Components/Modals/SetTripType/SetTripType';
-import { SetTripDuration } from '../../Components/Modals/SetTripDuration/SetTripDuration';
-import { SetRecOrEmpty } from '../../Components/Modals/SetRecOtEmpty/SetRecOrEmpty';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createNewTour, getTours } from './api';
 import { Spinner } from '../../Components/Spinner/Spinner';
+import {
+  CreateList,
+  SetRecOrEmpty,
+  SetTripDuration,
+  SetTripType,
+} from '../../Components/Modals';
 
 const Lists: FC = () => {
   const [currentModal, setCurrentModal] = useState<string>('setTripName');
