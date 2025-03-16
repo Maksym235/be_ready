@@ -9,6 +9,7 @@ import { getAuth, signInWithPopup } from 'firebase/auth';
 import { googleAuthProvider } from '../../../../firebase';
 import { IRegisterGoogleAuth } from '../../../../Types/api/home';
 import { IAuthModalProps } from '../../../../Types/Components/Modals';
+import { CButton } from '../../../Button/Button';
 
 export const LoginModal: FC<IAuthModalProps> = ({
   toggleModal,
@@ -81,37 +82,72 @@ export const LoginModal: FC<IAuthModalProps> = ({
           type='password'
         />
         <div className={styles.btn_wrapper}>
-          <button
+          <CButton
+            onClickFn={handleSubmit}
+            disabled={false}
+            htmlType='submit'
+            type='primary'
+          >
+            Sign in
+          </CButton>
+          {/* <button
             onClick={handleSubmit}
             className={styles.sing_up}
             type='submit'
           >
             Sign in
-          </button>
-          <button
+          </button> */}
+          <CButton
+            onClickFn={handleAuthWithGoogle}
+            type='primary'
+            htmlType='button'
+            disabled={false}
+          >
+            <img width={24} height={24} src={google} alt='google icon' />
+            Google
+          </CButton>
+          {/* <button
             onClick={handleAuthWithGoogle}
             className={styles.google}
             type='button'
           >
             <img width={24} height={24} src={google} alt='google icon' />
             Google
-          </button>
+          </button> */}
         </div>
       </form>
-      <button
+      <div className={styles.resetPass_wrapper}>
+        <CButton
+          onClickFn={() => setCurrentModal('resetPassEnterEmail')}
+          htmlType='button'
+          disabled={false}
+          type='contact_us'
+        >
+          RESET PASSWORD
+        </CButton>
+      </div>
+      {/* <button
         onClick={() => setCurrentModal('resetPassEnterEmail')}
         className={styles.resetPass}
       >
         RESET PASSWORD
-      </button>
+      </button> */}
       <div className={styles.alredy_have_acc_block}>
         <p className={styles.alredy_have_acc_text}>DON’T HAVE AN ACCOUNT? </p>
-        <button
+        <CButton
+          onClickFn={() => setCurrentModal('register')}
+          disabled={false}
+          htmlType='button'
+          type='contact_us'
+        >
+          SIGN UP
+        </CButton>
+        {/* <button
           onClick={() => setCurrentModal('register')}
           className={styles.sing_in}
         >
           SIGN UP
-        </button>
+        </button> */}
       </div>
     </ModalContainer>
   );

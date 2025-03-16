@@ -14,7 +14,7 @@
   align-items: center;
   color: var(--accent, #458ef7);
   text-align: center;
-  font-family: 'Founders Grotesk';
+  font-family: 'CW-Medium';
   font-size: 72px;
   font-style: normal;
   font-weight: 500;
@@ -47,7 +47,7 @@
   background: var(--accent, #458ef7);
   border: none;
   color: var(--white, #fff);
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 13px;
   font-style: normal;
   font-weight: 500;

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styles from './ShortDesc.module.css';
 import { useNavigate } from 'react-router-dom';
 import { IShortDescProps } from '../../Types/Components/Lists';
+import { CButton } from '../Button/Button';
 
 export const ShortDesc: FC<IShortDescProps> = ({ toggleModal }) => {
   const navigate = useNavigate();
@@ -20,12 +21,20 @@ export const ShortDesc: FC<IShortDescProps> = ({ toggleModal }) => {
         hiking trip.
       </p>
       <div className={styles.btn_wrapper}>
-        <button onClick={handleGetStarted} className={styles.get_started}>
-          <span className={styles.get_started_text}>Get started</span>
-        </button>
-        <button className={styles.lear_more}>
+        <CButton
+          disabled={false}
+          htmlType='button'
+          onClickFn={handleGetStarted}
+          type='primary'
+        >
+          get started
+        </CButton>
+        <CButton disabled={false} htmlType='button' type='secondary'>
+          Learn more
+        </CButton>
+        {/* <button className={styles.lear_more}>
           <span className={styles.lear_more_text}>Lear more</span>
-        </button>
+        </button> */}
       </div>
     </div>
   );

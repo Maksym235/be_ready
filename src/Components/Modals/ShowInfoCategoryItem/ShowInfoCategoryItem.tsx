@@ -9,6 +9,7 @@ import icon_minus_dis from '../../../assets/Modals/icon_minus_disabled.svg';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateCount, updateName } from '../../../Pages/Lists/api';
 import { IShowInfoCategoryItemProps } from '../../../Types/Components/Modals';
+import { CButton } from '../../Button/Button';
 
 export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
   toggleModal,
@@ -135,12 +136,28 @@ export const ShowInfoCategoryItem: FC<IShowInfoCategoryItemProps> = ({
           </div>
         </div>
         <div className={styles.btn_wrapper}>
-          <button onClick={handleSaveChanges} className={styles.save}>
+          <CButton
+            width={350}
+            onClickFn={handleSaveChanges}
+            htmlType='button'
+            type='primary'
+          >
             Save changes
-          </button>
-          <button onClick={toggleModal} className={styles.cancel}>
+          </CButton>
+          {/* <button onClick={handleSaveChanges} className={styles.save}>
+            Save changes
+          </button> */}
+          <CButton
+            width={350}
+            onClickFn={toggleModal}
+            htmlType='button'
+            type='secondary'
+          >
             cancel
-          </button>
+          </CButton>
+          {/* <button onClick={toggleModal} className={styles.cancel}>
+            cancel
+          </button> */}
         </div>
       </div>
     </ModalContainer>

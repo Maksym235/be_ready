@@ -10,6 +10,7 @@ import {
 } from '../../../Types/Components/SelectedLists';
 import plus_icon from '../../../assets/Modals/icon_plus.svg';
 import { updateList } from '../../../Pages/Lists/api';
+import { CButton } from '../../Button/Button';
 
 export type CategoryPropsType = {
   category: string;
@@ -152,17 +153,30 @@ export const Category: FC<CategoryPropsType> = ({
         </>
       )}
       {isEditing && opensCategories.includes(category) && (
-        <button
-          onClick={() => {
+        <CButton
+          type='add'
+          onClickFn={() => {
             setCurrentCategory(category);
             handleSetCurrentModal('newItem');
             toggleModal();
           }}
-          className={styles.add_category_item}
+          htmlType='button'
+          disabled={false}
         >
-          <img src={plus_icon} alt='add item icon' />
-          <p className={styles.add_category_item_text}>Add Item</p>
-        </button>
+          Add Item
+          <img src={plus_icon} width={24} height={24} alt='add item icon' />
+        </CButton>
+        // <button
+        //   onClick={() => {
+        //     setCurrentCategory(category);
+        //     handleSetCurrentModal('newItem');
+        //     toggleModal();
+        //   }}
+        //   className={styles.add_category_item}
+        // >
+        //   <img src={plus_icon} alt='add item icon' />
+        //   <p className={styles.add_category_item_text}>Add Item</p>
+        // </button>
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 @import 'normalize.css';
 
 @font-face {
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   src:
     local('NeueMontreal-Medium.ttf'),
     url('./assets/fonts/NeueMontreal-Medium.ttf') format('woff');
@@ -15,11 +15,43 @@
 }
 
 @font-face {
-  font-family: 'Founders Grotesk';
+  font-family: 'CW-Medium';
   src:
     local('FoundersGrotesk-Medium.ttf'),
     url('./assets/fonts/FoundersGrotesk-Medium.ttf') format('woff');
 }
+
+@font-face {
+  font-family: 'CW-Heavy';
+  src:
+    local('CraftworkGrotesk-Heavy.woff'),
+    url('./assets/fonts/CraftworkGrotesk-Heavy.woff') format('woff');
+}
+@font-face {
+  font-family: 'CW-Bold';
+  src:
+    local('CraftworkGrotesk-Bold.woff'),
+    url('./assets/fonts/CraftworkGrotesk-Bold.woff') format('woff');
+}
+@font-face {
+  font-family: 'CW-SemiBold';
+  src:
+    local('CraftworkGrotesk-SemiBold.woff'),
+    url('./assets/fonts/CraftworkGrotesk-SemiBold.woff') format('woff');
+}
+@font-face {
+  font-family: 'CW-Medium';
+  src:
+    local('CraftworkGrotesk-Medium.woff'),
+    url('./assets/fonts/CraftworkGrotesk-Medium.woff') format('woff');
+}
+@font-face {
+  font-family: 'CW-Medium';
+  src:
+    local('CraftworkGrotesk-Regular.woff'),
+    url('./assets/fonts/CraftworkGrotesk-Regular.woff') format('woff');
+}
+
 :root[data-theme='light'] {
   --bodyBcg: #f1e8e6;
   --cardBg: #edd2cb;
@@ -82,7 +114,7 @@ a {
 }
 
 body {
-  font-family: 'Neue Montreal', serif;
+  font-family: 'CW-Medium', sans-serif;
 }
 
 @media (min-width: 430px) {

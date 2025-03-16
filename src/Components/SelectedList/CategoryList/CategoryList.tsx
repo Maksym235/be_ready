@@ -7,6 +7,7 @@ import {
 } from '../../../Types/Components/SelectedLists';
 import { Category } from '../Category/Category';
 import plus_icon from '../../../assets/Modals/icon_plus.svg';
+import { CButton } from '../../Button/Button';
 export type CategoryListPropsType = {
   handleSetCurrentModal: (key: string) => void;
   toggleModal: () => void;
@@ -51,7 +52,20 @@ export const CategoryList: FC<CategoryListPropsType> = ({
               opensCategories={opensCategories}
             />
           ))}
-      <button
+      <div className={styles.btn_wrapper}>
+        <CButton
+          htmlType='button'
+          onClickFn={() => {
+            handleSetCurrentModal('newCategory');
+            toggleModal();
+          }}
+          type='add'
+        >
+          Add category
+          <img width={24} height={24} src={plus_icon} />
+        </CButton>
+      </div>
+      {/* <button
         onClick={() => {
           handleSetCurrentModal('newCategory');
           toggleModal();
@@ -60,7 +74,7 @@ export const CategoryList: FC<CategoryListPropsType> = ({
       >
         Add category
         <img width={24} height={24} src={plus_icon} />
-      </button>
+      </button> */}
     </div>
   );
 };

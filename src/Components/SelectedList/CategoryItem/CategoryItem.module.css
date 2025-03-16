@@ -27,7 +27,7 @@
 
 .item_name {
   color: var(--black, #0d0d0d);
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -70,7 +70,7 @@
   text-transform: uppercase;
   background-color: #fff;
   color: var(--accent, #458ef7);
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -89,7 +89,7 @@
 
 .add_category_item_text {
   color: var(--accent, #458ef7);
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

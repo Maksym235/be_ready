@@ -5,7 +5,7 @@
   border-radius: 3em;
   font-weight: 700;
   line-height: 1;
-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; */
 }
 .storybook-button--primary {
   background-color: #1ea7fd;
@@ -39,7 +39,7 @@
   background: var(--accent, #458ef7);
   border: none;
   color: var(--white, #fff);
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -85,7 +85,7 @@
   text-align: right;
 
   /* list item */
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

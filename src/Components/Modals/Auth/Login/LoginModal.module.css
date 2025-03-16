@@ -39,7 +39,7 @@
   background: var(--accent, #458ef7);
   color: var(--white, #fff);
   text-align: right;
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -80,12 +80,18 @@
   text-align: right;
 
   /* list item */
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   text-transform: uppercase;
+}
+
+.resetPass_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .resetPass {
@@ -105,7 +111,7 @@
   background-color: #fff;
   color: var(--accent, #458ef7);
   text-align: right;
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -131,13 +137,14 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 60px;
+  margin-top: 20px;
 }
 
 .alredy_have_acc_text {
   color: var(--accent, #458ef7);
 
   /* h4 */
-  font-family: 'Founders Grotesk';
+  font-family: 'CW-SemiBold';
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -156,7 +163,7 @@
   background: var(--accent, #458ef7);
   color: var(--white, #fff);
   /* list item */
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

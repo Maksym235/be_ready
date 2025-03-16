@@ -6,7 +6,7 @@
 .title {
   color: var(--black, #0d0d0d);
   padding-top: 8px;
-  font-family: 'Founders Grotesk';
+  font-family: 'CW-Medium';
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -31,6 +31,12 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  font-family: 'CW-Medium';
+  color: var(--black, #0d0d0d);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
   border-radius: 24px;
   background: var(--light-blue, #ecf4fe);
 }

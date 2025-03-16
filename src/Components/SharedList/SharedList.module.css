@@ -22,7 +22,7 @@
 
 .name {
   color: var(--black, #0d0d0d);
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -33,7 +33,7 @@
   margin-top: 24px;
   color: var(--silver, #939393);
   /* text-align: center; */
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 13px;
   font-style: normal;
   font-weight: 500;

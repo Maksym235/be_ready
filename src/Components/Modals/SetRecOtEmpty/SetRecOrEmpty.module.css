@@ -8,7 +8,7 @@
   color: var(--black, #0d0d0d);
 
   /* main text */
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -39,7 +39,7 @@
   color: var(--white, #fff);
 
   /* list item */
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -70,7 +70,7 @@
   border: 2px solid var(--accent, #458ef7);
   color: var(--accent, #458ef7);
   background-color: #fff;
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

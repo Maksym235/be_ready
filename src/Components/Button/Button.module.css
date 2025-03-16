@@ -1,0 +1,132 @@
+.btn {
+  display: flex;
+  padding: 8px 24px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 40px;
+  text-align: right;
+  text-transform: uppercase;
+  font-family: 'CW-Bold';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  position: relative;
+}
+
+.btn_text {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.primary {
+  width: 167px;
+  height: 44px;
+  border: none;
+  background: var(--accent, #458ef7);
+  color: var(--white, #fff);
+}
+
+.primary_text {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.primary::after {
+  right: 18px;
+  background-color: #fff;
+}
+
+.secondary {
+  width: 167px;
+  height: 44px;
+  border: 2px solid var(--accent, #458ef7);
+  background-color: #fff;
+  color: var(--accent, #458ef7);
+}
+
+.secondary_text {
+  position: relative;
+}
+
+.secondary::after {
+  background-color: #458ef7;
+  right: 18px;
+}
+
+.full {
+  width: 350px;
+  height: 44px;
+  border: none;
+  background: var(--white, #fff);
+  color: var(--accent, #458ef7);
+  position: relative;
+}
+
+.full_text {
+  position: relative;
+}
+
+.full::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  background-color: #458ef7;
+  border-radius: 50%;
+}
+
+.contact_us {
+  width: 350px;
+  height: 44px;
+  border: 2px solid var(--accent, #458ef7);
+  background-color: #fff;
+  color: var(--accent, #458ef7);
+  position: relative;
+}
+.contact_us::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  background-color: #458ef7;
+  border-radius: 50%;
+}
+
+.add {
+  width: 350px;
+  height: 44px;
+  border: 2px solid var(--accent, #458ef7);
+  background-color: #fff;
+  color: var(--accent, #458ef7);
+}
+
+.add_text {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}

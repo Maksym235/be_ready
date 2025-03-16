@@ -31,7 +31,7 @@
 
 .input::placeholder {
   color: var(--silver, #939393);
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -57,7 +57,7 @@
   position: relative;
   text-transform: uppercase;
   color: var(--white, #fff);
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -98,7 +98,7 @@
   position: relative;
   text-transform: uppercase;
   color: var(--accent, #458ef7);
-  font-family: 'Neue Montreal';
+  font-family: 'CW-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

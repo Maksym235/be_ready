@@ -4,21 +4,7 @@
   gap: 16px;
   margin-bottom: 80px;
 }
-.add_category {
+.btn_wrapper {
   display: flex;
-  /* width: 350px; */
-  height: 44px;
-  padding: 8px 24px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 40px;
-  border: 2px solid var(--accent, #458ef7);
-  text-transform: uppercase;
-  background-color: #fff;
-  color: var(--accent, #458ef7);
-  font-family: 'Neue Montreal';
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
+  justify-content: center;
 }
