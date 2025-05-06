@@ -3,8 +3,10 @@ import styles from './ShortDesc.module.css';
 import { useNavigate } from 'react-router-dom';
 import { IShortDescProps } from '../../Types/Components/Lists';
 import { CButton } from '../Button/Button';
+import { useTranslation } from 'react-i18next';
 
 export const ShortDesc: FC<IShortDescProps> = ({ toggleModal }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const handleGetStarted = () => {
     if (JSON.parse(localStorage.getItem('isLoggedIn')!)) {
@@ -15,11 +17,7 @@ export const ShortDesc: FC<IShortDescProps> = ({ toggleModal }) => {
   };
   return (
     <div className={styles.container}>
-      <p className={styles.text}>
-        BeReady is a cutting-edge tool designed to simplify the packing process,
-        ensuring you have everything you need for a successful and enjoyable
-        hiking trip.
-      </p>
+      <p className={styles.text}>{t('shortDesc')}</p>
       <div className={styles.btn_wrapper}>
         <CButton
           disabled={false}
@@ -27,10 +25,10 @@ export const ShortDesc: FC<IShortDescProps> = ({ toggleModal }) => {
           onClickFn={handleGetStarted}
           type='primary'
         >
-          get started
+          {t('buttons.getStarted')}
         </CButton>
         <CButton disabled={false} htmlType='button' type='secondary'>
-          Learn more
+          {t('buttons.learnMore')}
         </CButton>
         {/* <button className={styles.lear_more}>
           <span className={styles.lear_more_text}>Lear more</span>

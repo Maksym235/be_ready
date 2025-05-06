@@ -209,7 +209,7 @@
   background: var(--accent, #458ef7);
   color: var(--white, #fff);
   /* list item */
-  font-family: 'CW-Medium';
+  font-family: 'CW-Bold';
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

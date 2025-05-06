@@ -5,6 +5,7 @@ import { ModalContainer } from '../../ModalContainer/ModalContainer';
 import { getAuth, signInWithPopup } from 'firebase/auth';
 import { googleAuthProvider } from '../../../../firebase';
 import { IAuthModalProps } from '../../../../Types/Components/Modals';
+import { CButton } from '../../../Button/Button';
 
 export const RegisterModal: FC<IAuthModalProps> = ({
   toggleModal,
@@ -36,17 +37,18 @@ export const RegisterModal: FC<IAuthModalProps> = ({
           type='password'
         />
         <div className={styles.btn_wrapper}>
-          <button className={styles.sing_up} type='submit'>
+          <CButton type='primary' htmlType='submit' disabled={false}>
             Sign up
-          </button>
-          <button
-            onClick={handleAuthWithGoogle}
-            className={styles.google}
-            type='button'
+          </CButton>
+          <CButton
+            type='primary'
+            htmlType='button'
+            disabled={false}
+            onClickFn={handleAuthWithGoogle}
           >
             <img width={24} height={24} src={google} alt='google icon' />
             Google
-          </button>
+          </CButton>
         </div>
       </form>
 

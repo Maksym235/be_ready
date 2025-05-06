@@ -62,7 +62,7 @@ export const RenameTrip: FC<IRenameTripProps> = ({
             disabled={formik.values.name.length === 0}
             className={styles.create}
           >
-            rename
+            save
           </button>
           <button
             type='button'
